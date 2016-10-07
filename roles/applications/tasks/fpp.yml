@@ -1,0 +1,24 @@
+#Facebook PathPicker, install from github release
+- name: Clear existing directory
+  become: no
+  file: path={{ lookup('env','HOME') }}/applications/fpp state=absent
+- name: Recreate directory
+  become: no
+  file: path={{ lookup('env','HOME') }}/applications/fpp state=directory
+#- name: Download and unpack
+  # (use github_releases from ansible 2.2 on)
+  # (use unarchive from ansible 2.2 up)
+  # https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
+  #unarchive: remote_src=yes dest={{ lookup('env','HOME') }}/applications/franz src=https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
+- name: Download package
+  uri: dest=/tmp/fpp.tar.gz url=https://github.com/facebook/PathPicker/releases/download/0.7.1/fpp.0.7.1.tar.gz
+
+- name: Unpack
+  become: no
+  unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/fpp src=/tmp/fpp.tar.gz
+- name: Remove package
+  file: path=/tmp/fpp.tar.gz state=absent
+
+- name: Link executable to directory in path
+  become: no
+  file: state=link src={{ lookup('env','HOME') }}/applications/fpp/fpp path={{ lookup('env','HOME') }}/bin/fpp force=yes

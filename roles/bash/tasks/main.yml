@@ -1,0 +1,7 @@
+- name: Create bashrc.d folder
+  become: no
+  file: path={{ lookup('env','HOME') }}/.bashrc.d state=directory
+
+- name: Link basic .bashrc file
+  become: no
+  file: state=link force=yes src={{role_path}}/files/bashrc path={{ lookup('env','HOME') }}/.bashrc

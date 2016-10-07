@@ -1,0 +1,1 @@
+OPTIONS=boulder:0, color, norest_on_space, !autopickup, autoquiver, showexp

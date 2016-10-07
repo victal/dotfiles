@@ -1,0 +1,13 @@
+- hosts: localhost
+  vars:
+    host: "work"
+  become: yes
+  become_method: sudo
+  roles: 
+    - bash
+    - applications
+    - common
+    - dev
+    - desktop
+    - xorg
+    - i3

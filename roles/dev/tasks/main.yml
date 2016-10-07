@@ -1,0 +1,101 @@
+- name: Add node repository (NPM)
+  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
+  with_items:
+      - name: nodesource
+        repo: 'deb https://deb.nodesource.com/node_6.x xenial main'
+
+- name: Add node repo key
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+
+- name: Add Docker apt repository
+  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
+  with_items:
+      - name: docker
+        repo: 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+
+- name: Add Docker repo key
+  apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D state=present
+
+- name: Update packages
+  apt: upgrade=full update_cache=yes
+
+- name: Install development packages
+  apt: state=latest name={{item}}
+  with_items: 
+    - ack-grep
+    - mosh
+    - docker-engine
+    - nodejs
+    - exuberant-ctags
+    - mercurial
+    - icedtea-plugin
+    - virtualbox-qt
+    - vim-gtk-py2
+    - wireshark-qt
+
+- name: Install pip global packages
+  pip: name={{item}} state=latest
+  with_items:
+    - awscli
+    - docker-compose
+    - jedi
+    - virtualenv
+    - virtualenvwrapper
+
+- name: Link virtualenv bash configurations
+  become: no
+  file: state=link src={{role_path}}/files/bashrc/python.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/python.sh" force=yes
+
+- name: Link hg bash configurations
+  become: no
+  file: state=link src={{role_path}}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes
+
+- name: Install JS global packages
+  npm: name={{item}} state=latest global=true
+  with_items:
+    - bower
+    - browser-sync
+    - grunt-cli
+    - gulp
+    - jshint
+
+#Git
+- name: Install Git
+  apt: state=latest name={{item}}
+  with_items: 
+    - git
+- name: Link git config
+  become: no
+  file: state=link src={{role_path}}/files/git/gitconfig dest="{{ lookup('env','HOME') }}/.gitconfig"
+
+#Mercurial
+- name: Install Mercurial
+  apt: state=latest name={{item}}
+  with_items: 
+    - mercurial
+- name: Link hgrc config
+  become: no
+  file: state=link src={{role_path}}/files/hg/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
+
+#Python
+- name: Link REPL config
+  become: no
+  file: state=link src={{role_path}}/files/python/pyrc.py dest="{{ lookup('env','HOME') }}/.pyrc.py"
+
+#Vim
+- name: Link vim folder
+  become: no
+  file: state=link src={{ role_path }}/files/vim/vimfolder dest="{{ lookup('env','HOME') }}/.vim" force=yes
+- name: Link vimrc
+  become: no
+  file: state=link src={{ role_path }}/files/vim/vimrc dest="{{ lookup('env','HOME') }}/.vimrc" force=yes
+- name: Install Plugins
+  become: no
+  command: vim +PlugUpgrade +PlugInstall +qall
+
+#VSCode
+- name: Install VSCode from MS link
+  apt: deb=https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable
+- name: Link VSCode configurations
+  become: no
+  file: state=link src={{ role_path }}/files/VSCode/User dest="{{ lookup('env','HOME') }}/.config/Code/User"

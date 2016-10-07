@@ -1,0 +1,38 @@
+[ui]
+username = Guilherme Costa <guilherme.costa@maps.com.br>
+ssh = ssh -C
+
+[extensions]
+#localhooks = /home/guilherme/workspace/localhooks/localhooks/localhooks.py
+extdiff = 
+color = 
+graphlog = 
+histedit = 
+mq = 
+pager = 
+purge = 
+progress = 
+rebase = 
+shelve = 
+hgext.churn=
+#mercurial_keyring=
+
+[pager]
+pager = LESS='FSRX' less
+ignore = version, update
+
+[extdiff]
+cmd.meld = 
+cmd.vimdiff = 
+
+[web]
+allow_push = *
+push_ssl = false
+
+[auth]
+bb.prefix = https://bitbucket.org
+bb.username = jmine
+bb.password = maps@jmine@bitbucket
+
+[trusted]
+users = root

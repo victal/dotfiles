@@ -1,0 +1,58 @@
+- name: Add fasd PPA
+  apt_repository: repo='ppa:aacebedo/fasd'
+
+- name: Update packages
+  apt: upgrade=full update_cache=yes
+
+- name: Install package managers
+  apt: state=latest name={{item}}
+  with_items:
+    - build-essential
+    - curl
+    - python
+    - python-dev
+    - python-pip
+    - git
+
+- name: Upgrade pip
+  easy_install: name=pip state=latest
+
+- name: Install base packages
+  apt: state=latest name={{item}}
+  with_items: 
+    - dnsutils
+    - p7zip-full
+    - rar
+    - rsync
+    - udisks2
+    - zip
+    - fasd
+
+- name: Add fasd script to bashrc
+  become: no
+  file: state=link force=yes src="{{role_path}}/files/bashrc/fasd.sh" path="{{ lookup('env','HOME') }}/.bashrc.d/fasd.sh" state=link force=yes
+
+- name: Install monitoring packages - APT
+  apt: state=latest name={{item}}
+  with_items:
+    - htop
+    - iftop
+    - iotop
+    - iptraf-ng
+    - mtr-tiny
+    - nmon
+    - nmap
+    - ncdu 
+
+- name: Install monitoring packages - PIP
+  pip: name={{item}} state=latest
+  with_items:
+   - glances
+
+# Fonts
+- name: Link font folder
+  become: no
+  file: src="{{role_path}}/files/fonts" path="{{ lookup('env','HOME') }}/.local/share/fonts" state=link force=yes
+- name: Rebuild font cache
+  become: no
+  command: fc-cache -vf

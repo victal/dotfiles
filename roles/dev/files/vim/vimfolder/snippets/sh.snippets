@@ -1,0 +1,5 @@
+snippet curdir
+	pushd $(dirname $BASH_SOURCE) > /dev/null
+	SCRIPT_DIR=$(pwd -P)
+	popd > /dev/null
+

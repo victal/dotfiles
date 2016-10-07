@@ -1,0 +1,276 @@
+""""""""""""""""""
+" Common options "
+""""""""""""""""""
+syntax on
+set nocompatible
+set expandtab
+set autoindent
+set smarttab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=8
+set number
+set mouse=
+set incsearch
+set ignorecase
+set smartcase
+set modeline
+set foldmethod=manual
+set nobomb
+set viminfo=
+set diffopt+=iwhite
+set diffexpr=""
+
+"Faster searching for slashes
+cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
+
+""""""""""""""""
+" Vundle setup "
+""""""""""""""""
+
+call plug#begin('~/.vim/bundle')
+
+""""""""""""""""""""
+" My Plugins       "
+""""""""""""""""""""
+
+""" Sensible defaults """
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-speeddating'
+Plug 'duggiefresh/vim-easydir'
+Plug 'ryanoasis/vim-devicons'
+Plug 'chrisbra/unicode.vim'
+
+""" File operations """
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+""" Status Line and Color Schemes """
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'sjas/ColorSamplerPack'
+Plug 'junegunn/seoul256.vim'
+Plug 'altercation/vim-colors-solarized'
+
+""" Code (Generic)  """
+"http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
+Plug 'ervandew/supertab'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'scrooloose/nerdcommenter'
+
+Plug 'mhinz/vim-signify'
+let g:signify_vcs_list = [ 'hg', 'git' ]
+
+Plug 'ludovicchabant/vim-lawrencium'
+Plug 'scrooloose/syntastic'
+
+""" HTML, CSS, JS """
+"YouCompleteMe has tern support out of the box
+Plug 'mattn/emmet-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/javascript-libraries-syntax.vim'
+
+""" Angular """
+Plug 'tpope/vim-pathogen' "jasmine.vim dependency (?)
+Plug 'claco/jasmine.vim'
+Plug 'burnettk/vim-angular'
+Plug 'matthewsimo/angular-vim-snippets'
+let g:used_javascript_libs = 'jquery,angularjs,angularui,angularuirouter,jasmine'
+
+""" Python """
+Plug 'Rykka/InstantRst'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'davidhalter/jedi-vim'
+Plug 'tweekmonster/braceless.vim'
+
+autocmd FileType python BracelessEnable +indent +fold +highlight-cc2
+
+""" TODO """
+Plug 'freitass/todo.txt-vim'
+let g:todo_home="~/ownCloud/todo"
+function! OpenTodo(...)
+    if a:1 == ''
+        execute 'edit '.g:todo_home.'/todo.txt'
+    else
+        execute 'edit '.g:todo_home.'/'.a:1.'.todo.txt'
+    endif
+endfunction
+command -nargs=? Todo call OpenTodo('<args>')
+
+call plug#end()
+
+"""""""""""""""""""""
+" Airline options "
+"""""""""""""""""""""
+
+set term=xterm-256color
+set showtabline=0
+set laststatus=2
+"set guifont= MesloLGLDZ\ Nerd\ Font 10
+let g:airline_powerline_fonts = 1
+
+"""""""""""""""""
+" CtrlP options "
+"""""""""""""""""
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_root_markers = ['pom.xml', 'package.json', 'bower.json', 'setup.py']
+set wildignore+=*.class,*.pyc,*.java-CACHE
+nnoremap <leader>f :CtrlPBuffer<C-M>
+
+""""""""""""""""""""""""""
+" Tabwidth per file type "
+""""""""""""""""""""""""""
+
+" HTML (tab width 2 chr, no wrapping)
+autocmd FileType html,xhtml,htmldjango set sw=4
+autocmd FileType html,xhtml,htmldjango set ts=4
+autocmd FileType html,xhtml,htmldjango set sts=4
+" Python (tab width 4 chr, wrap at 79th char)
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+" CSS (tab width 2 chr, wrap at 79th char)
+autocmd FileType css set sw=2
+autocmd FileType css set ts=2
+autocmd FileType css set sts=2
+" JavaScript (tab width 4 chr, wrap at 79th)
+autocmd FileType javascript,jade set sw=4
+autocmd FileType javascript,jade set ts=4
+autocmd FileType javascript,jade set sts=4
+
+"""""""""""""""""""""""""""""""
+" Increment/Decrement numbers "
+"""""""""""""""""""""""""""""""
+
+nnoremap + <Plug>SpeedDatingUp
+nnoremap _ <Plug>SpeedDatingDown
+
+"""""""""""""""""""
+" Folding Options "
+"""""""""""""""""""
+
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
+""""""""""""""""""""
+" Jedi-vim Options "
+""""""""""""""""""""
+
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#completions_command = ""
+let g:jedi#show_call_signatures = "1"
+
+let g:jedi#goto_assignments_command = "<leader>a"
+let g:jedi#goto_definitions_command = "<leader>g"
+let g:jedi#documentation_command = "<leader>k"
+let g:jedi#usages_command = "<leader>u"
+let g:jedi#rename_command = "<leader>r"
+
+"""""""""""""""
+" YCM Options "
+"""""""""""""""
+
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+"""""""""""""""""""""
+" Ultisnips Options "
+"""""""""""""""""""""
+
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<C-p>"
+let g:snips_email = 'guilherme.costa@maps.com.br'
+let g:snips_github = ''
+
+""""""""""""""""""""""""
+" ScrollColors Options "
+""""""""""""""""""""""""
+
+"nnoremap <silent><F8> :NEXTCOLOR<cr>
+"nnoremap <silent><F7> :PREVCOLOR<cr> 
+let g:solarized_termcolors=256
+set background=light
+silent! colorscheme solarized
+"silent! colorscheme wombat256
+
+""""""""""""""""""""""
+" InstantRST Options "
+""""""""""""""""""""""
+
+let g:instant_rst_static = '/home/guilherme/workspace/docs-template/static'
+let g:instant_rst_template = '/home/guilherme/workspace/docs-template/templates'
+let g:instant_rst_browser = 'aurora'
+
+"""""""""""""""""""""
+" Syntastic Options "
+"""""""""""""""""""""
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_id_checkers = 1
+let g:syntastic_auto_loc_list = 1
+
+let g:syntastic_aggregate_errors = 1
+
+let g:syntastic_python_checkers = ['python'] ", 'pyflakes', 'pylint'] , 'pep8'] 
+
+
+""""""""""""""""""
+" Tagbar Options "
+""""""""""""""""""
+nnoremap <leader>t :TagbarToggle<CR>
+
+""""""""""""""""""""
+" NERDTree Options "
+""""""""""""""""""""
+nnoremap <leader>x :NERDTreeToggle<CR>
+
+
+"""""""""""""""""
+" Extra Options "
+"""""""""""""""""
+
+runtime macros/matchit.vim
+
+""" Extra save commands """
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+command WQ :execute ':W' | :q
+command Wq :execute ':W' | :q
+nnoremap <leader>ss :wa<CR>
+nnoremap <leader>sq :wqa<CR>
+
+function! FindFileUnderCursor()
+    let l:name = expand('<cWORD>:p:t')
+    if l:name !=? ""
+        echom "Searching file with name ".l:name
+        let l:result = system('find . -name '.l:name.' 2>/dev/null | grep -v target')
+        let l:trimmed = substitute(l:result, '^\s*\(.\{-}\).\s*$', '\1', "")
+        if l:result !=? ""
+            execute "s#".l:name."#".l:trimmed."#"
+        else
+            echom "No file found with name " .l:name
+        endif
+    else
+        echom "No file given to Find"
+    endif
+endfunction
+command -nargs=0 Find call FindFileUnderCursor()
+
+nnoremap <leader>F :Find<CR>

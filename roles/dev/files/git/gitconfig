@@ -1,0 +1,12 @@
+[user]
+    name = Guilherme Victal
+    email = guilhermevictal em gmail ponto com
+
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    meld = difftool -t meld -d
+
+[push]
+    default = matching

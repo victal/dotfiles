@@ -1,0 +1,40 @@
+- name: Add Owncloud APT repository
+  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
+  with_items:
+      - name: owncloud
+        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /'
+
+- name: Add owncloud repo key
+  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key state=present
+
+- name: Update packages
+  apt: update_cache=yes
+
+- name: Install common GUI Packages
+  apt: state=latest name={{item}}
+  with_items: 
+    - caffeine
+    - chromium-browser
+    - file-roller
+    - firefox
+    - flashplugin-installer
+    - gimp
+    - gnucash
+    - gparted
+    - inkscape
+    - keepassx
+    - lame 
+    - libreoffice
+    - lxappearance
+    - meld
+    - owncloud-client
+    - picard
+    - pidgin
+    - speedcrunch
+    - thunar
+    - terminator
+    - vlc
+
+- name: Link terminator configuration
+  become: no
+  file: state=link src={{role_path}}/files/terminator path="{{ lookup('env','HOME') }}/.config/terminator"
