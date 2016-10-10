@@ -1,10 +1,4 @@
 # Maven, install from official locations
-- name: Clear existing directory
-  become: no
-  file: path={{ lookup('env','HOME') }}/applications/maven state=absent
-- name: Recreate directory
-  become: no
-  file: path={{ lookup('env','HOME') }}/applications/maven state=directory
 - name: Download package
   uri: dest=/tmp/maven.tar.gz url=http://ftp.unicamp.br/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 - name: Unpack
@@ -12,7 +6,3 @@
   unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/ src=/tmp/maven.tar.gz
 - name: Remove package
   file: path=/tmp/maven.tar.gz state=absent
-
-- name: Link executable to directory in path
-  become: no
-  file: state=link src={{ lookup('env','HOME') }}/applications/apache-maven-3.3.9/bin/maven path={{ lookup('env','HOME') }}/bin/maven force=yes

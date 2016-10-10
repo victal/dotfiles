@@ -12,6 +12,7 @@ Session.vim
 # auto-generated tag files
 tags
 bundle
+plug.vim.old
 
 
 ### VisualStudioCode ###
