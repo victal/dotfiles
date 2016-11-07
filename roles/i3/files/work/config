@@ -195,6 +195,7 @@ exec --no-startup-id sonicwall-login
 exec --no-startup-id nm-applet
 exec --no-startup-id owncloud
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id dropbox --start
 
 exec --no-startup-id i3-msg 'workspace 1; exec aurora'
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal -x vim -c "Todo" -c "split" -c "Todo maps"'
