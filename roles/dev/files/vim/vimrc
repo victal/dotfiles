@@ -113,7 +113,7 @@ call plug#end()
 set term=xterm-256color
 set showtabline=0
 set laststatus=2
-"set guifont= MesloLGLDZ\ Nerd\ Font 10
+set guifont=MesloLGLDZ\ Nerd\ Font\ 10
 let g:airline_powerline_fonts = 1
 
 """""""""""""""""
