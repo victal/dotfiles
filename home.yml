@@ -4,9 +4,9 @@
   become: yes
   become_method: sudo
   roles: 
+    - common
     - bash
     - applications
-    - common
     - dev
     - desktop
     - xorg
