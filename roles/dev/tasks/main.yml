@@ -2,7 +2,7 @@
   apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
   with_items:
       - name: nodesource
-        repo: 'deb https://deb.nodesource.com/node_6.x xenial main'
+        repo: 'deb https://deb.nodesource.com/node_6.x yakkety main'
 
 - name: Add node repo key
   apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
@@ -12,6 +12,7 @@
   with_items:
       - name: docker
         repo: 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+        #TODO: Wait for yakkety repo
 
 - name: Add Docker repo key
   apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D state=present
