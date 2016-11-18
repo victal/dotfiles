@@ -1,6 +1,9 @@
 - name: Add fasd PPA
   apt_repository: repo='ppa:aacebedo/fasd'
 
+- name: Configure release update manager
+  file: state=link force=yes src="{{role_path}}/files/apt/release-upgrades" path="/etc/update-manager/release-upgrades"
+
 - name: Update packages
   apt: upgrade=full update_cache=yes
 
@@ -30,7 +33,7 @@
 
 - name: Add fasd script to bashrc
   become: no
-  file: state=link force=yes src="{{role_path}}/files/bashrc/fasd.sh" path="{{ lookup('env','HOME') }}/.bashrc.d/fasd.sh" state=link force=yes
+  file: state=link force=yes src="{{role_path}}/files/bashrc/fasd.sh" path="{{ lookup('env','HOME') }}/.bashrc.d/fasd.sh"
 
 - name: Install monitoring packages - APT
   apt: state=latest name={{item}}
