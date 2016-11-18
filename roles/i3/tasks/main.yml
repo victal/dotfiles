@@ -2,7 +2,7 @@
   apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
   with_items:
       - name: i3
-        repo: 'deb http://debian.sur5r.net/i3/ xenial universe'
+        repo: 'deb http://debian.sur5r.net/i3/ yakkety universe'
 
 - name: Update packages
   apt: update_cache=yes allow_unauthenticated=yes
