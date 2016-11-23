@@ -12,6 +12,5 @@
     - xorg
     - i3
     - home
-
-# Shell
-# config files
+    - spotify
+    # TODO: Role dependencies
