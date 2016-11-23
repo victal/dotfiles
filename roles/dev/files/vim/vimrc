@@ -67,6 +67,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mhinz/vim-signify'
 let g:signify_vcs_list = [ 'hg', 'git' ]
 
+Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'scrooloose/syntastic'
 
