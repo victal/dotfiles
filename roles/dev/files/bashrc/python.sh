@@ -4,3 +4,4 @@ then
     export WORKON_HOME=$HOME/venv
     source $VENVWRAPPER_PATH
 fi
+export PYTHONSTARTUP=$HOME/.pyrc.py
