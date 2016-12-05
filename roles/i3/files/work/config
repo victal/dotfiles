@@ -162,7 +162,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3blocks -c ~/.i3/i3blocks.conf
-        tray_output LVDS1
+        tray_output LVDS-1
 }
 
 # Add a small delay to prevent suspend races
@@ -187,8 +187,8 @@ bindsym $mod+Insert mode "$mode_system"
 
 exec --no-startup-id bash /home/guilherme/.screenlayout/default.sh
 exec --no-startup-id xmodmap /home/guilherme/.Xmodmap
-workspace 1 output LVDS1
-workspace 3 output LVDS1
+workspace 1 output LVDS-1
+workspace 3 output LVDS-1
 assign [class="Navigator"] workspace 1
 assign [class="keepassx"] workspace 3
 exec --no-startup-id sonicwall-login
