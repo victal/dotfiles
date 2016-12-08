@@ -4,13 +4,13 @@
   become: yes
   become_method: sudo
   roles: 
-    - common
-    - bash
-    - applications
-    - dev
-    - desktop
-    - xorg
-    - i3
-    - home
-    - spotify
+    - { name: common, tags: "common" }
+    - { name: bash, tags: "bash" }
+    - { name: applications, tags: "applications" }
+    - { name: dev, tags: "dev" }
+    - { name: desktop, tags: "desktop" }
+    - { name: xorg, tags: "xorg" }
+    - { name: i3, tags: "i3" }
+    - { name: home, tags: "home" }
+    - { name: spotify, tags: "spotify" }
     # TODO: Role dependencies
