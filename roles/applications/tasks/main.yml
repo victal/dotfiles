@@ -10,6 +10,10 @@
   become: no
   file: path={{ lookup('env','HOME') }}/applications/ state=directory
 
+- name: Create bin directory
+  become: no
+  file: path={{ lookup('env','HOME') }}/bin/ state=directory
+
 - include: "{{item}}.yml"
   with_items:
     - fpp

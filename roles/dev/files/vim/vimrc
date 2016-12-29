@@ -60,7 +60,7 @@ Plug 'altercation/vim-colors-solarized'
 """ Code (Generic)  """
 "http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
 Plug 'ervandew/supertab'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --tern-completer' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 

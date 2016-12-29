@@ -1,3 +1,7 @@
+- name: Create .bashrc.d directory
+  file: state=directory path={{ lookup('env', 'HOME') }}/.bashrc.d
+  become: no
+
 - name: Add fasd PPA
   apt_repository: repo='ppa:aacebedo/fasd'
 
@@ -17,8 +21,8 @@
     - python-pip
     - git
 
-- name: Upgrade pip
-  easy_install: name=pip state=latest
+#- name: Upgrade pip
+#  easy_install: name=pip state=latest
 
 - name: Install base packages
   apt: state=latest name={{item}}
