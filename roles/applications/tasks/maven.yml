@@ -6,3 +6,10 @@
   unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/ src=/tmp/maven.tar.gz
 - name: Remove package
   file: path=/tmp/maven.tar.gz state=absent
+
+- name: Add mvn symlink to bin
+  become: no
+  file: state=link src={{ lookup('env','HOME') }}/applications/apache-maven-3.3.9/bin/{{item}} dest={{ lookup('env','HOME') }}/bin/{{item}} force=yes
+  with_items: 
+    - mvn
+    - mvnDebug
