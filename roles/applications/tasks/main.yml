@@ -18,6 +18,6 @@
   with_items:
     - fpp
     - maven
+    - aurora
     #- idea
     #- pycharm
-
