@@ -5,6 +5,7 @@
     - transmission-gtk
     - mpv
     - nethack-console
+    - mcomix
 
 # Nethack
 - name: Copy nethackrc
