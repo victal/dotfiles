@@ -26,6 +26,7 @@
     - nitrogen
     - scrot
     - suckless-tools
+    - i3blocks
 
 - name: Link specific i3 configuration
   become: no
