@@ -27,7 +27,16 @@
     - scrot
     - suckless-tools
     - i3blocks
+    - rofi
 
 - name: Link specific i3 configuration
   become: no
   file: state=link src={{role_path}}/files/{{host}} dest="{{ lookup('env','HOME') }}/.i3" force=yes
+
+- name: Create rofi configuration folder
+  become: no
+  file: state=directory path={{ lookup('env', 'HOME') }}/.config/rofi
+
+- name: Link specific rofi configuration
+  become: no
+  file: state=link src={{role_path}}/files/{{host}}/rofi.config dest="{{ lookup('env','HOME') }}/.config/rofi/config" force=yes
