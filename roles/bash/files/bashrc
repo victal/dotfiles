@@ -98,5 +98,5 @@ export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 for file in $HOME/.bashrc.d/*.sh
 do
-  source $file
+  source "$file"
 done
