@@ -39,7 +39,7 @@ bindsym $mod+Shift+q kill
 # installed.
 bindsym $mod+Shift+d exec --no-startup-id j4-dmenu-desktop
 #bindsym $mod+d exec --no-startup-id python ~/.i3/dmenu_runner.py
-bindsym $mod+d exec --no-startup-id "rofi -combi-modi window,run,drun -modi combi -show combi"
+bindsym $mod+d exec --no-startup-id "rofi -combi-modi window,drun,run -show combi -modi combi"
 
 # change focus
 bindsym $mod+h focus left

@@ -29,9 +29,19 @@
     - i3blocks
     - rofi
 
+- name: Create i3 config dir
+  become: no
+  file: state=directory dest="{{ lookup('env','HOME') }}/.i3"
+
+- name: Link common i3 configuration
+  become: no
+  file: state=link src={{role_path}}/files/{{item}} dest="{{ lookup('env','HOME') }}/.i3/{{item}}" force=yes
+  with_items:
+    - i3blocks.conf
+
 - name: Link specific i3 configuration
   become: no
-  file: state=link src={{role_path}}/files/{{host}} dest="{{ lookup('env','HOME') }}/.i3" force=yes
+  file: state=link src={{role_path}}/files/{{host}}.i3config dest="{{ lookup('env','HOME') }}/.i3/config" force=yes
 
 - name: Create rofi configuration folder
   become: no
@@ -39,4 +49,4 @@
 
 - name: Link specific rofi configuration
   become: no
-  file: state=link src={{role_path}}/files/{{host}}/rofi.config dest="{{ lookup('env','HOME') }}/.config/rofi/config" force=yes
+  file: state=link src={{role_path}}/files/rofi.config dest="{{ lookup('env','HOME') }}/.config/rofi/config" force=yes
