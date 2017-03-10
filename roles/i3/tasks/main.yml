@@ -1,14 +1,14 @@
-- name: Add apt i3 repository
-  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
-  with_items:
-      - name: i3
-        repo: 'deb http://debian.sur5r.net/i3/ yakkety universe'
-
-- name: Update packages
-  apt: update_cache=yes allow_unauthenticated=yes
+#- name: Add apt i3 repository
+  #apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
+  #with_items:
+      #- name: i3
+        #repo: 'deb http://debian.sur5r.net/i3/ yakkety universe'
 
 - name: Install i3 keyring
   apt: name=sur5r-keyring state=latest allow_unauthenticated=yes
+
+- name: Update packages
+  apt: update_cache=yes allow_unauthenticated=yes
 
 - name: Update packages
   apt: update_cache=yes upgrade=full
