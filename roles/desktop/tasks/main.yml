@@ -1,15 +1,11 @@
 - name: Add owncloud repo key
-  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_17.04/Release.key state=present
+  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.10/Release.key state=present
 
 - name: Add Owncloud APT repository
-  apt_repository: filename={{ item.name }} repo={{ item.repo }} state=present
+  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
   with_items:
       - name: owncloud
-        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_17.04/ /'
-
-- name: Add Vivaldi APT Repository
-  apt_repository: filename=vivaldi state=present repo='deb http://repo.vivaldi.com/stable/deb/ stable main'
-    
+        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.10/ /'
 
 - name: Update packages
   apt: update_cache=yes
@@ -38,7 +34,6 @@
     - thunar
     - terminator
     - vlc
-    - vivaldi-stable
 
 - name: Link terminator configuration
   become: no
