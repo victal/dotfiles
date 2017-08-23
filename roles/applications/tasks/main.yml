@@ -22,3 +22,8 @@
     - vivaldi
     #- idea
     #- pycharm
+
+- include: "{{item}}.yml"
+  with_items:
+    - gojira
+  when: host == "work"

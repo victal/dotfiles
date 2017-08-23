@@ -1,0 +1,14 @@
+- name: Get latest release of go-jira
+  become: no
+  github_release:
+    token: invalid_token
+    user: Netflix-Skunkworks
+    repo: go-jira
+    action: latest_release
+  register: gojira_version
+
+- name: Download go-jira executable
+  become: no
+  uri:
+    dest: "{{ lookup('env','HOME') }}/applications/gojira"
+    url: "https://github.com/Netflix-Skunkworks/go-jira/releases/download/{{gojira_version.tag}}/jira-linux-amd64"
