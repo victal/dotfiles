@@ -1,7 +1,7 @@
 - name: Get latest release of go-jira
   become: no
   github_release:
-    token: 072d1b45e810c457e137a163a1b6c1c0811c734a
+    token: invalid_token
     user: Netflix-Skunkworks
     repo: go-jira
     action: latest_release
