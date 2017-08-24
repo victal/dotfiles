@@ -19,7 +19,7 @@
     - fpp
     - maven
     - aurora
-    - vivaldi
+    #- vivaldi
     #- idea
     #- pycharm
 
