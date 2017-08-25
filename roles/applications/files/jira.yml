@@ -1,0 +1,3 @@
+endpoint: {{jira.endpoint}}
+editor: vim 
+user: {{jira.username}}
