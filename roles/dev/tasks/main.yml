@@ -97,7 +97,7 @@
   file: state=link src={{ role_path }}/files/vim/vimrc dest="{{ lookup('env','HOME') }}/.vimrc" force=yes
 - name: Install Vim Plugins
   become: no
-  command: vim +PlugUpgrade +PlugInstall +qall
+  command: vim +PlugUpgrade +PlugInstall +qall && reset
 
 #VSCode
 - name: Install VSCode from MS link

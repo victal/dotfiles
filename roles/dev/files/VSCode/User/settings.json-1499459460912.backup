@@ -7,6 +7,6 @@
 
     // Enable crash reports to be sent to Microsoft.
 	// This option requires restart to take effect.
-    "telemetry.enableCrashReporter": false,
-    "extensions.ignoreRecommendations": false
+    "telemetry.enableCrashReporter": false
+
 }

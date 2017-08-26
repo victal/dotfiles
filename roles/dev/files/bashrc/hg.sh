@@ -9,5 +9,13 @@ get_branch() {
         DIR="$(dirname "$DIR")"
     done
 }
-PS1="\$(get_branch "$2")$PS1";
+PS1="\$(get_branch \"$2\")$PS1";
 
+graft() {
+  if [[ "$(hg branch)" != "$2" ]]
+  then
+    hg up "$2"
+  fi
+  hg branch "${1}-$(hg branch)"
+  hg graft -r "first(branch(${1}))::"
+}

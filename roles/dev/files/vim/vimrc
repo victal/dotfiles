@@ -269,7 +269,6 @@ function! FindFileUnderCursor()
             execute "s#".l:name."#".l:trimmed."#"
         else
             echom "No file found with name " .l:name
-        endif
     else
         echom "No file given to Find"
     endif
