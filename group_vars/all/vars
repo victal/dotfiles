@@ -1,0 +1,4 @@
+github_token: "{{ vault.github_token }}"
+jira:
+    endpoint: "{{ vault.jira.endpoint }}"
+    user: "{{ vault.jira.user }}"
