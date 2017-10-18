@@ -33,15 +33,12 @@
   become: no
   file: state=directory dest="{{ lookup('env','HOME') }}/.i3"
 
-- name: Link common i3 configuration
-  become: no
-  file: state=link src={{role_path}}/files/{{item}} dest="{{ lookup('env','HOME') }}/.i3/{{item}}" force=yes
-  with_items:
-    - i3blocks.conf
-
 - name: Link specific i3 configuration
   become: no
-  file: state=link src={{role_path}}/files/{{host}}.i3config dest="{{ lookup('env','HOME') }}/.i3/config" force=yes
+  file: state=link src={{role_path}}/files/{{host}}/{{item}} dest="{{ lookup('env','HOME') }}/.i3/{{item}}" force=yes
+  with_items:
+    - config
+    - i3blocks.conf
 
 - name: Create rofi configuration folder
   become: no

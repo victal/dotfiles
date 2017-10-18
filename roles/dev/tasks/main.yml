@@ -15,7 +15,6 @@
   with_items:
       - name: docker
         repo: 'deb https://apt.dockerproject.org/repo ubuntu-yakkety main'
-        #TODO: Wait for yakkety repo
 
 - name: Update packages
   apt: upgrade=full update_cache=yes
@@ -35,7 +34,8 @@
     - wireshark-qt
 
 - name: Install pip global packages
-  pip: name={{item}} state=latest
+  become: yes
+  pip: name={{item}} state=latest executable=pip
   with_items:
     - awscli
     - docker-compose
@@ -83,9 +83,12 @@
   become: no
   file: state=link src={{role_path}}/files/python/pyrc.py dest="{{ lookup('env','HOME') }}/.pyrc.py"
 
+
 #Vim
 - name: Install vim plugin dependencies
   apt: state=latest name=cmake
+- name: Install npm dependencies for vim-livedown
+  npm: name=livedown state=latest production=yes global=yes
 - name: Link vim folder
   become: no
   file: state=link src={{ role_path }}/files/vim/vimfolder dest="{{ lookup('env','HOME') }}/.vim" force=yes

@@ -1,7 +1,7 @@
 - name: Get latest release of go-jira
   become: no
   github_release:
-    token: no_token_for_you
+    token: "{{ github_token }}"
     user: Netflix-Skunkworks
     repo: go-jira
     action: latest_release
@@ -31,6 +31,6 @@
 
 - name: Copy gojira config
   become: no
-  copy: 
+  template: 
     src: "{{role_path}}/files/jira.yml"
     dest: "{{ lookup('env','HOME') }}/.jira.d/config.yml"
