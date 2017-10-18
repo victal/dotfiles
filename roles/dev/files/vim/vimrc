@@ -21,11 +21,8 @@ set viminfo=
 set diffopt+=iwhite
 set diffexpr=""
 
-"Faster searching for slashes
-cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
-
 """"""""""""""""
-" Vundle setup "
+" Vim-Plug setup "
 """"""""""""""""
 
 call plug#begin('~/.vim/bundle')
@@ -245,12 +242,19 @@ nnoremap <leader>t :TagbarToggle<CR>
 """"""""""""""""""""
 nnoremap <leader>x :NERDTreeToggle<CR>
 
+""""""""""""""""""""
+" Livedown Options "
+""""""""""""""""""""
+let g:livedown_autorun = 1
 
 """""""""""""""""
 " Extra Options "
 """""""""""""""""
 
 runtime macros/matchit.vim
+
+"Faster searching for slashes
+cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 
 """ Extra save commands """
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!

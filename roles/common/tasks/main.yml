@@ -1,5 +1,5 @@
 - name: Create .bashrc.d directory
-  file: state=directory path={{ lookup('env', 'HOME') }}/.bashrc.d
+  file: state=directory path={{ ansible_env.HOME }}/.bashrc.d
   become: no
 
 - name: Add fasd PPA

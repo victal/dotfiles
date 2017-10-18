@@ -101,7 +101,7 @@
   apt: deb=https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable
 - name: Create VSCode configuration dir
   become: no
-  file: state=directory path={{ lookup('env', 'HOME') }}/.config/Code
+  file: state=directory path={{ ansible_env.HOME }}/.config/Code
 - name: Link VSCode configurations
   become: no
   file: state=link src={{ role_path }}/files/VSCode/User dest="{{ lookup('env','HOME') }}/.config/Code/User"
