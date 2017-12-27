@@ -74,15 +74,19 @@
   apt: state=latest name={{item}}
   with_items: 
     - mercurial
+
 - name: Link hgrc config
   become: no
   file: state=link src={{role_path}}/files/hg/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
+
+- name: Link custom merge script
+  become: no
+  file: state=link src={{role_path}}/files/hg/pom_merge.sh dest="{{ lookup('env','HOME') }}/bin/pom_merge.sh" mode=0744
 
 #Python
 - name: Link REPL config
   become: no
   file: state=link src={{role_path}}/files/python/pyrc.py dest="{{ lookup('env','HOME') }}/.pyrc.py"
-
 
 #Vim
 - name: Install vim plugin dependencies

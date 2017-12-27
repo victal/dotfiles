@@ -25,14 +25,18 @@ ignore = version, update
 cmd.meld = 
 cmd.vimdiff = 
 
+[merge-tools]
+pommerge.executable = ~/bin/pom_merge.sh 
+pommerge.args = $local $other $base $output
+pommerge.priority = 1
+
 [web]
 allow_push = *
 push_ssl = false
 
-[auth]
-bb.prefix = https://bitbucket.org
-bb.username = jmine
-bb.password = maps@jmine@bitbucket
-
 [trusted]
 users = root
+
+[merge-patterns]
+**pom.xml = pommerge
+.hgtags = internal:tagmerge
