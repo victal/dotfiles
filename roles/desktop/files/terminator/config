@@ -1,5 +1,5 @@
 [global_config]
-  enabled_plugins = TestPlugin, LaunchpadCodeURLHandler, APTURLHandler, MavenPluginURLHandler, LaunchpadBugURLHandler
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, MavenPluginURLHandler, LaunchpadBugURLHandler
 [keybindings]
 [layouts]
   [[default]]
@@ -14,15 +14,15 @@
   [[default]]
     background_color = "#ffffff"
     background_darkness = 0.74
-    background_image = None
     background_type = transparent
+    cursor_color = "#000000"
     font = MesloLGLDZ Nerd Font 10
     foreground_color = "#000000"
     scrollbar_position = hidden
     use_system_font = False
   [[grey on black]]
     background_darkness = 0.9
-    background_image = None
     background_type = transparent
-    font = Meslo LG L DZ for Powerline 10
+    cursor_color = "#aaaaaa"
+    font = MesloLGLDZ Nerd Font 10
     use_system_font = False
