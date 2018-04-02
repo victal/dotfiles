@@ -1,6 +1,6 @@
 # Maven, install from official locations
 - name: Download package
-  uri: dest=/tmp/maven.tar.gz url=http://ftp.unicamp.br/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+  uri: dest=/tmp/maven.tar.gz url=http://ftp.unicamp.br/pub/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
 - name: Unpack
   become: no
   unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/ src=/tmp/maven.tar.gz
@@ -9,7 +9,7 @@
 
 - name: Add mvn symlink to bin
   become: no
-  file: state=link src={{ lookup('env','HOME') }}/applications/apache-maven-3.3.9/bin/{{item}} dest={{ lookup('env','HOME') }}/bin/{{item}} force=yes
+  file: state=link src={{ lookup('env','HOME') }}/applications/apache-maven-3.5.2/bin/{{item}} dest={{ lookup('env','HOME') }}/bin/{{item}} force=yes
   with_items: 
     - mvn
     - mvnDebug
