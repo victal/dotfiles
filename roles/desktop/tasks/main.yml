@@ -43,29 +43,3 @@
 #TODO: Get download link dynamically
 - name: Install Dropbox from official link
   apt: deb=https://linux.dropbox.com/packages/ubuntu/dropbox_2015.10.28_amd64.deb
-
-#Franz
-- name: Clear existing franz directory
-  become: no
-  file: path={{ lookup('env','HOME') }}/applications/franz state=absent
-- name: Recreate franz directory
-  become: no
-  file: path={{ lookup('env','HOME') }}/applications/franz state=directory
-#- name: Download and unpack
-  # (use github_releases from ansible 2.2 on)
-  # (use unarchive from ansible 2.2 up)
-  # https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
-  #unarchive: remote_src=yes dest={{ lookup('env','HOME') }}/applications/franz src=https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
-- name: Download franz package
-  uri: dest=/tmp/franz.tgz url=https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz
-
-- name: Unpack franz
-  become: no
-  unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/franz src=/tmp/franz.tgz
-- name: Remove franz package
-  file: path=/tmp/franz.tgz state=absent
-
-- name: Link franz executable to directory in path
-  become: no
-  file: state=link src={{ lookup('env','HOME') }}/applications/franz/Franz path={{ lookup('env','HOME') }}/bin/franz force=yes
-
