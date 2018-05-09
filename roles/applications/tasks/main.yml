@@ -5,6 +5,7 @@
     - applications
     - maven
     - java
+    - gojira
 
 - name: Create applications directory
   become: no
