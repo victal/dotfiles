@@ -2,9 +2,6 @@
   file: state=directory path={{ lookup('env','HOME') }}/.bashrc.d
   become: no
 
-- name: Add fasd PPA
-  apt_repository: repo='ppa:aacebedo/fasd'
-
 - name: Configure release update manager
   file: state=link force=yes src="{{role_path}}/files/apt/release-upgrades" path="/etc/update-manager/release-upgrades"
 
