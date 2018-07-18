@@ -44,14 +44,10 @@
     - iotop
     - iptraf-ng
     - mtr-tiny
+    - dstat
     - nmon
     - nmap
     - ncdu 
-
-- name: Install monitoring packages - PIP
-  pip: name={{item}} state=latest
-  with_items:
-   - glances
 
 # Fonts
 - name: Link font folder
