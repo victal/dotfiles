@@ -1,12 +1,9 @@
 [global_config]
-  dbus = False
-  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, MavenPluginURLHandler, LaunchpadBugURLHandler
 [keybindings]
 [layouts]
   [[default]]
     [[[child1]]]
       parent = window0
-      profile = default
       type = Terminal
     [[[window0]]]
       parent = ""
@@ -14,18 +11,6 @@
 [plugins]
 [profiles]
   [[default]]
-    background_color = "#ffffff"
-    background_darkness = 1.0
-    background_type = transparent
-    cursor_color = "#000000"
-    font = MesloLGLDZ Nerd Font 10
-    foreground_color = "#000000"
-    scrollbar_position = hidden
-    use_system_font = False
-    use_theme_colors = True
-  [[grey on black]]
-    background_darkness = 0.9
-    background_type = transparent
     cursor_color = "#aaaaaa"
-    font = Meslo LG L DZ for Powerline 10
+    font = MesloLGLDZ Nerd Font 10
     use_system_font = False

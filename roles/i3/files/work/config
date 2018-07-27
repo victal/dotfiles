@@ -152,7 +152,8 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3blocks -c ~/.i3/i3blocks.conf
-        tray_output LVDS-1
+        tray_output DP-2
+        tray_output eDP-1
 }
 
 # Add a small delay to prevent suspend races
@@ -175,12 +176,16 @@ mode "$mode_system" {
 
 bindsym $mod+Insert mode "$mode_system"
 
+#https://faq.i3wm.org/question/6066/scrot-selection-using-bindkeys.1.html
+bindsym --release $mod+Shift+s exec scrot -s
+
 exec --no-startup-id bash /home/guilherme/.screenlayout/default.sh
 exec --no-startup-id xmodmap /home/guilherme/.Xmodmap
-workspace 1 output LVDS-1
-workspace 3 output LVDS-1
-assign [class="Navigator"] workspace 1
-assign [class="keepassx"] workspace 3
+workspace 1 output eDP-1
+workspace 2 output DP-2
+workspace 3 output eDP-1
+assign [class="(?i)firefox"] workspace 1
+assign [class="(?i)keepassx"] workspace 3
 exec --no-startup-id sonicwall-login
 exec --no-startup-id nm-applet
 exec --no-startup-id owncloud
@@ -189,8 +194,7 @@ exec --no-startup-id dropbox start
 
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal -x vim -c "Todo" -c "split" -c "Todo maps"'
 exec --no-startup-id i3-msg 'workspace 3; exec keepassx'
-exec --no-startup-id i3-msg 'workspace 3; exec pidgin'
-exec --no-startup-id i3-msg 'workspace 1; exec vivaldi'
+exec --no-startup-id i3-msg 'workspace 1; exec aurora'
 exec --no-startup-id i3-msg 'workspace 1; exec redshift-gtk'
 
 # Volume keys

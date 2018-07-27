@@ -74,15 +74,19 @@
   apt: state=latest name={{item}}
   with_items: 
     - mercurial
+
 - name: Link hgrc config
   become: no
   file: state=link src={{role_path}}/files/hg/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
+
+- name: Link custom merge script
+  become: no
+  file: state=link src={{role_path}}/files/hg/pom_merge.sh dest="{{ lookup('env','HOME') }}/bin/pom_merge.sh" mode=0744
 
 #Python
 - name: Link REPL config
   become: no
   file: state=link src={{role_path}}/files/python/pyrc.py dest="{{ lookup('env','HOME') }}/.pyrc.py"
-
 
 #Vim
 - name: Install vim plugin dependencies
@@ -104,7 +108,7 @@
   apt: deb=https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable
 - name: Create VSCode configuration dir
   become: no
-  file: state=directory path={{ lookup('env', 'HOME') }}/.config/Code
+  file: state=directory path={{ ansible_env.HOME }}/.config/Code
 - name: Link VSCode configurations
   become: no
   file: state=link src={{ role_path }}/files/VSCode/User dest="{{ lookup('env','HOME') }}/.config/Code/User"

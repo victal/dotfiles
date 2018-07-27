@@ -12,10 +12,13 @@ get_branch() {
 PS1="\$(get_branch \"$2\")$PS1";
 
 graft() {
-  if [[ "$(hg branch)" != "$2" ]]
+  orig_branch="$(hg branch)"
+  if [[ "$orig_branch" != "$2" ]]
   then
+    orig_branch="$2"
     hg up "$2"
   fi
-  hg branch "${1}-$(hg branch)"
+  hg branch "${1}-${orig_branch}"
   hg graft -r "first(branch(${1}))::"
+  hg up "$orig_branch"
 }
