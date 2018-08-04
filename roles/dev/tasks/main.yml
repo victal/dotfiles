@@ -39,17 +39,6 @@
   with_items:
     - awscli
     - docker-compose
-    - jedi
-    - virtualenv
-    - virtualenvwrapper
-
-- name: Link virtualenv bash configurations
-  become: no
-  file: state=link src={{role_path}}/files/bashrc/python.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/python.sh" force=yes
-
-- name: Link hg bash configurations
-  become: no
-  file: state=link src={{role_path}}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes
 
 - name: Install JS global packages
   npm: name={{item}} state=latest global=true
@@ -79,11 +68,32 @@
   become: no
   file: state=link src={{role_path}}/files/hg/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
 
+- name: Link hg bash configurations
+  become: no
+  file: state=link src={{role_path}}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes
+
 - name: Link custom merge script
   become: no
   file: state=link src={{role_path}}/files/hg/pom_merge.sh dest="{{ lookup('env','HOME') }}/bin/pom_merge.sh" mode=0744
 
 #Python
+- name: Install python development packages
+  become: yes
+  pip: name={{item}} state=latest executable=pip
+  with_items:
+    - jedi
+    - virtualenv
+    - virtualenvwrapper
+
+- name: Install pipenv
+  pip: name={{item}} state=latest executable=pip
+  with_items:
+    - pipenv
+
+- name: Link virtualenv and pipenv bash configurations
+  become: no
+  file: state=link src={{role_path}}/files/bashrc/python.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/python.sh" force=yes
+
 - name: Link REPL config
   become: no
   file: state=link src={{role_path}}/files/python/pyrc.py dest="{{ lookup('env','HOME') }}/.pyrc.py"

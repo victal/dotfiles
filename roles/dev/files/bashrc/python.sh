@@ -5,3 +5,6 @@ then
     source $VENVWRAPPER_PATH
 fi
 export PYTHONSTARTUP=$HOME/.pyrc.py
+
+#Pipenv shell completion
+eval "$(pipenv --completion)"
