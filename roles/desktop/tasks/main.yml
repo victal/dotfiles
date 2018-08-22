@@ -1,11 +1,18 @@
+- name: Get Ubuntu numeric version
+  command: "lsb_release -rs"
+  register: version
+
 - name: Add owncloud repo key
   apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.10/Release.key state=present
-
+  apt_key: 
+    url: "http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_{{ version.stdout }}/Release.key" 
+    state: present
+ 
 - name: Add Owncloud APT repository
   apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
   with_items:
       - name: owncloud
-        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.10/ /'
+        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_{{ version.stdout }}/ /'
 
 - name: Update packages
   apt: update_cache=yes
