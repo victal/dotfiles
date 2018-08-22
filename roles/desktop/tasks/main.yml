@@ -34,6 +34,7 @@
     - thunar
     - terminator
     - vlc
+    - redshift-gtk
 
 - name: Link terminator configuration
   become: no
