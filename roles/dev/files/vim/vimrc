@@ -46,6 +46,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'jeetsukumaran/vim-buffergator'
 
 """ Status Line and Color Schemes """
 Plug 'vim-airline/vim-airline'
@@ -53,6 +54,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sjas/ColorSamplerPack'
 Plug 'junegunn/seoul256.vim'
 Plug 'altercation/vim-colors-solarized'
+Plug 'nightsense/stellarized'
 
 """ Code (Generic)  """
 "http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
@@ -68,6 +70,7 @@ let g:signify_vcs_list = [ 'hg', 'git' ]
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'scrooloose/syntastic'
+"Plug 'w0rp/ale'
 
 """ HTML, CSS, JS """
 "YouCompleteMe has tern support out of the box
@@ -104,16 +107,6 @@ endfunction
 command -nargs=? Todo call OpenTodo('<args>')
 
 call plug#end()
-
-"""""""""""""""""""""
-" Airline options "
-"""""""""""""""""""""
-
-set term=xterm-256color
-set showtabline=0
-set laststatus=2
-set guifont=MesloLGLDZ\ Nerd\ Font\ 10
-let g:airline_powerline_fonts = 1
 
 """""""""""""""""
 " CtrlP options "
@@ -202,10 +195,23 @@ let g:snips_github = ''
 
 "nnoremap <silent><F8> :NEXTCOLOR<cr>
 "nnoremap <silent><F7> :PREVCOLOR<cr> 
-let g:solarized_termcolors=256
-set background=light
-silent! colorscheme solarized
+set termguicolors
+set background=dark
+silent! colorscheme stellarized
+"let g:solarized_termcolors=256
+"silent! colorscheme solarized
 "silent! colorscheme wombat256
+
+"""""""""""""""""""""
+" Airline options "
+"""""""""""""""""""""
+
+set term=xterm-256color
+set showtabline=0
+set laststatus=2
+set guifont=MesloLGLDZ\ Nerd\ Font\ 10
+let g:airline_powerline_fonts = 1
+let g:airline_theme='stellarized_dark'
 
 """"""""""""""""""""""
 " InstantRST Options "
@@ -231,6 +237,16 @@ let g:syntastic_aggregate_errors = 1
 
 let g:syntastic_python_checkers = ['python'] ", 'pyflakes', 'pylint'] , 'pep8'] 
 
+"""""""""""""""
+" Ale Options "
+"""""""""""""""
+"let g:ale_linters = {
+"\   'javascript': ['prettier'],
+"\}
+
+"let g:ale_fixers = {
+"\   'javascript': ['prettier'],
+"\}
 
 """"""""""""""""""
 " Tagbar Options "
