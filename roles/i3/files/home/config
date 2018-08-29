@@ -182,7 +182,7 @@ mode "$mode_system" {
 bindsym $mod+Pause mode "$mode_system"
 
 #https://faq.i3wm.org/question/6066/scrot-selection-using-bindkeys.1.html
-bindsym --release $mod+Shift+s exec scrot -s
+bindsym --release $mod+Shift+s exec scrot -s $HOME/screenshots/'%Y-%m-%d-%H%M%S_$wx$h_scrot.png'
 
 # Screen Layout
 exec --no-startup-id /home/guilherme/.screenlayout/default.sh
