@@ -18,9 +18,6 @@
     - python-pip
     - git
 
-#- name: Upgrade pip
-#  easy_install: name=pip state=latest
-
 - name: Install base packages
   apt: state=latest name={{item}}
   with_items: 
@@ -48,11 +45,3 @@
     - nmon
     - nmap
     - ncdu 
-
-# Fonts
-- name: Link font folder
-  become: no
-  file: src="{{role_path}}/files/fonts" path="{{ lookup('env','HOME') }}/.local/share/fonts" state=link force=yes
-- name: Rebuild font cache
-  become: no
-  command: fc-cache -vf
