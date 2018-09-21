@@ -90,6 +90,37 @@
   with_items:
     - pipenv
 
+- name: Install pyenv dependencies
+  apt:
+    name: "{{item}}"
+    state: latest
+  with_items:
+   - make
+   - build-essential
+   - libssl-dev
+   - zlib1g-dev
+   - libbz2-dev
+   - libreadline-dev
+   - libsqlite3-dev
+   - wget
+   - curl
+   - llvm
+   - libncurses5-dev
+   - libncursesw5-dev
+   - xz-utils
+   - tk-dev
+   - libffi-dev
+
+- name: Clone pyenv
+  become: no
+  git:
+    repo: https://github.com/pyenv/pyenv.git
+    dest: "{{ lookup('env', 'HOME') }}/applications/pyenv"
+
+- name: Link pyenv bash configuration
+  become: no
+  file: state=link src={{role_path}}/files/bashrc/pyenv.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/pyenv.sh" force=yes
+
 - name: Link virtualenv and pipenv bash configurations
   become: no
   file: state=link src={{role_path}}/files/bashrc/python.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/python.sh" force=yes
