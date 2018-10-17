@@ -1,21 +1,3 @@
-- name: Add node repo key
-  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
-
-- name: Add node repository (NPM)
-  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
-  with_items:
-      - name: nodesource
-        repo: 'deb https://deb.nodesource.com/node_6.x yakkety main'
-
-- name: Add Docker repo key
-  apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D state=present
-
-- name: Add Docker apt repository
-  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
-  with_items:
-      - name: docker
-        repo: 'deb https://apt.dockerproject.org/repo ubuntu-yakkety main'
-
 - name: Update packages
   apt: upgrade=full update_cache=yes
 
@@ -26,28 +8,24 @@
     - mosh
     - docker-engine
     - nodejs
+    - npm
     - exuberant-ctags
     - mercurial
     - icedtea-plugin
     - virtualbox-qt
-    - vim-gtk-py2
+    - vim-gtk
     - wireshark-qt
 
 - name: Install pip global packages
   become: yes
-  pip: name={{item}} state=latest executable=pip
+  pip: 
+    name: "{{item}}"
+    state: latest 
+    executable: pip
+    extra_args: --user
   with_items:
     - awscli
     - docker-compose
-
-- name: Install JS global packages
-  npm: name={{item}} state=latest global=true
-  with_items:
-    - bower
-    - browser-sync
-    - grunt-cli
-    - gulp
-    - jshint
 
 #Git
 - name: Install Git
@@ -143,13 +121,3 @@
 - name: Install Vim Plugins
   become: no
   command: vim +PlugUpgrade +PlugInstall +qall && reset
-
-#VSCode
-- name: Install VSCode from MS link
-  apt: deb=https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable
-- name: Create VSCode configuration dir
-  become: no
-  file: state=directory path={{ ansible_env.HOME }}/.config/Code
-- name: Link VSCode configurations
-  become: no
-  file: state=link src={{ role_path }}/files/VSCode/User dest="{{ lookup('env','HOME') }}/.config/Code/User"
