@@ -69,13 +69,12 @@
     - pipenv
 
 - name: Install pyenv dependencies
-  apt:
-    name: "{{item}}"
-    state: latest
+  become: yes
+  apt: state=latest name={{item}}
   with_items:
    - make
    - build-essential
-   - libssl-dev
+   #- libssl-dev
    - zlib1g-dev
    - libbz2-dev
    - libreadline-dev
