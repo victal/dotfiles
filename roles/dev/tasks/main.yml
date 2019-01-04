@@ -6,9 +6,8 @@
   become: yes
   apt: state=latest name={{item}}
   with_items: 
-    - ack-grep
-    - mosh
-    - docker-engine
+    - silversearcher-ag
+    - docker-ce
     - nodejs
     - npm
     - exuberant-ctags
@@ -24,7 +23,6 @@
     name: "{{item}}"
     state: latest 
     executable: pip
-    extra_args: --user
   with_items:
     - awscli
     - docker-compose
