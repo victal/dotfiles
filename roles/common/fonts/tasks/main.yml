@@ -5,4 +5,3 @@
 - name: Rebuild font cache
   become: no
   command: fc-cache -vf
-

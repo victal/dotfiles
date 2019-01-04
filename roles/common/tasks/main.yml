@@ -9,39 +9,37 @@
   apt: upgrade=full update_cache=yes
 
 - name: Install package managers
-  apt: state=latest name={{item}}
-  with_items:
-    - build-essential
-    - curl
-    - python
-    - python-dev
-    - python-pip
-    - git
+  apt: 
+    state: latest 
+    name: 
+      - build-essential
+      - curl
+      - python
+      - python-dev
+      - python-pip
+      - git
 
 - name: Install base packages
-  apt: state=latest name={{item}}
-  with_items: 
-    - dnsutils
-    - p7zip-full
-    - rar
-    - rsync
-    - udisks2
-    - zip
-    - fasd
+  apt: 
+    state: latest 
+    name: 
+      - dnsutils
+      - p7zip-full
+      - rar
+      - rsync
+      - udisks2
+      - zip
 
-- name: Add fasd script to bashrc
-  become: no
-  file: state=link force=yes src="{{role_path}}/files/bashrc/fasd.sh" path="{{ lookup('env','HOME') }}/.bashrc.d/fasd.sh"
-
-- name: Install monitoring packages - APT
-  apt: state=latest name={{item}}
-  with_items:
-    - htop
-    - iftop
-    - iotop
-    - iptraf-ng
-    - mtr-tiny
-    - dstat
-    - nmon
-    - nmap
-    - ncdu 
+- name: Install monitoring packages
+  apt:
+    state: latest 
+    name: 
+      - htop
+      - iftop
+      - iotop
+      - iptraf-ng
+      - mtr-tiny
+      - dstat
+      - nmon
+      - nmap
+      - ncdu 
