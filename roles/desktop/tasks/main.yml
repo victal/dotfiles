@@ -3,7 +3,7 @@
   register: version
 
 - name: Add owncloud repo key
-  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.10/Release.key state=present
+  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_18.10/Release.key state=present
   apt_key: 
     url: "http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_{{ version.stdout }}/Release.key" 
     state: present
