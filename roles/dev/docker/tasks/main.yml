@@ -1,0 +1,36 @@
+- name: Install HTTPS repo dependencies
+  apt: 
+    state: latest
+    name: 
+     - apt-transport-https 
+     - ca-certificates 
+     - software-properties-common
+
+- name: Get Ubuntu version code
+  command: "lsb_release -cs"
+  register: version
+
+- name: Add docker repo key
+  apt_key: 
+    url: "https://download.docker.com/linux/ubuntu/gpg" 
+    state: present
+ 
+- name: Add Owncloud APT repository
+  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
+  with_items:
+      - name: owncloud
+        repo: 'deb https://download.docker.com/linux/ubuntu {{ version.stdout }} test'
+
+- name: Update packages
+  apt: update_cache=yes
+
+- name: Install docker
+  apt: name=docker-ce state=latest
+
+
+# docker-compose
+
+- name: Install docker-compose
+  pip:
+    name: docker-compose
+    state: latest
