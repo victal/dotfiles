@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: home
   vars:
     host: "home"
   become: yes
