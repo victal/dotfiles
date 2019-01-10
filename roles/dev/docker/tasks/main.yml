@@ -81,10 +81,13 @@
   args:
     chdir: "/tmp/amazon-ecr-credential-helper"
 
-- name: Install ecr-credential-helper-binary
+- name: Install ecr-credential-helper binary
   copy: 
     src: /tmp/amazon-ecr-credential-helper/bin/local/docker-credential-ecr-login
     dest: "{{ lookup('env', 'HOME') }}/bin/docker-credential-ecr-login"
     owner: guilherme
     group: guilherme
     mode: 755
+
+- name: Cleanup ecr-credential-helper installation
+  command: docker system prune -af
