@@ -33,6 +33,17 @@
 
 
 # docker-compose
+- name: Uninstall pip dependency
+  pip:
+    state: absent
+    name: backports.ssl-match-hostname
+
+- name: Install docker python lib dependency
+  apt: 
+    state: latest
+    name:
+      - python-backports.ssl-match-hostname
+
 
 - name: Install docker-compose
   pip:
