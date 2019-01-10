@@ -1,0 +1,8 @@
+{
+    "credHelpers": {
+        {% for account in ecr.accounts %}
+        "{{ account }}.dkr.ecr.region.amazonaws.com": "ecr-login"{% if not loop.last %},{%endif %}
+        {% endfor %}
+    }
+}
+
