@@ -33,11 +33,6 @@
 
 
 # docker-compose
-- name: Uninstall pip dependency
-  pip:
-    state: absent
-    name: backports.ssl-match-hostname
-
 - name: Install docker python lib dependency
   apt: 
     state: latest
@@ -74,3 +69,22 @@
     password: "{{ dockerhub.password }}"
     email: "{{ dockerhub.email }}"
   when: dockerhub.username is defined
+
+# ECR configuration
+- name: Clone ecr-credential-helper repository
+  git: 
+    repo: https://github.com/awslabs/amazon-ecr-credential-helper
+    dest: "/tmp/amazon-ecr-credential-helper"
+
+- name: Build ecr-credential-helper
+  command: make docker
+  args:
+    chdir: "/tmp/amazon-ecr-credential-helper"
+
+- name: Install ecr-credential-helper-binary
+  copy: 
+    src: /tmp/amazon-ecr-credential-helper/bin/local/docker-credential-ecr-login
+    dest: "{{ lookup('env', 'HOME') }}/bin/docker-credential-ecr-login"
+    owner: guilherme
+    group: guilherme
+    mode: 755
