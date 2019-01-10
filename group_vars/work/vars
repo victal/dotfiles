@@ -1,0 +1,11 @@
+ecr:
+    accounts:
+        - account: 921310136302 
+          region: us-east-1
+        - account: 422896434364 
+          region: us-east-1
+
+dockerhub:
+    username: "{{ vault.dockerhub.username }}"
+    password: "{{ vault.dockerhub.password }}"
+    email: "{{ vault.dockerhub.email }}"
