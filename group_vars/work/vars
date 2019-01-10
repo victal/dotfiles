@@ -9,3 +9,7 @@ dockerhub:
     username: "{{ vault.dockerhub.username }}"
     password: "{{ vault.dockerhub.password }}"
     email: "{{ vault.dockerhub.email }}"
+
+jira:
+    endpoint: "{{ vault.jira.endpoint }}"
+    user: "{{ vault.jira.user }}"

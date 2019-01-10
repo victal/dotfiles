@@ -34,3 +34,8 @@
   template: 
     src: "{{role_path}}/files/jira.yml"
     dest: "{{ lookup('env','HOME') }}/.jira.d/config.yml"
+
+- name: Link bashrc configuration
+  become: no
+  file: state=link src={{role_path}}/files/bashrc/gojira.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/gojira.sh" force=yes
+    
