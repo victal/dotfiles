@@ -32,5 +32,21 @@
 
 - name: Install docker-compose
   pip:
-    name: docker-compose
     state: latest
+    name: 
+      - docker
+      - docker-compose
+
+- name: Add user to docker group
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    groups: "docker"
+
+- meta: reset_connection
+
+- name: Log into DockerHub
+  docker_login:
+    username: "{{ dockerhub.username }}"
+    password: "{{ dockerhub.password }}"
+    email: "{{ dockerhub.email }}"
