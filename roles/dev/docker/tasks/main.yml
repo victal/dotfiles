@@ -25,7 +25,11 @@
   apt: update_cache=yes
 
 - name: Install docker
-  apt: name=docker-ce state=latest
+  apt: 
+    state: latest
+    name:
+      - docker-ce
+      - python-backports.ssl-match-hostname
 
 
 # docker-compose
@@ -43,10 +47,19 @@
     name: "{{ ansible_user }}"
     groups: "docker"
 
-- meta: reset_connection
+- name: Reset connection to get group changes
+  meta: reset_connection
+
+- name: Add docker config
+  become: no
+  template:
+    src: "{{role_path}}/files/config.json"
+    dest: "{{ lookup('env','HOME') }}/.docker/config.json"
+  when: ecr.accounts is defined
 
 - name: Log into DockerHub
   docker_login:
     username: "{{ dockerhub.username }}"
     password: "{{ dockerhub.password }}"
     email: "{{ dockerhub.email }}"
+  when: dockerhub.username is defined
