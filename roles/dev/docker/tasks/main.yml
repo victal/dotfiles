@@ -52,6 +52,7 @@
   user:
     name: "{{ ansible_user }}"
     groups: "docker"
+    append: yes
 
 - name: Reset connection to get group changes
   meta: reset_connection
