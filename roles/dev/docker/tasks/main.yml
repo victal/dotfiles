@@ -15,10 +15,10 @@
     url: "https://download.docker.com/linux/ubuntu/gpg" 
     state: present
  
-- name: Add Owncloud APT repository
+- name: Add Docker APT repository
   apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
   with_items:
-      - name: owncloud
+      - name: docker
         repo: 'deb https://download.docker.com/linux/ubuntu {{ version.stdout }} test'
 
 - name: Update packages
