@@ -7,7 +7,6 @@
   apt: state=latest name={{item}}
   with_items: 
     - silversearcher-ag
-    - docker-ce
     - nodejs
     - npm
     - exuberant-ctags
@@ -25,7 +24,6 @@
     executable: pip
   with_items:
     - awscli
-    - docker-compose
 
 #Git
 - name: Install Git
