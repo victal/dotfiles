@@ -57,19 +57,26 @@
 - name: Reset connection to get group changes
   meta: reset_connection
 
+- name: Create docker config dir
+  become: no
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.docker"
+    state: directory
+    mode: 0755
+
 - name: Add docker config
   become: no
   template:
     src: "{{role_path}}/files/config.json"
     dest: "{{ lookup('env','HOME') }}/.docker/config.json"
-  when: ecr.accounts is defined
+  when: ecr is defined and ecr.accounts is defined
 
 - name: Log into DockerHub
   docker_login:
     username: "{{ dockerhub.username }}"
     password: "{{ dockerhub.password }}"
     email: "{{ dockerhub.email }}"
-  when: dockerhub.username is defined
+  when: dockerhub is defined
 
 # ECR configuration
 - name: Clone ecr-credential-helper repository
