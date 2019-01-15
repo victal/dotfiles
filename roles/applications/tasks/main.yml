@@ -27,4 +27,4 @@
 - include: "{{item}}.yml"
   with_items:
     - gojira
-  when: host == "work"
+  when: jira is defined and jira.endpoint is defined

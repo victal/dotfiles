@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: home
   vars:
     host: "home"
   become: yes
@@ -12,5 +12,5 @@
     - { name: xorg, tags: "xorg" }
     - { name: i3, tags: "i3" }
     - { name: home, tags: "home" }
-    - { name: spotify, tags: "spotify" }
+    #- { name: spotify, tags: "spotify" }
     # TODO: Role dependencies
