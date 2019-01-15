@@ -8,7 +8,6 @@
     - { name: bash, tags: "bash" }
     - { name: applications, tags: "applications" }
     - { name: dev, tags: "dev" }
-    - { name: dev/docker, tags: "docker" }
     - { name: desktop, tags: "desktop" }
     - { name: xorg, tags: "xorg" }
     - { name: i3, tags: "i3" }
