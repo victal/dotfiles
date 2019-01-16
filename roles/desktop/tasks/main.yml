@@ -1,47 +1,43 @@
-- name: Get Ubuntu numeric version
-  command: "lsb_release -rs"
-  register: version
-
 - name: Add owncloud repo key
-  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_18.10/Release.key state=present
   apt_key: 
-    url: "http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_{{ version.stdout }}/Release.key" 
+    url: "http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_{{ ansible_distribution_version }}/Release.key" 
     state: present
  
 - name: Add Owncloud APT repository
   apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
   with_items:
       - name: owncloud
-        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_{{ version.stdout }}/ /'
+        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_{{ ansible_distribution_version }}/ /'
 
 - name: Update packages
   apt: update_cache=yes
 
 - name: Install common GUI Packages
-  apt: state=latest name={{item}}
-  with_items: 
-    - caffeine
-    - chromium-browser
-    - file-roller
-    - firefox
-    - flashplugin-installer
-    - gimp
-    - gnucash
-    - gparted
-    - inkscape
-    - keepassx
-    - lame 
-    - libreoffice
-    - lxappearance
-    - meld
-    - owncloud-client
-    - picard
-    - pidgin
-    - speedcrunch
-    - thunar
-    - terminator
-    - vlc
-    - redshift-gtk
+  apt:
+    state: latest
+    name: 
+      - caffeine
+      - chromium-browser
+      - file-roller
+      - firefox
+      - flashplugin-installer
+      - gimp
+      - gnucash
+      - gparted
+      - inkscape
+      - keepassx
+      - lame 
+      - libreoffice
+      - lxappearance
+      - meld
+      - owncloud-client
+      - picard
+      - pidgin
+      - speedcrunch
+      - thunar
+      - terminator
+      - vlc
+      - redshift-gtk
 
 - name: Link terminator configuration
   become: no
