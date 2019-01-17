@@ -29,6 +29,7 @@
       - rsync
       - udisks2
       - zip
+      - tldr
 
 - name: Install monitoring packages
   apt:
