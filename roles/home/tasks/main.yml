@@ -1,11 +1,12 @@
 - name: Install specific packages for home computer
-  apt: state=latest name={{item}}
-  with_items:
-    - audacity
-    - transmission-gtk
-    - mpv
-    - nethack-console
-    - mcomix
+  apt: 
+    state: latest 
+    name:
+      - audacity
+      - transmission-gtk
+      - mpv
+      - nethack-console
+      - mcomix
 
 # Nethack
 - name: Copy nethackrc
