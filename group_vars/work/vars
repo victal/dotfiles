@@ -6,10 +6,10 @@ ecr:
           region: us-east-1
 
 dockerhub:
-    username: "{{ vault.dockerhub.username }}"
-    password: "{{ vault.dockerhub.password }}"
-    email: "{{ vault.dockerhub.email }}"
+    username: "{{ work_vault.dockerhub.username }}"
+    password: "{{ work_vault.dockerhub.password }}"
+    email: "{{ work_vault.dockerhub.email }}"
 
 jira:
-    endpoint: "{{ vault.jira.endpoint }}"
-    user: "{{ vault.jira.user }}"
+    endpoint: "{_ work_vault.jira.endpoint _}"
+    user: "{_ work_vault.jira.user _}"

@@ -1,9 +1,14 @@
 # Maven, install from official locations
 - name: Download package
-  uri: dest=/tmp/maven.tar.gz url=http://ftp.unicamp.br/pub/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
+  uri: 
+    url: "https://archive.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz"
+    dest: /tmp/maven.tar.gz 
+    status_code: 200,304
+
 - name: Unpack
   become: no
   unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/ src=/tmp/maven.tar.gz
+
 - name: Remove package
   file: path=/tmp/maven.tar.gz state=absent
 
