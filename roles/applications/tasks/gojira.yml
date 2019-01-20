@@ -1,3 +1,8 @@
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
+    verbosity: 3
+
 - name: Get latest release of go-jira
   become: no
   github_release:
@@ -12,6 +17,7 @@
   uri:
     dest: "{{ lookup('env','HOME') }}/applications/gojira"
     url: "https://github.com/Netflix-Skunkworks/go-jira/releases/download/{{gojira_version.tag}}/jira-linux-amd64"
+    status_code: 200,304
 
 - name: Make the reptile be able to run
   become: no
@@ -34,6 +40,8 @@
   template: 
     src: "{{role_path}}/files/jira.yml"
     dest: "{{ lookup('env','HOME') }}/.jira.d/config.yml"
+    variable_start_string: "{_ "
+    variable_end_string: " _}"
 
 - name: Link bashrc configuration
   become: no

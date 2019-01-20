@@ -1,9 +1,9 @@
-- name: Create .bashrc.d directory
-  file: state=directory path={{ lookup('env','HOME') }}/.bashrc.d
-  become: no
-
 - name: Configure release update manager
-  file: state=link force=yes src="{{role_path}}/files/apt/release-upgrades" path="/etc/update-manager/release-upgrades"
+  file: 
+    src: "{{role_path}}/files/apt/release-upgrades" 
+    dest: "/etc/update-manager/release-upgrades"
+    state: link 
+    force: yes 
 
 - name: Update packages
   apt: upgrade=full update_cache=yes
@@ -29,6 +29,7 @@
       - rsync
       - udisks2
       - zip
+      - tldr
 
 - name: Install monitoring packages
   apt:

@@ -1,6 +1,6 @@
-endpoint: {{jira.endpoint}}
+endpoint: {_ jira.endpoint _}
 editor: vim 
-user: {{jira.user}}
+user: {_ jira.user _}
 custom-commands:
   - name: attach alter
     help: Attach an alter script to an issue based on the filename
