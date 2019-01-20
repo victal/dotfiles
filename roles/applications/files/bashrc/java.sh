@@ -57,4 +57,5 @@ java_cd() {
     fi
 }
 
+export LP_PS1_PREFIX="$(get_java)$LP_PS1_PREFIX"
 export PS1="\$(get_java)$PS1"

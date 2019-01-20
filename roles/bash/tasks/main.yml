@@ -5,3 +5,19 @@
 - name: Link basic .bashrc file
   become: no
   file: state=link force=yes src={{role_path}}/files/bashrc path={{ lookup('env','HOME') }}/.bashrc
+
+- name: Clone liquidprompt
+  become: no
+  git:
+    repo: https://github.com/nojhan/liquidprompt.git
+    dest: "{{ lookup('env', 'HOME') }}/applications/liquidprompt"
+
+- name: Add liquidprompt config to .bashrc.d
+  become: no
+  file: 
+    state: link 
+    src: "{{role_path}}/files/liquidprompt.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/liquidprompt.sh" 
+    force: yes
+
+
