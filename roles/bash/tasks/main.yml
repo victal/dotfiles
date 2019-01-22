@@ -12,7 +12,7 @@
     repo: https://github.com/nojhan/liquidprompt.git
     dest: "{{ lookup('env', 'HOME') }}/applications/liquidprompt"
 
-- name: Add liquidprompt config to .bashrc.d
+- name: Add liquidprompt .bashrc.d config
   become: no
   file: 
     state: link 
@@ -20,4 +20,10 @@
     dest: "{{ lookup('env','HOME') }}/.bashrc.d/liquidprompt.sh" 
     force: yes
 
+- name: Add liquidpromptrc
+  become: no
+  file: 
+    state: link 
+    src: "{{role_path}}/files/liquidpromptrc"
+    dest: "{{ lookup('env','HOME') }}/.liquidpromptrc" 
 

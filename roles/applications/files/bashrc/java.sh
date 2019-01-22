@@ -10,6 +10,7 @@ export NO_JAVA_PATH=$PATH
 export PATH="$JAVA_HOME/bin:$PATH"
 change_java() {
     OLD_JAVA_HOME=$JAVA_HOME
+    OLD_JAVA=$(get_java)
     NEW_JAVA_HOME=$1
     if echo $PATH | grep -q $OLD_JAVA_HOME; then
         NEWPATH=$(echo $PATH | sed "s#$OLD_JAVA_HOME#$1#")
@@ -24,6 +25,8 @@ change_java() {
     else
         PATH=$NEWPATH JAVA_HOME=$1 $@
     fi
+    NEW_JAVA=$(get_java)
+    export LP_PS1_PREFIX=$(echo $LP_PS1_PREFIX | sed s/$OLD_JAVA/$NEW_JAVA/ )
 
 }
 
