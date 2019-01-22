@@ -94,8 +94,10 @@ Plug 'tweekmonster/braceless.vim'
 autocmd FileType python BracelessEnable +indent +fold +highlight-cc2
 
 """ TODO """
-Plug 'freitass/todo.txt-vim'
-let g:todo_load_python = 1
+Plug 'dbeniamine/todo.txt-vim'
+autocmd BufNewFile,BufRead .*\.todo\.txt set filetype=todo
+autocmd Filetype todo setlocal nofoldenable
+
 let g:todo_home="~/Dropbox/todo"
 function! OpenTodo(...)
     if a:1 == ''
