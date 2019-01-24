@@ -95,7 +95,7 @@ autocmd FileType python BracelessEnable +indent +fold +highlight-cc2
 
 """ TODO """
 Plug 'dbeniamine/todo.txt-vim'
-autocmd BufNewFile,BufRead .*\.todo\.txt set filetype=todo
+autocmd BufNewFile,BufRead *.todo.txt set filetype=todo
 autocmd Filetype todo setlocal nofoldenable
 
 let g:todo_home="~/Dropbox/todo"
