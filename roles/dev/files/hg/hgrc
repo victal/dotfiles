@@ -3,7 +3,8 @@ username = Guilherme Costa <guilherme.costa@maps.com.br>
 ssh = ssh -C
 
 [extensions]
-#localhooks = /home/guilherme/workspace/localhooks/localhooks/localhooks.py
+jiracommit = /home/guilherme/workspace/jiracommit/jiracommit.py
+fsmonitor=
 extdiff = 
 color = 
 graphlog = 
@@ -16,6 +17,9 @@ rebase =
 shelve = 
 hgext.churn=
 #mercurial_keyring=
+
+[fsmonitor]
+walk_on_invalidate = false
 
 [pager]
 pager = LESS='FSRX' less
