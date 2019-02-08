@@ -121,3 +121,10 @@
 - name: Install Vim Plugins
   become: no
   command: vim +PlugUpgrade +PlugInstall +qall && reset
+
+#Jetbrains
+- name: Install Jetbrains IDEs
+  command: snap install {{item}} --classic
+  with_items:
+    - intellij-idea-community
+    - pycharm-community
