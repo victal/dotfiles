@@ -91,6 +91,11 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Use bash-completion, if available
+if [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
+
 shopt -s autocd
 
 #Bash debug
