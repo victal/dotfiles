@@ -196,7 +196,7 @@ exec --no-startup-id dropbox start
 exec --no-startup-id i3-msg 'workspace 2; exec i3-sensible-terminal -x vim -c "Todo" -c "split" -c "Todo maps"'
 exec --no-startup-id i3-msg 'workspace 3; exec keepassx'
 exec --no-startup-id i3-msg 'workspace 1; exec aurora'
-exec --no-startup-id i3-msg 'workspace 1; exec redshift-gtk'
+exec --no-startup-id i3-msg 'workspace 1; exec redshift-gtk -l "-23.63:-46.63"'
 
 # Volume keys
 bindsym XF86AudioLowerVolume exec amixer -q set Master 2%- unmute && pkill -RTMIN+10 i3blocks
