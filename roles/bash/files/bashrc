@@ -95,7 +95,7 @@ shopt -s autocd
 
 #Bash debug
 # Ex.: ++(/home/user/.bashrc:98): source(): export 'PS4=+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }' 
-export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+export PS4=`echo -ne "+(\${BASH_SOURCE}:\${LINENO}): \${FUNCNAME[0]:+\${FUNCNAME[0]}(): }"`
 
 for file in $HOME/.bashrc.d/*.sh
 do
