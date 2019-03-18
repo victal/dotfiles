@@ -51,10 +51,11 @@ Plug 'jeetsukumaran/vim-buffergator'
 """ Status Line and Color Schemes """
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'sjas/ColorSamplerPack'
-Plug 'junegunn/seoul256.vim'
-Plug 'altercation/vim-colors-solarized'
+"Plug 'sjas/ColorSamplerPack'
+"Plug 'junegunn/seoul256.vim'
+"Plug 'altercation/vim-colors-solarized'
 Plug 'nightsense/stellarized'
+Plug 'kristijanhusak/vim-hybrid-material'
 
 """ Code (Generic)  """
 "http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
@@ -70,7 +71,6 @@ let g:signify_vcs_list = [ 'hg', 'git' ]
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'scrooloose/syntastic'
-"Plug 'w0rp/ale'
 
 """ HTML, CSS, JS """
 "YouCompleteMe has tern support out of the box
@@ -198,11 +198,10 @@ let g:snips_github = ''
 "nnoremap <silent><F8> :NEXTCOLOR<cr>
 "nnoremap <silent><F7> :PREVCOLOR<cr> 
 set termguicolors
+let g:enable_bold_font = 1
+let g:enable_italic_font = 1
 set background=dark
-silent! colorscheme stellarized
-"let g:solarized_termcolors=256
-"silent! colorscheme solarized
-"silent! colorscheme wombat256
+silent! colorscheme hybrid_material
 
 """""""""""""""""""""
 " Airline options "
@@ -213,7 +212,7 @@ set showtabline=0
 set laststatus=2
 set guifont=MesloLGLDZ\ Nerd\ Font\ 10
 let g:airline_powerline_fonts = 1
-let g:airline_theme='stellarized_dark'
+let g:airline_theme='hybrid'
 
 """"""""""""""""""""""
 " InstantRST Options "
@@ -238,17 +237,6 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_aggregate_errors = 1
 
 let g:syntastic_python_checkers = ['python'] ", 'pyflakes', 'pylint'] , 'pep8'] 
-
-"""""""""""""""
-" Ale Options "
-"""""""""""""""
-"let g:ale_linters = {
-"\   'javascript': ['prettier'],
-"\}
-
-"let g:ale_fixers = {
-"\   'javascript': ['prettier'],
-"\}
 
 """"""""""""""""""
 " Tagbar Options "
