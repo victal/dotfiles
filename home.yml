@@ -8,9 +8,8 @@
     - { name: bash, tags: "bash" }
     - { name: applications, tags: "applications" }
     - { name: dev, tags: "dev" }
+    - { name: dev/hg, tags: [ "dev", "hg" ] }
     - { name: desktop, tags: "desktop" }
     - { name: xorg, tags: "xorg" }
     - { name: i3, tags: "i3" }
     - { name: home, tags: "home" }
-    #- { name: spotify, tags: "spotify" }
-    # TODO: Role dependencies
