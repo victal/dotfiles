@@ -9,7 +9,6 @@ JAVA_VERSION_FILE="java_version.log"
 export NO_JAVA_PATH=$PATH
 export PATH="$JAVA_HOME/bin:$PATH"
 change_java() {
-    set -x
     OLD_JAVA_HOME=$JAVA_HOME
     OLD_JAVA=$(get_java)
     NEW_JAVA_HOME=$1
@@ -30,7 +29,6 @@ change_java() {
     fi
     NEW_JAVA=$(get_java)
     export LP_PS1_PREFIX=$(echo $LP_PS1_PREFIX | sed "s/$OLD_JAVA/$NEW_JAVA/" )
-    set +x
 }
 
 get_java() {
