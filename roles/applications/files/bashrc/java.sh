@@ -9,10 +9,13 @@ JAVA_VERSION_FILE="java_version.log"
 export NO_JAVA_PATH=$PATH
 export PATH="$JAVA_HOME/bin:$PATH"
 change_java() {
+    set -x
     OLD_JAVA_HOME=$JAVA_HOME
     OLD_JAVA=$(get_java)
     NEW_JAVA_HOME=$1
-    if echo $PATH | grep -q $OLD_JAVA_HOME; then
+    if [ -z "$OLD_JAVA_HOME" ]; then
+        NEWPATH=$NEW_JAVA_HOME/bin:$PATH
+    elif echo $PATH | grep -q $OLD_JAVA_HOME; then
         NEWPATH=$(echo $PATH | sed "s#$OLD_JAVA_HOME#$1#")
     else
         NEWPATH=$NEW_JAVA_HOME/bin:$PATH
@@ -26,12 +29,19 @@ change_java() {
         PATH=$NEWPATH JAVA_HOME=$1 $@
     fi
     NEW_JAVA=$(get_java)
-    export LP_PS1_PREFIX=$(echo $LP_PS1_PREFIX | sed s/$OLD_JAVA/$NEW_JAVA/ )
-
+    export LP_PS1_PREFIX=$(echo $LP_PS1_PREFIX | sed "s/$OLD_JAVA/$NEW_JAVA/" )
+    set +x
 }
 
 get_java() {
-    echo "($(basename $JAVA_HOME))"
+    if [ -n "$JAVA_HOME" ]
+    then
+        echo "($(basename $JAVA_HOME))"
+    elif command -v java &> /dev/null; then 
+        echo  "($(java -version 2>&1 | awk ' BEGIN { FS = "\"" } ; /version/ {print $2}'))"
+    else
+        echo "(no java)"
+    fi
 }
 
 for j in $JAVA_HOMES_DIR/java*
@@ -65,9 +75,11 @@ export PS1="\$(get_java)$PS1"
 
 unjava() {
     OLD_JAVA_HOME=$JAVA_HOME
+    OLD_JAVA="$(get_java)"
     if echo $PATH | grep -q $OLD_JAVA_HOME; then
         NEWPATH=$(echo $PATH | sed "s#$OLD_JAVA_HOME##")
     fi
     export PATH=$NEWPATH
     export JAVA_HOME=
+    export LP_PS1_PREFIX=$(echo $LP_PS1_PREFIX | sed "s/$OLD_JAVA/$(get_java)/")
 }
