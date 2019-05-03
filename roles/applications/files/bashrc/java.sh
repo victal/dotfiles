@@ -62,3 +62,12 @@ java_cd() {
 
 export LP_PS1_PREFIX="$(get_java)$LP_PS1_PREFIX"
 export PS1="\$(get_java)$PS1"
+
+unjava() {
+    OLD_JAVA_HOME=$JAVA_HOME
+    if echo $PATH | grep -q $OLD_JAVA_HOME; then
+        NEWPATH=$(echo $PATH | sed "s#$OLD_JAVA_HOME##")
+    fi
+    export PATH=$NEWPATH
+    export JAVA_HOME=
+}
