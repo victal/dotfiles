@@ -7,4 +7,6 @@ fi
 export PYTHONSTARTUP=$HOME/.pyrc.py
 
 #Pipenv shell completion
-eval "$(pipenv --completion)"
+if command -v pipenv 1>/dev/null 2>&1; then  
+    eval "$(pipenv --completion)"
+fi
