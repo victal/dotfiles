@@ -10,7 +10,7 @@ custom-commands:
     script: |-
       FILENAME=$(basename {{args.FILE}})
       ISSUE=$(echo "$FILENAME" | grep -E -o "[A-Z]+-[0-9]+")
-      if [ -z "$ISSUE" ] then
+      if [ -z "$ISSUE" ]; then
           echo "Issue não reconhecida a partir do nome de arquivo $FILENAME"
           exit 2
       fi
