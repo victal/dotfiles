@@ -207,7 +207,7 @@ silent! colorscheme hybrid_material
 " Airline options "
 """""""""""""""""""""
 
-set term=xterm-256color
+"set term=xterm-256color
 set showtabline=0
 set laststatus=2
 set guifont=MesloLGLDZ\ Nerd\ Font\ 10
