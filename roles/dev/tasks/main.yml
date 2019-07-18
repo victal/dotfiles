@@ -1,117 +1,117 @@
-- name: Update packages
-  become: yes
-  apt: upgrade=full update_cache=yes
-
-- name: Install development packages
-  become: yes
-  apt: state=latest name={{item}}
-  with_items: 
-    - silversearcher-ag
-    - nodejs
-    - npm
-    - exuberant-ctags
-    - mercurial
-    - icedtea-plugin
-    - virtualbox-qt
-    - vim-gtk
-    - wireshark-qt
-
-- name: Install pip global packages
-  become: yes
-  pip: 
-    name: "{{item}}"
-    state: latest 
-    executable: pip
-  with_items:
-    - awscli
-
-#Git
-- name: Install Git
-  become: yes
-  apt: state=latest name={{item}}
-  with_items: 
-    - git
-
-- name: Link git config
-  become: no
-  file: state=link src={{role_path}}/files/git/gitconfig dest="{{ lookup('env','HOME') }}/.gitconfig"
-
-#Mercurial
-- name: Install Mercurial
-  become: yes
-  apt: state=latest name={{item}}
-  with_items: 
-    - mercurial
-
-- name: Link hgrc config
-  become: no
-  file: state=link src={{role_path}}/files/hg/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
-
-- name: Link hg bash configurations
-  become: no
-  file: state=link src={{role_path}}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes
-
-- name: Link custom merge script
-  become: no
-  file: state=link src={{role_path}}/files/hg/pom_merge.sh dest="{{ lookup('env','HOME') }}/bin/pom_merge.sh" mode=0744
-
-#Python
-- name: Install python development packages
-  become: yes
-  pip: name={{item}} state=latest executable=pip
-  with_items:
-    - jedi
-    - virtualenv
-    - virtualenvwrapper
-
-- name: Install pipenv
-  pip: name={{item}} state=latest executable=pip
-  with_items:
-    - pipenv
-
-- name: Install pyenv dependencies
-  become: yes
-  apt: state=latest name={{item}}
-  with_items:
-   - make
-   - build-essential
-   #- libssl-dev
-   - zlib1g-dev
-   - libbz2-dev
-   - libreadline-dev
-   - libsqlite3-dev
-   - wget
-   - curl
-   - llvm
-   - libncurses5-dev
-   - libncursesw5-dev
-   - xz-utils
-   - tk-dev
-   - libffi-dev
-
-- name: Clone pyenv
-  become: no
-  git:
-    repo: https://github.com/pyenv/pyenv.git
-    dest: "{{ lookup('env', 'HOME') }}/applications/pyenv"
-
-- name: Link pyenv bash configuration
-  become: no
-  file: state=link src={{role_path}}/files/bashrc/pyenv.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/pyenv.sh" force=yes
-
-- name: Link virtualenv and pipenv bash configurations
-  become: no
-  file: state=link src={{role_path}}/files/bashrc/python.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/python.sh" force=yes
-
-- name: Link REPL config
-  become: no
-  file: state=link src={{role_path}}/files/python/pyrc.py dest="{{ lookup('env','HOME') }}/.pyrc.py"
-
-#Vim
-- name: Install vim plugin dependencies
-  apt: state=latest name=cmake
-- name: Install npm dependencies for vim-livedown
-  npm: name=livedown state=latest production=yes global=yes
+#- name: Update packages
+#  become: yes
+#  apt: upgrade=full update_cache=yes
+#
+#- name: Install development packages
+#  become: yes
+#  apt: state=latest name={{item}}
+#  with_items: 
+#    - silversearcher-ag
+#    - nodejs
+#    - npm
+#    - exuberant-ctags
+#    - mercurial
+#    - icedtea-plugin
+#    - virtualbox-qt
+#    - vim-gtk
+#    - wireshark-qt
+#
+#- name: Install pip global packages
+#  become: yes
+#  pip: 
+#    name: "{{item}}"
+#    state: latest 
+#    executable: pip
+#  with_items:
+#    - awscli
+#
+##Git
+#- name: Install Git
+#  become: yes
+#  apt: state=latest name={{item}}
+#  with_items: 
+#    - git
+#
+#- name: Link git config
+#  become: no
+#  file: state=link src={{role_path}}/files/git/gitconfig dest="{{ lookup('env','HOME') }}/.gitconfig"
+#
+##Mercurial
+#- name: Install Mercurial
+#  become: yes
+#  apt: state=latest name={{item}}
+#  with_items: 
+#    - mercurial
+#
+#- name: Link hgrc config
+#  become: no
+#  file: state=link src={{role_path}}/files/hg/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
+#
+#- name: Link hg bash configurations
+#  become: no
+#  file: state=link src={{role_path}}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes
+#
+#- name: Link custom merge script
+#  become: no
+#  file: state=link src={{role_path}}/files/hg/pom_merge.sh dest="{{ lookup('env','HOME') }}/bin/pom_merge.sh" mode=0744
+#
+##Python
+#- name: Install python development packages
+#  become: yes
+#  pip: name={{item}} state=latest executable=pip
+#  with_items:
+#    - jedi
+#    - virtualenv
+#    - virtualenvwrapper
+#
+#- name: Install pipenv
+#  pip: name={{item}} state=latest executable=pip
+#  with_items:
+#    - pipenv
+#
+#- name: Install pyenv dependencies
+#  become: yes
+#  apt: state=latest name={{item}}
+#  with_items:
+#   - make
+#   - build-essential
+#   #- libssl-dev
+#   - zlib1g-dev
+#   - libbz2-dev
+#   - libreadline-dev
+#   - libsqlite3-dev
+#   - wget
+#   - curl
+#   - llvm
+#   - libncurses5-dev
+#   - libncursesw5-dev
+#   - xz-utils
+#   - tk-dev
+#   - libffi-dev
+#
+#- name: Clone pyenv
+#  become: no
+#  git:
+#    repo: https://github.com/pyenv/pyenv.git
+#    dest: "{{ lookup('env', 'HOME') }}/applications/pyenv"
+#
+#- name: Link pyenv bash configuration
+#  become: no
+#  file: state=link src={{role_path}}/files/bashrc/pyenv.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/pyenv.sh" force=yes
+#
+#- name: Link virtualenv and pipenv bash configurations
+#  become: no
+#  file: state=link src={{role_path}}/files/bashrc/python.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/python.sh" force=yes
+#
+#- name: Link REPL config
+#  become: no
+#  file: state=link src={{role_path}}/files/python/pyrc.py dest="{{ lookup('env','HOME') }}/.pyrc.py"
+#
+##Vim
+#- name: Install vim plugin dependencies
+#  apt: state=latest name=cmake
+#- name: Install npm dependencies for vim-livedown
+#  npm: name=livedown state=latest production=yes global=yes
 - name: Link vim folder
   become: no
   file: state=link src={{ role_path }}/files/vim/vimfolder dest="{{ lookup('env','HOME') }}/.vim" force=yes
@@ -123,8 +123,8 @@
   command: vim +PlugUpgrade +PlugInstall +qall && reset
 
 #Jetbrains
-- name: Install Jetbrains IDEs
-  command: snap install {{item}} --classic
-  with_items:
-    - intellij-idea-community
-    - pycharm-community
+#- name: Install Jetbrains IDEs
+#  command: snap install {{item}} --classic
+#  with_items:
+#    - intellij-idea-community
+#    - pycharm-community

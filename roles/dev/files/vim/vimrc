@@ -21,6 +21,9 @@ set viminfo=
 set diffopt+=iwhite
 set diffexpr=""
 
+"Change leader to different key due to mac keyboard
+let mapleader='`'
+
 """"""""""""""""
 " Vim-Plug setup "
 """"""""""""""""
@@ -51,19 +54,21 @@ Plug 'jeetsukumaran/vim-buffergator'
 """ Status Line and Color Schemes """
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'sjas/ColorSamplerPack'
-"Plug 'junegunn/seoul256.vim'
-"Plug 'altercation/vim-colors-solarized'
 Plug 'nightsense/stellarized'
 Plug 'kristijanhusak/vim-hybrid-material'
 
 """ Code (Generic)  """
-"http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
-Plug 'ervandew/supertab'
-Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --tern-completer' }
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'scrooloose/nerdcommenter'
-Plug 'shime/vim-livedown'
+
+Plug 'neomake/neomake'
+"Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'mhinz/vim-signify'
 let g:signify_vcs_list = [ 'hg', 'git' ]
@@ -75,8 +80,10 @@ Plug 'scrooloose/syntastic'
 """ HTML, CSS, JS """
 "YouCompleteMe has tern support out of the box
 Plug 'mattn/emmet-vim'
-Plug 'pangloss/vim-javascript'
-Plug 'othree/javascript-libraries-syntax.vim'
+"Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
+"Plug 'carlitux/deoplete-ternjs'
+"Plug 'pangloss/vim-javascript'
+"Plug 'othree/javascript-libraries-syntax.vim'
 
 """ Angular """
 Plug 'tpope/vim-pathogen' "jasmine.vim dependency (?)
@@ -86,7 +93,7 @@ Plug 'matthewsimo/angular-vim-snippets'
 let g:used_javascript_libs = 'jquery,angularjs,angularui,angularuirouter,jasmine'
 
 """ Python """
-Plug 'Rykka/InstantRst'
+"Plug 'Rykka/InstantRst'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'davidhalter/jedi-vim'
 Plug 'tweekmonster/braceless.vim'
@@ -174,12 +181,27 @@ let g:jedi#usages_command = "<leader>u"
 let g:jedi#rename_command = "<leader>r"
 
 """""""""""""""
-" YCM Options "
+" Deoplete Options "
 """""""""""""""
 
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+
+"""""""""""""""""""
+" Neomake options "
+"""""""""""""""""""
+
+call neomake#configure#automake('nw', 750)
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+"let g:gutentags_cache_dir="~/.vim/tags"
+"let g:airline#extensions#gutentags#enabled = 1
 
 """""""""""""""""""""
 " Ultisnips Options "
@@ -207,7 +229,9 @@ silent! colorscheme hybrid_material
 " Airline options "
 """""""""""""""""""""
 
-"set term=xterm-256color
+if !has('nvim')
+  set term=xterm-256color
+endif
 set showtabline=0
 set laststatus=2
 set guifont=MesloLGLDZ\ Nerd\ Font\ 10

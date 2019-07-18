@@ -110,3 +110,13 @@ for file in $HOME/.bashrc.d/*.sh
 do
   source "$file"
 done
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/serverless.bash ] && . /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/serverless.bash
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[ -f /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/sls.bash ] && . /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/sls.bash
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[ -f /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/slss.bash ] && . /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/slss.bash
