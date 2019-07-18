@@ -27,3 +27,5 @@ workspaceStorage
 *.retry
 
 .uuid
+
+.DS_Store
