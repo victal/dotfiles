@@ -79,7 +79,7 @@ let g:signify_vcs_list = [ 'hg', 'git' ]
 
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 
 """ HTML, CSS, JS """
 "YouCompleteMe has tern support out of the box
@@ -199,8 +199,9 @@ let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
 " Neomake options "
 """""""""""""""""""
 
-call neomake#configure#automake('nw', 750)
+call neomake#configure#automake('nrwi', 100)
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_open_list = 2
 
 "let g:gutentags_cache_dir="~/.vim/tags"
 "let g:airline#extensions#gutentags#enabled = 1
@@ -283,6 +284,7 @@ let g:livedown_autorun = 1
 " Extra Options "
 """""""""""""""""
 
+au BufNewFile,BufRead Jenkinsfile setf groovy
 runtime macros/matchit.vim
 
 "Faster searching for slashes
