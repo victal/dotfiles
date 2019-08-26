@@ -108,7 +108,7 @@ Plug 'dbeniamine/todo.txt-vim'
 autocmd BufNewFile,BufRead *.todo.txt set filetype=todo
 autocmd Filetype todo setlocal nofoldenable
 
-let g:todo_home="~/ownCloud/todo"
+let g:todo_home="~/Nextcloud/todo"
 function! OpenTodo(...)
     if a:1 == ''
         execute 'edit '.g:todo_home.'/todo.txt'
