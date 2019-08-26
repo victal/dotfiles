@@ -278,6 +278,22 @@ nnoremap <leader>t :TagbarToggle<CR>
 " NERDTree Options "
 """"""""""""""""""""
 nnoremap <leader>x :NERDTreeToggle<CR>
+" Thanks https://superuser.com/a/474298/383630 and https://gist.github.com/avesus/1954d9384d86cc1e39cb2b2eff7017b7
+" calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
+function! s:syncTree()
+  let s:curwnum = winnr()
+  NERDTreeFind
+  exec s:curwnum . "wincmd w"
+endfunction
+
+function! s:syncTreeIf()
+  if (winnr("$") > 1)
+    call s:syncTree()
+  endif
+endfunction
+  
+" Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
+autocmd BufEnter * call s:syncTreeIf()
 
 """"""""""""""""""""
 " Livedown Options "
