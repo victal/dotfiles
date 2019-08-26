@@ -120,3 +120,4 @@ done
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [ -f /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/slss.bash ] && . /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/slss.bash
+export EDITOR=nvim
