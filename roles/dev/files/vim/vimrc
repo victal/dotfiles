@@ -49,7 +49,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'jeetsukumaran/vim-buffergator'
+Plug 'jeetsukumaran/vim-buffergator' "TODO: Remove due to ctrl.p doing similar things
 
 """ Status Line and Color Schemes """
 Plug 'vim-airline/vim-airline'
@@ -72,7 +72,8 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'neomake/neomake'
-"Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'ervandew/supertab'
 
 Plug 'mhinz/vim-signify'
 let g:signify_vcs_list = [ 'hg', 'git' ]
@@ -86,12 +87,12 @@ Plug 'ludovicchabant/vim-lawrencium'
 Plug 'mattn/emmet-vim'
 "Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
 "Plug 'carlitux/deoplete-ternjs'
-
+Plug 'pangloss/vim-javascript'
 """ Angular """
 Plug 'tpope/vim-pathogen' "jasmine.vim dependency (?)
 Plug 'claco/jasmine.vim'
-Plug 'burnettk/vim-angular'
-Plug 'matthewsimo/angular-vim-snippets'
+Plug 'jaawerth/neomake-local-eslint-first'
+Plug 'maksimr/vim-jsbeautify'
 let g:used_javascript_libs = 'jquery,angularjs,angularui,angularuirouter,jasmine'
 
 """ Python """
@@ -206,8 +207,8 @@ call neomake#configure#automake('nrwi', 100)
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_open_list = 2
 
-"let g:gutentags_cache_dir="~/.vim/tags"
-"let g:airline#extensions#gutentags#enabled = 1
+let g:gutentags_cache_dir="~/.vim/tags"
+let g:airline#extensions#gutentags#enabled = 1
 
 """""""""""""""""""""
 " Ultisnips Options "
