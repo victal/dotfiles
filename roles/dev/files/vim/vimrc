@@ -46,23 +46,31 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'jeetsukumaran/vim-buffergator'
+Plug 'jeetsukumaran/vim-buffergator' "TODO: Remove due to ctrl.p doing similar things
 
 """ Status Line and Color Schemes """
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'sjas/ColorSamplerPack'
-"Plug 'junegunn/seoul256.vim'
-"Plug 'altercation/vim-colors-solarized'
 Plug 'nightsense/stellarized'
 Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'hzchirs/vim-material'
 
 """ Code (Generic)  """
-"http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
-Plug 'ervandew/supertab'
-Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --tern-completer' }
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 Plug 'scrooloose/nerdcommenter'
+
+Plug 'neomake/neomake'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'ervandew/supertab'
 Plug 'shime/vim-livedown'
 
 Plug 'mhinz/vim-signify'
@@ -70,23 +78,22 @@ let g:signify_vcs_list = [ 'hg', 'git' ]
 
 Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-lawrencium'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 
 """ HTML, CSS, JS """
 "YouCompleteMe has tern support out of the box
 Plug 'mattn/emmet-vim'
+"Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
+"Plug 'carlitux/deoplete-ternjs'
 Plug 'pangloss/vim-javascript'
-Plug 'othree/javascript-libraries-syntax.vim'
-
 """ Angular """
 Plug 'tpope/vim-pathogen' "jasmine.vim dependency (?)
 Plug 'claco/jasmine.vim'
-Plug 'burnettk/vim-angular'
-Plug 'matthewsimo/angular-vim-snippets'
-let g:used_javascript_libs = 'jquery,angularjs,angularui,angularuirouter,jasmine'
+Plug 'jaawerth/neomake-local-eslint-first'
+Plug 'maksimr/vim-jsbeautify'
 
 """ Python """
-Plug 'Rykka/InstantRst'
+"Plug 'Rykka/InstantRst'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'davidhalter/jedi-vim'
 Plug 'tweekmonster/braceless.vim'
@@ -119,6 +126,9 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_root_markers = ['pom.xml', 'package.json', 'bower.json', 'setup.py']
 set wildignore+=*.class,*.pyc,*.java-CACHE
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
+  \ }
 nnoremap <leader>f :CtrlPBuffer<C-M>
 
 """"""""""""""""""""""""""
@@ -174,12 +184,28 @@ let g:jedi#usages_command = "<leader>u"
 let g:jedi#rename_command = "<leader>r"
 
 """""""""""""""
-" YCM Options "
+" Deoplete Options "
 """""""""""""""
 
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+
+"""""""""""""""""""
+" Neomake options "
+"""""""""""""""""""
+
+call neomake#configure#automake('nrwi', 100)
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_open_list = 2
+
+let g:gutentags_cache_dir="~/.vim/tags"
+let g:airline#extensions#gutentags#enabled = 1
 
 """""""""""""""""""""
 " Ultisnips Options "
@@ -201,18 +227,20 @@ set termguicolors
 let g:enable_bold_font = 1
 let g:enable_italic_font = 1
 set background=dark
-silent! colorscheme hybrid_material
+silent! colorscheme vim-material
 
 """""""""""""""""""""
 " Airline options "
 """""""""""""""""""""
 
-"set term=xterm-256color
+if !has('nvim')
+  set term=xterm-256color
+endif
 set showtabline=0
 set laststatus=2
 set guifont=MesloLGLDZ\ Nerd\ Font\ 10
 let g:airline_powerline_fonts = 1
-let g:airline_theme='hybrid'
+let g:airline_theme='material'
 
 """"""""""""""""""""""
 " InstantRST Options "
@@ -247,6 +275,22 @@ nnoremap <leader>t :TagbarToggle<CR>
 " NERDTree Options "
 """"""""""""""""""""
 nnoremap <leader>x :NERDTreeToggle<CR>
+" Thanks https://superuser.com/a/474298/383630 and https://gist.github.com/avesus/1954d9384d86cc1e39cb2b2eff7017b7
+" calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
+function! s:syncTree()
+  let s:curwnum = winnr()
+  NERDTreeFind
+  exec s:curwnum . "wincmd w"
+endfunction
+
+function! s:syncTreeIf()
+  if (winnr("$") > 1)
+    call s:syncTree()
+  endif
+endfunction
+  
+" Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
+autocmd BufEnter * call s:syncTreeIf()
 
 """"""""""""""""""""
 " Livedown Options "
@@ -257,6 +301,7 @@ let g:livedown_autorun = 1
 " Extra Options "
 """""""""""""""""
 
+au BufNewFile,BufRead Jenkinsfile setf groovy
 runtime macros/matchit.vim
 
 "Faster searching for slashes
