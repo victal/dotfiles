@@ -1,13 +1,8 @@
-- name: Add owncloud repo key
-  apt_key: 
-    url: "http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_{{ ansible_distribution_version }}/Release.key" 
-    state: present
- 
-- name: Add Owncloud APT repository
+- name: Add nextcloud APT repository
   apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
   with_items:
-      - name: owncloud
-        repo: 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_{{ ansible_distribution_version }}/ /'
+      - name: nextcloud
+        repo: 'ppa:nextcloud-devs/client'
 
 - name: Update packages
   apt: update_cache=yes
@@ -20,7 +15,6 @@
       - chromium-browser
       - file-roller
       - firefox
-      - flashplugin-installer
       - gimp
       - gnucash
       - gparted
@@ -30,7 +24,7 @@
       - libreoffice
       - lxappearance
       - meld
-      - owncloud-client
+      - nextcloud-client
       - picard
       - pidgin
       - speedcrunch
