@@ -24,9 +24,9 @@ set diffexpr=""
 "Change leader to different key due to mac keyboard
 let mapleader='`'
 
-""""""""""""""""
+""""""""""""""""""
 " Vim-Plug setup "
-""""""""""""""""
+""""""""""""""""""
 
 call plug#begin('~/.vim/bundle')
 
@@ -119,6 +119,21 @@ endfunction
 command -nargs=? Todo call OpenTodo('<args>')
 
 call plug#end()
+
+""""""""""""""""""""""""""
+" Grep w/Silver Searcher "
+""""""""""""""""""""""""""
+" https://thoughtbot.com/blog/faster-grepping-in-vim
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  "let g:ctrlp_use_caching = 0
+endif
 
 """""""""""""""""
 " CtrlP options "
@@ -225,7 +240,7 @@ let g:snips_github = ''
 """"""""""""""""""""""""
 
 "nnoremap <silent><F8> :NEXTCOLOR<cr>
-"nnoremap <silent><F7> :PREVCOLOR<cr> 
+"nnoremap <silent><F7> :PREVCOLOR<cr>
 set termguicolors
 let g:enable_bold_font = 1
 let g:enable_italic_font = 1
@@ -267,7 +282,7 @@ let g:syntastic_auto_loc_list = 1
 
 let g:syntastic_aggregate_errors = 1
 
-let g:syntastic_python_checkers = ['python'] ", 'pyflakes', 'pylint'] , 'pep8'] 
+let g:syntastic_python_checkers = ['python'] ", 'pyflakes', 'pylint'] , 'pep8']
 
 """"""""""""""""""
 " Tagbar Options "
@@ -280,10 +295,17 @@ nnoremap <leader>t :TagbarToggle<CR>
 nnoremap <leader>x :NERDTreeToggle<CR>
 " Thanks https://superuser.com/a/474298/383630 and https://gist.github.com/avesus/1954d9384d86cc1e39cb2b2eff7017b7
 " calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
+function! s:isNTOpen()
+" returns true iff is NERDTree open/active
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
 function! s:syncTree()
   let s:curwnum = winnr()
-  NERDTreeFind
-  exec s:curwnum . "wincmd w"
+  if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff
+      NERDTreeFind
+      exec s:curwnum . "wincmd w"
+  endif
 endfunction
 
 function! s:syncTreeIf()
@@ -291,7 +313,7 @@ function! s:syncTreeIf()
     call s:syncTree()
   endif
 endfunction
-  
+
 " Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
 autocmd BufEnter * call s:syncTreeIf()
 
