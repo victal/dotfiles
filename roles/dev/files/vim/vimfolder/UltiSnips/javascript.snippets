@@ -1,0 +1,13 @@
+snippet crr
+const R = require('ramda')
+endsnippet
+
+snippet sandbox
+let sandbox
+beforeEach(() => {
+    sandbox = sinon.createSandbox()
+})
+afterEach(() =>  {
+    sandbox.restore()
+})
+endsnippet
