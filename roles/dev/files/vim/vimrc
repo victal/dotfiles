@@ -49,7 +49,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'jeetsukumaran/vim-buffergator' "TODO: Remove due to ctrl.p doing similar things
+Plug 'jeetsukumaran/vim-buffergator'
 
 """ Status Line and Color Schemes """
 Plug 'vim-airline/vim-airline'
@@ -68,8 +68,11 @@ else
 endif
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-
 Plug 'scrooloose/nerdcommenter'
+Plug 'metakirby5/codi.vim'
+
+Plug 'frazrepo/vim-rainbow'
+au FileType javascript,*.javascript call rainbow#load()
 
 Plug 'neomake/neomake'
 Plug 'ludovicchabant/vim-gutentags'
