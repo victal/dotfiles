@@ -204,9 +204,9 @@ let g:jedi#documentation_command = "<leader>k"
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#rename_command = "<leader>r"
 
-"""""""""""""""
+""""""""""""""""""""
 " Deoplete Options "
-"""""""""""""""
+""""""""""""""""""""
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_ignore_case = 1
@@ -225,7 +225,14 @@ call neomake#configure#automake('nrwi', 100)
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_open_list = 2
 
+"""""""""""""""""""""
+" Gutentags options "
+"""""""""""""""""""""
+
 let g:gutentags_cache_dir="~/.vim/tags"
+
+let g:gutentags_ctags_exclude = ['coverage', '.nyc_output', '.vscode', 'node_modules']
+
 let g:airline#extensions#gutentags#enabled = 1
 
 """""""""""""""""""""
@@ -250,9 +257,9 @@ let g:enable_italic_font = 1
 set background=dark
 silent! colorscheme vim-material
 
-"""""""""""""""""""""
+"""""""""""""""""""
 " Airline options "
-"""""""""""""""""""""
+"""""""""""""""""""
 
 if !has('nvim')
   set term=xterm-256color
@@ -324,6 +331,13 @@ autocmd BufEnter * call s:syncTreeIf()
 " Livedown Options "
 """"""""""""""""""""
 let g:livedown_autorun = 1
+
+""""""""""""""""""""
+" Codi.vim Options "
+""""""""""""""""""""
+
+"Width of the codi side pane as a percentage of the current buffer width
+let g:codi#width = 40.0
 
 """""""""""""""""
 " Extra Options "
