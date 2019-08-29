@@ -1,3 +1,4 @@
 ---
 dependencies:
   - role: dev/docker
+  - role: dev/git

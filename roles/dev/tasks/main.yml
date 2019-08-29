@@ -25,17 +25,6 @@
   with_items:
     - awscli
 
-#Git
-- name: Install Git
-  become: yes
-  apt: state=latest name={{item}}
-  with_items: 
-    - git
-
-- name: Link git config
-  become: no
-  file: state=link src={{role_path}}/files/git/gitconfig dest="{{ lookup('env','HOME') }}/.gitconfig"
-
 #Python
 - name: Install python development packages
   become: yes
