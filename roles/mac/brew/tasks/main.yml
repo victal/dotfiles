@@ -1,0 +1,3 @@
+- name: Install brew via installation script
+  become: false
+  shell: "/usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""

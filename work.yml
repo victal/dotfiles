@@ -6,8 +6,8 @@
   roles: 
 #    - { name: bash, tags: "bash" }
 #    - { name: applications, tags: "applications" }
-    - { name: common, tags: "common" }
-    - { name: dev, tags: "dev" }
+    - { name: mac/brew, tags: "brew" }
+    #- { name: dev, tags: "dev" }
 #    - { name: dev/hg, tags: [ "dev", "hg" ] }
 #    - { name: desktop, tags: "desktop" }
 #    - { name: xorg, tags: "xorg" }
