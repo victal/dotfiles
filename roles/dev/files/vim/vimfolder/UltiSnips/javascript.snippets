@@ -2,12 +2,28 @@ snippet crr
 const R = require('ramda')
 endsnippet
 
+snippet crs
+const sinon = require('sinon')
+endsnippet
+
+snippet desc
+describe('${1:description}', () => {
+  $2
+})
+endsnippet
+
+snippet it
+it('${1:description}', () => {
+  $2
+})
+endsnippet
+
 snippet sandbox
 let sandbox
 beforeEach(() => {
-    sandbox = sinon.createSandbox()
+  sandbox = sinon.createSandbox()
 })
-afterEach(() =>  {
-    sandbox.restore()
+afterEach(() => {
+  sandbox.restore()
 })
 endsnippet
