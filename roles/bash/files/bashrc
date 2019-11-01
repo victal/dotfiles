@@ -121,3 +121,16 @@ done
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [ -f /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/slss.bash ] && . /Users/guilherme.costa/workspace/connection-monitor/node_modules/tabtab/.completions/slss.bash
 export EDITOR=nvim
+
+eval "$(thefuck --alias)"
+alias now="date +%Y%m%d%H%M%S"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
+#https://stackoverflow.com/a/58445755
+export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$DYLD_LIBRARY_PATH
