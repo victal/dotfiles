@@ -170,9 +170,11 @@ autocmd FileType css set sw=2
 autocmd FileType css set ts=2
 autocmd FileType css set sts=2
 " JavaScript (tab width 4 chr, wrap at 79th)
-autocmd FileType javascript,jade set sw=2
-autocmd FileType javascript,jade set ts=2
-autocmd FileType javascript,jade set sts=2
+autocmd FileType javascript set sw=2
+autocmd FileType javascript set ts=2
+autocmd FileType javascript set sts=2
+autocmd FileType javascript set sts=2
+autocmd FileType javascript,*.javascript set makeprg=npm
 
 """""""""""""""""""""""""""""""
 " Increment/Decrement numbers "
@@ -402,7 +404,7 @@ endfunction
 
 function! s:syncTree()
   let s:curwnum = winnr()
-  if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff
+  if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff && expand('%') !~ "NERD_tree_.*"
       NERDTreeFind
       exec s:curwnum . "wincmd w"
   endif
