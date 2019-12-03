@@ -44,7 +44,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'duggiefresh/vim-easydir'
 Plug 'ryanoasis/vim-devicons'
 Plug 'chrisbra/unicode.vim'
-Plug 'shime/vim-livedown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 
 """ File operations """
 Plug 'ctrlpvim/ctrlp.vim'
@@ -228,103 +228,6 @@ call neomake#configure#automake('nrwi', 100)
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_open_list = 2
 
-""""""""""""""""""""""""""
-" Grep w/Silver Searcher "
-""""""""""""""""""""""""""
-" https://thoughtbot.com/blog/faster-grepping-in-vim
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  "let g:ctrlp_use_caching = 0
-endif
-
-"""""""""""""""""
-" CtrlP options "
-"""""""""""""""""
-
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_root_markers = ['pom.xml', 'package.json', 'bower.json', 'setup.py']
-set wildignore+=*.class,*.pyc,*.java-CACHE
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
-  \ }
-nnoremap <leader>f :CtrlPBuffer<C-M>
-
-""""""""""""""""""""""""""
-" Tabwidth per file type "
-""""""""""""""""""""""""""
-
-" HTML (tab width 2 chr, no wrapping)
-autocmd FileType html,xhtml,htmldjango set sw=4
-autocmd FileType html,xhtml,htmldjango set ts=4
-autocmd FileType html,xhtml,htmldjango set sts=4
-" Python (tab width 4 chr, wrap at 79th char)
-autocmd FileType python set sw=4
-autocmd FileType python set ts=4
-autocmd FileType python set sts=4
-" CSS (tab width 2 chr, wrap at 79th char)
-autocmd FileType css set sw=2
-autocmd FileType css set ts=2
-autocmd FileType css set sts=2
-" JavaScript (tab width 4 chr, wrap at 79th)
-autocmd FileType javascript,jade set sw=2
-autocmd FileType javascript,jade set ts=2
-autocmd FileType javascript,jade set sts=2
-
-"""""""""""""""""""""""""""""""
-" Increment/Decrement numbers "
-"""""""""""""""""""""""""""""""
-
-nnoremap + <Plug>SpeedDatingUp
-nnoremap _ <Plug>SpeedDatingDown
-
-"""""""""""""""""""
-" Folding Options "
-"""""""""""""""""""
-
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
-
-""""""""""""""""""""
-" Jedi-vim Options "
-""""""""""""""""""""
-
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#completions_command = ""
-let g:jedi#show_call_signatures = "1"
-
-let g:jedi#goto_assignments_command = "<leader>a"
-let g:jedi#goto_definitions_command = "<leader>g"
-let g:jedi#documentation_command = "<leader>k"
-let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "<leader>r"
-
-""""""""""""""""""""
-" Deoplete Options "
-""""""""""""""""""""
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#enable_camel_case = 1
-let g:deoplete#enable_refresh_always = 1
-let g:deoplete#max_abbr_width = 0
-let g:deoplete#max_menu_width = 0
-let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-
-"""""""""""""""""""
-" 
-
 """""""""""""""""""""
 " Gutentags options "
 """""""""""""""""""""
@@ -419,10 +322,11 @@ endfunction
 " Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
 autocmd BufEnter * call s:syncTreeIf()
 
-""""""""""""""""""""
-" Livedown Options "
-""""""""""""""""""""
-let g:livedown_autorun = 1
+""""""""""""""""""""""""""""
+" Markdown Preview Options "
+""""""""""""""""""""""""""""
+" set to 1, nvim will open the preview window after entering the markdown buffer
+let g:mkdp_auto_start = 0 
 
 """"""""""""""""""""
 " Codi.vim Options "
