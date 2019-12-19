@@ -37,13 +37,13 @@ call plug#begin('~/.vim/bundle')
 """ Sensible defaults """
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
-"Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'duggiefresh/vim-easydir'
 Plug 'ryanoasis/vim-devicons'
 Plug 'chrisbra/unicode.vim'
+Plug 'wellle/targets.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 
 """ File operations """
@@ -354,3 +354,9 @@ nnoremap <leader>ss :wa<CR>
 nnoremap <leader>sq :wqa<CR>
 
 nnoremap <leader>g :grep! "\b<cword>\b"<CR>:cw<CR>
+
+au Filetype json vnoremap <leader>j :call RangeJsonBeautify()<CR>
+au Filetype json nnoremap <leader>j :call JsonBeautify()<CR>
+au Filetype javascript vnoremap <leader>j :call RangeJsBeautify()<CR>
+au Filetype javascript nnoremap <leader>j :call JsBeautify()<CR>
+"%s/_\(\w\)/\u\1/g
