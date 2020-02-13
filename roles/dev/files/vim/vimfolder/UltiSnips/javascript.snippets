@@ -12,6 +12,12 @@ describe('${1:description}', () => {
 })
 endsnippet
 
+snippet context
+context('${1:description}', () => {
+  $2
+})
+endsnippet
+
 snippet it
 it('${1:description}', () => {
   $2
@@ -36,4 +42,9 @@ endsnippet
 
 snippet taplog
 R.tap(console.log.bind(console)),
+endsnippet
+
+snippet fhir
+const Fhir = require('fhir').Fhir
+const fhir = new Fhir()
 endsnippet
