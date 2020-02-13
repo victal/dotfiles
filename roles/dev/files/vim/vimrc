@@ -166,10 +166,10 @@ autocmd FileType python set sts=4
 autocmd FileType css set sw=2
 autocmd FileType css set ts=2
 autocmd FileType css set sts=2
-" JavaScript (tab width 4 chr, wrap at 79th)
-autocmd FileType javascript,jade set sw=4
-autocmd FileType javascript,jade set ts=4
-autocmd FileType javascript,jade set sts=4
+" JavaScript (tab width 2 chr, wrap at 79th)
+autocmd FileType javascript,jade set sw=2
+autocmd FileType javascript,jade set ts=2
+autocmd FileType javascript,jade set sts=2
 
 """""""""""""""""""""""""""""""
 " Increment/Decrement numbers "
@@ -224,6 +224,7 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_open_list = 2
 
 let g:gutentags_cache_dir="~/.vim/tags"
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
 let g:airline#extensions#gutentags#enabled = 1
 
 """""""""""""""""""""
