@@ -7,6 +7,7 @@
     dest: "{{ lookup('env','HOME') }}/applications/watchman" 
     depth: 1
     version: "v4.9.0"
+  register: watchman
 
 - name: Install watchman build dependencies
   apt:
@@ -14,6 +15,7 @@
     name: 
       - libtool
       - python-dev
+  when: watchman.changed
 
 - name: Build and install watchman
   shell: |
@@ -23,3 +25,4 @@
     make install
   args:
     chdir: "{{ lookup('env','HOME') }}/applications/watchman" 
+  when: watchman.changed
