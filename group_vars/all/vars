@@ -1,1 +1,3 @@
+git_user_name: 'Guilherme Victal'
+
 github_token: "{{ vault.github_token }}"

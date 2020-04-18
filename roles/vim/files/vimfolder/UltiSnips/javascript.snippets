@@ -1,0 +1,62 @@
+snippet crr
+const R = require('ramda')
+endsnippet
+
+snippet crs
+const sinon = require('sinon')
+endsnippet
+
+snippet desc
+describe('${1:description}', () => {
+  $2
+})
+endsnippet
+
+snippet context
+context('${1:description}', () => {
+  $2
+})
+endsnippet
+
+snippet it
+it('${1:description}', () => {
+  $2
+})
+endsnippet
+
+snippet sandbox
+let sandbox
+beforeEach(() => {
+  sandbox = sinon.createSandbox()
+})
+afterEach(() => {
+  sandbox.restore()
+})
+endsnippet
+
+snippet exp
+module.exports = {
+  $1
+}
+endsnippet
+
+snippet taplog
+R.tap(console.log.bind(console)),
+endsnippet
+
+snippet befa
+  beforeAll(() => {
+    $1
+  })
+endsnippet
+
+snippet bef
+  beforeEach(() => {
+    $1
+  })
+endsnippet
+
+snippet fhir
+const Fhir = require('fhir').Fhir
+const fhir = new Fhir()
+endsnippet

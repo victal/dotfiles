@@ -1,61 +1,9 @@
-- name: Install HTTPS repo dependencies
-  apt: 
-    state: latest
-    name: 
-     - apt-transport-https 
-     - ca-certificates 
-     - software-properties-common
-
-- name: Get Ubuntu version code
-  command: "lsb_release -cs"
-  register: version
-
-- name: Add docker repo key
-  apt_key: 
-    url: "https://download.docker.com/linux/ubuntu/gpg" 
-    state: present
- 
-- name: Add Docker APT repository
-  apt_repository: repo={{ item.repo }} state=present filename={{ item.name }}
-  with_items:
-      - name: docker
-        repo: 'deb https://download.docker.com/linux/ubuntu {{ version.stdout }} test'
-
-- name: Update packages
-  apt: update_cache=yes
-
-- name: Install docker
-  apt: 
-    state: latest
-    name:
-      - docker-ce
-      - python-backports.ssl-match-hostname
-
-
-# docker-compose
-- name: Install docker python lib dependency
-  apt: 
-    state: latest
-    name:
-      - python-backports.ssl-match-hostname
-
-
 - name: Install docker-compose
   pip:
     state: latest
     name: 
       - docker
       - docker-compose
-
-- name: Add user to docker group
-  become: true
-  user:
-    name: "{{ ansible_user }}"
-    groups: "docker"
-    append: yes
-
-- name: Reset connection to get group changes
-  meta: reset_connection
 
 - name: Create docker config dir
   become: no
@@ -78,24 +26,8 @@
     email: "{{ dockerhub.email }}"
   when: dockerhub is defined
 
-# ECR configuration
-- name: Clone ecr-credential-helper repository
-  git: 
-    repo: https://github.com/awslabs/amazon-ecr-credential-helper
-    dest: "/tmp/amazon-ecr-credential-helper"
-
-- name: Build ecr-credential-helper
-  command: make docker
-  args:
-    chdir: "/tmp/amazon-ecr-credential-helper"
-
-- name: Install ecr-credential-helper binary
-  copy: 
-    src: /tmp/amazon-ecr-credential-helper/bin/local/docker-credential-ecr-login
-    dest: "{{ lookup('env', 'HOME') }}/bin/docker-credential-ecr-login"
-    owner: guilherme
-    group: guilherme
-    mode: 755
-
-- name: Cleanup ecr-credential-helper installation
-  command: docker system prune -af
+- name: Install docker ecr credential helper
+  become: ansible_distribution == 'Ubuntu'
+  package:
+    state: latest
+    name: '{{ applications.docker_ecr_helper }}'

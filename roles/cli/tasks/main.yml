@@ -1,0 +1,24 @@
+# Installs packages available in both package managers:
+# https://tldr.sh/
+# https://github.com/ggreer/the_silver_searcher
+# https://github.com/junegunn/fzf
+# https://github.com/aws/aws-cli
+# https://github.com/nvbn/thefuck
+- name: Install utility packages
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
+  package: 
+    state: latest
+    name: 
+      - tldr
+      - '{{ applications.ag }}'
+      - fzf
+      - thefuck
+
+- name: Copy thefuck initialization to .bashrc.d dir
+  shell: "thefuck --alias > {{ lookup('env', 'HOME') }}/.bashrc.d/thefuck.sh"
+  args: 
+    executable: '{{ bash.executable }}'
+
+# Applications installed in OS specific roles:
+# fpp (both)
+# go-jira (on mac)

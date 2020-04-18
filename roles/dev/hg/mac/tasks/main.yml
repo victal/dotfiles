@@ -1,0 +1,7 @@
+#Install watchman from brew
+
+- name: Install watchman via brew
+  become: no
+  package:
+    name: watchman
+    state: latest

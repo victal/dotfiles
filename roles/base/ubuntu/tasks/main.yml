@@ -1,0 +1,40 @@
+- name: Configure release update manager
+  file: 
+    src: "{{role_path}}/files/apt/release-upgrades" 
+    dest: "/etc/update-manager/release-upgrades"
+    state: link 
+    force: yes 
+
+- name: Update packages
+  apt: upgrade=full update_cache=yes
+
+- name: Install base packages
+  apt: 
+    state: latest 
+    name: 
+      - build-essential
+      - curl
+      - python
+      - python-dev
+      - python-pip
+      - git
+
+- name: Install HTTPS repo dependencies
+  apt: 
+    state: latest
+    name: 
+     - apt-transport-https 
+     - ca-certificates 
+     - software-properties-common
+
+- name: Link font folder
+  become: no
+  file:
+    src: "{{role_path}}/../files/fonts"
+    path: "{{ lookup('env','HOME') }}/.local/share/fonts"
+    state: link
+    force: yes
+
+- name: Rebuild font cache
+  become: no
+  command: fc-cache -vf

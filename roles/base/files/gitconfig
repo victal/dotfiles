@@ -1,0 +1,20 @@
+[user]
+    name = {{ git_user_name }}
+    email = {{ git_user_email }}
+
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    meld = difftool -t meld -d
+
+    # aliases that match the hg in / out commands
+    out      = !git fetch && git log FETCH_HEAD..
+    outgoing = !git fetch && git log FETCH_HEAD..
+    in       = !git fetch && git log ..FETCH_HEAD
+    incoming = !git fetch && git log ..FETCH_HEAD
+
+[push]
+    default = matching
+
+# vi: ft=gitconfig

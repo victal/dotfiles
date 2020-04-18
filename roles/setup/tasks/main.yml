@@ -1,0 +1,3 @@
+- name: Create groups based on OS
+  group_by:
+    key: '{{ ansible_os_family }}'

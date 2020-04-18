@@ -1,0 +1,46 @@
+- name: Add nextcloud APT repository
+  apt_repository: 
+    repo: 'ppa:nextcloud-devs/client'
+    state: present 
+    filename: nextcloud
+    update_cache: yes
+
+- name: Install common GUI Packages
+  apt:
+    state: latest
+    name: 
+      - audacity
+      - caffeine
+      - chromium-browser
+      - file-roller
+      - firefox
+      - gimp
+      - gnucash
+      - inkscape
+      - keepassx
+      - lame 
+      - libreoffice
+      - meld
+      - nextcloud-client
+      - redshift-gtk
+      - speedcrunch
+      - terminator
+      - thunar
+      - transmission-gtk
+      - vlc
+
+- name: Link terminator configuration
+  become: no
+  file:
+    state: link
+    src: "{{role_path}}/files/terminator"
+    path: "{{ lookup('env','HOME') }}/.config/terminator"
+
+#Dropbox
+#TODO: Get download link dynamically
+- name: Install Dropbox from official link
+  apt: 
+    deb: "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
+
+# Firefox Dev edition installation
+- import_tasks: aurora.yml

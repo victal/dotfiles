@@ -1,9 +1,8 @@
-#Mercurial
 - name: Install Mercurial
-  become: yes
-  apt: state=latest name={{item}}
-  with_items: 
-    - mercurial
+  become: ansible_distribution == 'Ubuntu'
+  package: 
+    state: latest
+    name: mercurial
 
 - name: Link hgrc config
   become: no
@@ -12,32 +11,3 @@
 - name: Link hg bash configurations
   become: no
   file: state=link src={{role_path}}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes
-
-- name: Link custom merge script
-  become: no
-  file: state=link src={{role_path}}/files/pom_merge.sh dest="{{ lookup('env','HOME') }}/bin/pom_merge.sh" mode=0744
-
-- name: Clone watchman into applications directory
-  become: no
-  git: 
-    repo: "git://github.com/facebook/watchman.git"
-    dest: "{{ lookup('env','HOME') }}/applications/watchman" 
-    depth: 1
-    # XXX: there are no github releases for watchman so one has to hardcode the version used
-    version: "v4.9.0"
-
-- name: Install watchman build dependencies
-  apt:
-    state: latest
-    name: 
-      - libtool
-      - python-dev
-
-- name: Build and install watchman
-  shell: |
-    ./autogen.sh
-    ./configure --enable-lenient
-    make
-    make install
-  args:
-    chdir: "{{ lookup('env','HOME') }}/applications/watchman" 

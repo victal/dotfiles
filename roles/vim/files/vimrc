@@ -1,0 +1,352 @@
+""""""""""""""""""
+" Common options "
+""""""""""""""""""
+syntax on
+set nocompatible
+set expandtab
+set autoindent
+set smarttab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=8
+set number
+set mouse=
+set incsearch
+set ignorecase
+set smartcase
+set modeline
+set foldmethod=manual
+set nobomb
+set viminfo=
+set diffopt+=iwhite
+set diffexpr=""
+
+""""""""""""""""""
+" Vim-Plug setup "
+""""""""""""""""""
+
+call plug#begin('~/.vim/bundle')
+
+""""""""""""""""""""
+" My Plugins       "
+""""""""""""""""""""
+
+""" Sensible defaults """
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'duggiefresh/vim-easydir'
+Plug 'ryanoasis/vim-devicons'
+Plug 'chrisbra/unicode.vim'
+Plug 'wellle/targets.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+
+""" File operations """
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'jeetsukumaran/vim-buffergator'
+
+""" Status Line and Color Schemes """
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'nightsense/stellarized'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'hzchirs/vim-material'
+
+""" Code (Generic)  """
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'scrooloose/nerdcommenter'
+Plug 'metakirby5/codi.vim'
+Plug 'machakann/vim-swap'
+
+Plug 'frazrepo/vim-rainbow'
+au FileType javascript,*.javascript call rainbow#load()
+
+Plug 'neomake/neomake'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'ervandew/supertab'
+
+Plug 'mhinz/vim-signify'
+let g:signify_vcs_list = [ 'hg', 'git' ]
+
+Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-lawrencium'
+"Plug 'scrooloose/syntastic'
+
+""" JS """
+"YouCompleteMe has tern support out of the box
+Plug 'mattn/emmet-vim'
+"Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
+"Plug 'carlitux/deoplete-ternjs'
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-pathogen' "jasmine.vim dependency (?)
+Plug 'claco/jasmine.vim'
+Plug 'jaawerth/neomake-local-eslint-first'
+Plug 'maksimr/vim-jsbeautify'
+
+""" Python """
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'davidhalter/jedi-vim'
+Plug 'tweekmonster/braceless.vim'
+
+autocmd FileType python BracelessEnable +indent +fold +highlight-cc2
+
+""" TODO """
+Plug 'dbeniamine/todo.txt-vim'
+autocmd BufNewFile,BufRead *.todo.txt set filetype=todo
+autocmd Filetype todo setlocal nofoldenable
+
+if (!exists('g:todo_home')) 
+  let g:todo_home="~/Nextcloud/todo" 
+endif
+function! OpenTodo(...)
+    if a:1 == ''
+        execute 'edit '.g:todo_home.'/todo.txt'
+    else
+        execute 'edit '.g:todo_home.'/'.a:1.'.todo.txt'
+    endif
+endfunction
+command -nargs=? Todo call OpenTodo('<args>')
+
+call plug#end()
+
+""""""""""""""""""""""""""
+" Grep w/Silver Searcher "
+""""""""""""""""""""""""""
+" https://thoughtbot.com/blog/faster-grepping-in-vim
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  "let g:ctrlp_use_caching = 0
+endif
+
+"""""""""""""""""
+" CtrlP options "
+"""""""""""""""""
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_root_markers = ['pom.xml', 'package.json', 'bower.json', 'setup.py']
+set wildignore+=*.class,*.pyc,*.java-CACHE
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
+  \ }
+nnoremap <leader>f :CtrlPBuffer<C-M>
+
+""""""""""""""""""""""""""
+" Tabwidth per file type "
+""""""""""""""""""""""""""
+
+" HTML (tab width 2 chr, no wrapping)
+autocmd FileType html,xhtml,htmldjango set sw=4
+autocmd FileType html,xhtml,htmldjango set ts=4
+autocmd FileType html,xhtml,htmldjango set sts=4
+" Python (tab width 4 chr, wrap at 79th char)
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+" CSS (tab width 2 chr, wrap at 79th char)
+autocmd FileType css set sw=2
+autocmd FileType css set ts=2
+autocmd FileType css set sts=2
+" JavaScript (tab width 2 chr, wrap at 79th)
+autocmd FileType javascript,jade set sw=2
+autocmd FileType javascript,jade set ts=2
+autocmd FileType javascript,jade set sts=2
+autocmd FileType javascript,*.javascript set makeprg=npm
+
+"""""""""""""""""""
+" Folding Options "
+"""""""""""""""""""
+
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
+""""""""""""""""""""
+" Jedi-vim Options "
+""""""""""""""""""""
+
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#completions_command = ""
+let g:jedi#show_call_signatures = "1"
+
+let g:jedi#goto_assignments_command = "<leader>a"
+let g:jedi#goto_definitions_command = "<leader>g"
+let g:jedi#documentation_command = "<leader>k"
+let g:jedi#usages_command = "<leader>u"
+let g:jedi#rename_command = "<leader>r"
+
+""""""""""""""""""""
+" Deoplete Options "
+""""""""""""""""""""
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+
+"""""""""""""""""""
+" Neomake options "
+"""""""""""""""""""
+
+call neomake#configure#automake('nrwi', 100)
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_open_list = 2
+
+"""""""""""""""""""""
+" Gutentags options "
+"""""""""""""""""""""
+
+let g:gutentags_cache_dir="~/.vim/tags"
+let g:gutentags_ctags_exclude = ['coverage', '.nyc_output', '.vscode', 'node_modules', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
+let g:airline#extensions#gutentags#enabled = 1
+
+"""""""""""""""""""""
+" Ultisnips Options "
+"""""""""""""""""""""
+
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<C-p>"
+let g:snips_email = 'guilherme.costa@maps.com.br'
+let g:snips_github = ''
+
+"""""""""""""""""
+" Color Options "
+"""""""""""""""""
+
+set termguicolors
+let g:enable_bold_font = 1
+let g:enable_italic_font = 1
+set background=dark
+silent! colorscheme vim-material
+
+"""""""""""""""""""
+" Airline options "
+"""""""""""""""""""
+
+if !has('nvim')
+  set term=xterm-256color
+endif
+set showtabline=0
+set laststatus=2
+set guifont=MesloLGLDZ\ Nerd\ Font\ 10
+let g:airline_powerline_fonts = 1
+let g:airline_theme='material'
+
+"""""""""""""""""""""
+" Syntastic Options "
+"""""""""""""""""""""
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_id_checkers = 1
+let g:syntastic_auto_loc_list = 1
+
+let g:syntastic_aggregate_errors = 1
+
+let g:syntastic_python_checkers = ['python'] ", 'pyflakes', 'pylint'] , 'pep8']
+
+""""""""""""""""""
+" Tagbar Options "
+""""""""""""""""""
+nnoremap <leader>t :TagbarToggle<CR>
+
+""""""""""""""""""""
+" NERDTree Options "
+""""""""""""""""""""
+nnoremap <leader>x :NERDTreeToggle<CR>
+" Thanks https://superuser.com/a/474298/383630 and https://gist.github.com/avesus/1954d9384d86cc1e39cb2b2eff7017b7
+" calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
+function! s:isNTOpen()
+" returns true iff is NERDTree open/active
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+function! s:syncTree()
+  let s:curwnum = winnr()
+  if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff && expand('%') !~ "NERD_tree_.*"
+      NERDTreeFind
+      exec s:curwnum . "wincmd w"
+  endif
+endfunction
+
+function! s:syncTreeIf()
+  if (winnr("$") > 1)
+    call s:syncTree()
+  endif
+endfunction
+
+" Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
+autocmd BufEnter * call s:syncTreeIf()
+
+""""""""""""""""""""""""""""
+" Markdown Preview Options "
+""""""""""""""""""""""""""""
+" set to 1, nvim will open the preview window after entering the markdown buffer
+let g:mkdp_auto_start = 0 
+
+""""""""""""""""""""
+" Codi.vim Options "
+""""""""""""""""""""
+
+"Width of the codi side pane as a percentage of the current buffer width
+let g:codi#width = 40.0
+let g:codi#rightalign = 0
+
+"""""""""""""""""
+" Extra Options "
+"""""""""""""""""
+
+" From https://www.hillelwayne.com/post/intermediate-vim/
+set inccommand=nosplit
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+
+au BufNewFile,BufRead Jenkinsfile setf groovy
+
+"Faster searching for slashes
+cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
+
+""" Extra save commands """
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+command WQ :execute ':W' | :q
+command Wq :execute ':W' | :q
+nnoremap <leader>ss :wa<CR>
+nnoremap <leader>sq :wqa<CR>
+
+nnoremap <leader>g :grep! "\b<cword>\b"<CR>:cw<CR>
+
+au Filetype json vnoremap <leader>j :call RangeJsonBeautify()<CR>
+au Filetype json nnoremap <leader>j :call JsonBeautify()<CR>
+au Filetype javascript vnoremap <leader>j :call RangeJsBeautify()<CR>
+au Filetype javascript nnoremap <leader>j :call JsBeautify()<CR>

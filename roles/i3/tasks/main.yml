@@ -1,38 +1,50 @@
 - name: Install base i3 packages
-  apt: state=latest name={{item}}
-  with_items: 
-    - dunst
-    - dmenu
-    - i3
-    - i3-wm
-    - i3lock
-    - i3status
-    - j4-dmenu-desktop
-    - nitrogen
-    - scrot
-    - suckless-tools
-    - i3blocks
-    - rofi
+  apt: 
+    state: latest 
+    name:
+      - dunst
+      - dmenu
+      - i3
+      - i3-wm
+      - i3lock
+      - i3status
+      - j4-dmenu-desktop
+      - nitrogen
+      - scrot
+      - suckless-tools
+      - i3blocks
+      - rofi
+      - lxappearance
 
 - name: Create screenshot dir
   become: no
-  file: state=directory dest="{{ lookup('env','HOME') }}/screenshots"
+  file: 
+    state: directory 
+    dest: "{{ lookup('env','HOME') }}/screenshots"
 
 - name: Create i3 config dir
   become: no
-  file: state=directory dest="{{ lookup('env','HOME') }}/.i3"
+  file: 
+    state: directory
+    dest: "{{ lookup('env','HOME') }}/.i3"
 
 - name: Link specific i3 configuration
   become: no
-  file: state=link src={{role_path}}/files/{{host}}/{{item}} dest="{{ lookup('env','HOME') }}/.i3/{{item}}" force=yes
+  file: state=link src={{role_path}}/files/{{item}} dest="{{ lookup('env','HOME') }}/.i3/{{item}}" force=yes
   with_items:
     - config
     - i3blocks.conf
 
 - name: Create rofi configuration folder
   become: no
-  file: state=directory path={{ lookup('env', 'HOME') }}/.config/rofi
+  file: 
+    state: directory 
+    path: "{{ lookup('env', 'HOME') }}/.config/rofi"
 
 - name: Link specific rofi configuration
   become: no
-  file: state=link src={{role_path}}/files/rofi.config dest="{{ lookup('env','HOME') }}/.config/rofi/config" force=yes
+  file: 
+    state: link 
+    src: "{{role_path}}/files/rofi.config"
+    dest: "{{ lookup('env','HOME') }}/.config/rofi/config" 
+    force: yes

@@ -1,0 +1,22 @@
+# Install packages for aws-cli and helpers/dependencies
+
+- name: Install aws-cli package
+  become: no
+  pip:
+    state: latest
+    name: awscli
+
+# https://github.com/venth/aws-adfs
+- name: Install AWS adfs package (for mac)
+  become: no
+  pip:
+    state: latest
+    name: aws-adfs
+  when: ansible_os_family == 'Darwin'
+
+# https://github.com/aws-cloudformation/cfn-python-lint
+- name: Install cfn-lint
+  become: no
+  pip: 
+    state: latest
+    name: cfn-lint

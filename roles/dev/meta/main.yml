@@ -1,4 +1,7 @@
 ---
 dependencies:
+  - role: dev/aws
+  - role: dev/python
+  - role: dev/nodejs
   - role: dev/docker
-  - role: dev/git
+  - role: dev/hg

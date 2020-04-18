@@ -1,0 +1,25 @@
+# Watchman installation from source 
+# https://facebook.github.io/watchman/docs/install.html
+- name: Clone watchman into applications directory
+  become: no
+  git: 
+    repo: "git://github.com/facebook/watchman.git"
+    dest: "{{ lookup('env','HOME') }}/applications/watchman" 
+    depth: 1
+    version: "v4.9.0"
+
+- name: Install watchman build dependencies
+  apt:
+    state: latest
+    name: 
+      - libtool
+      - python-dev
+
+- name: Build and install watchman
+  shell: |
+    ./autogen.sh
+    ./configure --enable-lenient
+    make
+    make install
+  args:
+    chdir: "{{ lookup('env','HOME') }}/applications/watchman" 

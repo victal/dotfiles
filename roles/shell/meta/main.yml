@@ -1,0 +1,5 @@
+---
+dependencies:
+  - role: base
+  - role: shell/mac
+    when: ansible_os_family == 'Darwin'

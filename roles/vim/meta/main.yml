@@ -1,0 +1,9 @@
+---
+dependencies:
+  - role: shell
+  - role: dev/python
+  - role: dev/nodejs
+  - role: vim/mac
+    when: ansible_os_family == 'Darwin'
+  - role: vim/ubuntu
+    when: ansible_distribution == 'Ubuntu'

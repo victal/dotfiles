@@ -1,0 +1,10 @@
+- name: Install pyenv build dependencies
+  become: no
+  package:
+    state: latest
+    name:
+      - openssl
+      - readline
+      - sqlite3
+      - xz
+      - zlib

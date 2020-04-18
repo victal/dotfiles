@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: shell
+  #- role: nodejs/mac
+    #when: ansible_os_family == 'Darwin'
+  - role: dev/nodejs/ubuntu
+    when: ansible_distribution == 'Ubuntu'

@@ -1,0 +1,14 @@
+- name: Remove neovim PPA (not needed since 18.04)
+  apt_repository:
+    repo: ppa:neovim-ppa/stable
+    state: absent
+    filename: neovim
+    update_cache: yes
+
+# Install neovim plugin dependencies
+- name: Install vim plugin dependencies
+  apt: 
+    state: latest 
+    name: 
+      - cmake
+      - exuberant-ctags

@@ -1,0 +1,14 @@
+git_user_email: guilherme.costa@nexadigital.com.br
+
+bash:
+  completion_dir: '/usr/local/etc/bash_completion.d'
+  executable: '/usr/local/bin/bash'
+
+applications:
+  ag: 'the_silver_searcher'
+  docker_ecr_helper: 'docker-credential-helper-ecr'
+
+jira:
+    endpoint: "{_ work_vault.jira.endpoint _}"
+    user: "{_ work_vault.jira.user _}"
+# vi: ft=yaml sw=2 ts=8:

@@ -1,0 +1,58 @@
+# Install specific packages for linux environment
+- name: Install utility packages
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
+  package: 
+    state: latest
+    name: 
+      - dnsutils
+      - p7zip-full
+      - rar
+      - zip
+      - htop
+      - iftop
+      - iotop
+      - iptraf-ng
+      - mtr-tiny
+      - dstat
+      - nmon
+      - nmap
+      - ncdu 
+
+# Install packages not available under package manager
+# Facebook PathPicker, install from github release
+- name: Get latest release of fpp
+  become: no
+  github_release:
+    token: "{{ github_token }}"
+    user: facebook
+    repo: PathPicker
+    action: latest_release
+  register: fpp_version
+
+- name: Clone fpp
+  become: no
+  git:
+    repo: 'https://github.com/facebook/PathPicker.git'
+    dest: "{{ lookup('env','HOME') }}/applications/fpp"
+    version: "{{ fpp_version.tag }}"
+    clone: yes
+    update: yes
+
+- name: Link executable to directory in path
+  become: no
+  file: state=link src={{ lookup('env','HOME') }}/applications/fpp/fpp path={{ lookup('env','HOME') }}/bin/fpp force=yes
+
+- name: Install fzf shortcuts
+  become: no
+  file: 
+    state: link 
+    src: "{{role_path}}/files/fzf.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/fzf.sh" 
+    force: yes
+
+- name: Install fzf bash-completion
+  become: yes
+  file: 
+    state: link 
+    src: "/usr/share/bash-completion/completions/fzf"
+    dest: "/etc/bash_completion.d/fzf" 

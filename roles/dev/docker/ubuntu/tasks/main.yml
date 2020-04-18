@@ -1,0 +1,26 @@
+- name: Add docker repo key
+  apt_key: 
+    url: "https://download.docker.com/linux/ubuntu/gpg" 
+    state: present
+ 
+- name: Add Docker APT repository
+  apt_repository: 
+    repo: 'deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} test'
+    state: present
+    filename: docker
+    update_cache: yes
+
+- name: Install docker and dependencies
+  become: yes
+  apt: 
+    state: latest
+    name:
+      - docker-ce
+      - python-backports.ssl-match-hostname
+
+- name: Add user to docker group
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    groups: "docker"
+    append: yes

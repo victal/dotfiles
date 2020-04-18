@@ -1,0 +1,45 @@
+# Install packages available on brew but not on linux package manager
+- name: Install specific utility packages
+  become: no
+  package: 
+    state: latest
+    name: 
+      - coreutils
+      - gnu-sed
+      - go-jira
+      - fpp
+
+- name: Create gojira configuration directory
+  become: no
+  file: path={{ lookup('env','HOME') }}/.jira.d/ state=directory
+
+- name: Copy gojira config
+  become: no
+  template: 
+    src: "{{role_path}}/files/jira.yml"
+    dest: "{{ lookup('env','HOME') }}/.jira.d/config.yml"
+    variable_start_string: "{_ "
+    variable_end_string: " _}"
+
+- name: Link bashrc configuration
+  become: no
+  file: state=link src={{role_path}}/files/gojira.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/gojira.sh" force=yes
+
+- name: Register brew prefix
+  become: no
+  command: brew --prefix
+  register: brew_prefix
+
+- name: debug
+  debug: var=brew_prefix
+
+- name: Run brew fzf installation
+  command: "{{ brew_prefix.stdout }}/opt/fzf/install --all --no-update-rc"
+
+- name: Add bashrc fzf config
+  become: no
+  file: 
+    state: link 
+    src: "{{role_path}}/files/fzf.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/fzf.sh" 
+    force: yes

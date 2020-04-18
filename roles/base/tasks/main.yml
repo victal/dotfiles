@@ -1,0 +1,31 @@
+# Create applications directory -> Manually installed applications will live here
+- name: Create applications directory
+  become: no
+  file: path={{ lookup('env','HOME') }}/applications/ state=directory
+
+# Create $HOME/bin directory -> executables of manually installed applications will be linked here to be added to $PATH
+- name: Create bin directory
+  become: no
+  file: path={{ lookup('env','HOME') }}/bin/ state=directory
+
+# install git if not present
+- name: Install Git
+  become: ansible_distribution == 'Ubuntu'
+  package: 
+    name: git
+    state: latest 
+
+# Copy git configuration - git installation is handled by sub-roles
+- name: Link git config
+  become: no
+  template:
+    src: "{{role_path}}/files/gitconfig"
+    dest: "{{ lookup('env','HOME') }}/.gitconfig"
+
+# Needed for github_release module
+- name: Install pip dependencies for other modules
+  become: no
+  pip:
+    name: github3.py
+    state: present
+    version: 1.0.0a4 # TODO: Check latest working version

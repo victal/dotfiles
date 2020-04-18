@@ -1,0 +1,84 @@
+# Install neovim
+- name: Install neovim
+  become: ansible_distribution == 'Ubuntu'
+  package: 
+    name: neovim
+    state: latest
+
+# Link neovim config file
+- name: Create nvim config dir
+  become: no
+  file:
+    state: directory
+    path: "{{ lookup('env','HOME') }}/.config/nvim"
+    force: yes
+
+- name: copy init.vim file
+  become: no
+  template:
+    src: "{{ role_path }}/files/init.vim"
+    dest: "{{ lookup('env','HOME') }}/.config/nvim/init.vim"
+    force: yes
+
+# Link vim configuration folder
+- name: Link vim folder
+  become: no
+  file:
+    state: link
+    src: "{{ role_path }}/files/vimfolder"
+    dest: "{{ lookup('env','HOME') }}/.vim"
+    force: yes
+
+# Link vimrc
+- name: Link vimrc
+  become: no
+  file:
+    state: link
+    src: "{{ role_path }}/files/vimrc"
+    dest: "{{ lookup('env','HOME') }}/.vimrc"
+    force: yes
+
+# Install bash aliases
+- name: Link nvim-to-vim bash aliases
+  become: no
+  file:
+    state: link
+    src: "{{ role_path }}/files/nvim.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/nvim.sh"
+    force: yes
+
+- name: Install neovim npm package
+  become: ansible_distribution == 'Ubuntu'
+  npm:
+    global: yes
+    state: latest
+    name: neovim
+
+
+- name: Configure virtualenv for python2 provider
+  become: no
+  script: "{{role_path}}/files/pyenv-venv.sh 2.7.17 neovim2"
+  register: pyenv2
+
+- name: Configure virtualenv for python3 provider
+  become: no
+  script: "{{role_path}}/files/pyenv-venv.sh 3.8.2 neovim3"
+  register: pyenv3
+
+- name: get neovim2 path
+  debug: var=pyenv2
+
+- name: get neovim3 path
+  debug: var=pyenv3
+
+- name: Copy platform-specific vim config
+  become: no
+  template:
+    src: "{{ role_path }}/files/{{ ansible_os_family | lower }}.vim"
+    dest: "{{ lookup('env','HOME') }}/.config/nvim/{{ ansible_os_family | lower }}.vim"
+    force: yes
+    
+# Install vim plugins 
+- name: Install Vim Plugins
+  become: no
+  command: nvim +PlugUpgrade +PlugClean +PlugInstall +PlugUpdate +qall && reset

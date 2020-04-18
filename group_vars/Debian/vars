@@ -1,0 +1,11 @@
+git_user_email: guilhermevictal@gmail.com
+
+bash:
+  completion_dir: '/usr/share/bash-completion/completions'
+  executable: '/bin/bash'
+
+applications:
+  ag: 'silversearcher-ag'
+  docker_ecr_helper: 'amazon-ecr-credential-helper'
+
+# vi: ft=yaml sw=2 ts=8:

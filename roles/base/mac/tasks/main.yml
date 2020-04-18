@@ -1,0 +1,30 @@
+# Install Homebrew
+#TODO: Check if xcode-select --install is needed
+#TODO: It is -> https://github.com/nodejs/node-gyp/blob/master/macOS_Catalina.md
+
+- name: Download brew install script
+  get_url: 
+    url: https://raw.githubusercontent.com/Homebrew/install/master/install
+    dest: "{{ lookup('env','TMPDIR') }}/brew_install.rb"
+
+- name: Install Homebrew (on mac)
+  become: no
+  script: 
+    cmd: "{{ lookup('env','TMPDIR') }}/brew_install.rb"
+    executable: '/usr/bin/ruby'
+
+- name: List fonts to link
+  find:
+    paths: '{{role_path}}/../files/fonts' 
+    file_type: any
+  register: fonts
+
+- name: Link fonts to Library
+  become: no
+  copy: 
+    src: "{{ item.path }}"
+    dest: "{{ lookup('env', 'HOME') }}/Library/Fonts/{{ item.path | basename }}"
+    remote_src: yes
+    force: yes
+  with_items: 
+   - "{{ fonts.files }}"

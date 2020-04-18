@@ -1,22 +1,24 @@
 - name: Install arandr
-  apt: name=arandr state=latest
-
-- name: Setup xrandr script dir
-  become: no
-  file: path={{ lookup('env','HOME') }}/.screenlayout state=directory
-
-- name: Link xrandr script to correct place
-  become: no
-  file: state=link src={{role_path}}/files/xrandr/{{host}}.sh path={{ lookup('env','HOME') }}/.screenlayout/default.sh
+  apt: 
+    name: arandr 
+    state: latest
 
 - name: Create xorg.conf.d directory
-  file: path=/etc/X11/xorg.conf.d state=directory
+  file: 
+    path: /etc/X11/xorg.conf.d 
+    state: directory
 
 - name: Add xorg configuration for Logitech T650
-  file: src={{role_path}}/files/t650/52-t650-synaptics.conf path=/etc/X11/xorg.conf.d/52-t650-synaptics.conf state=link
-  when: host == 'home'
+  file:
+    src: "{{role_path}}/files/t650/52-t650-synaptics.conf"
+    path: /etc/X11/xorg.conf.d/52-t650-synaptics.conf
+    state: link
 
-- name: Add Xmodmap configuration if applicable
+- name: Install Xmodmap file
   become: no
-  file: src={{role_path}}/files/xmodmap/Xmodmap.{{host}} path={{ lookup('env','HOME') }}/.Xmodmap state=link
-  when: host == 'work'
+  file: 
+    src: "{{role_path}}/files/Xmodmap" 
+    dest: "{{ lookup('env','HOME') }}/.Xmodmap"
+    state: link 
+    force: yes 
+

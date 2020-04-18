@@ -1,0 +1,23 @@
+install python-gpg with dropbox
+install libgnome-keyring0 with owncloud
+
+install pgcli e sqlcl
+install docker-compose
+
+install ulp
+install shellcheck
+
+https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
+edit limits.conf (nofile)
+# Add or modify nofile soft limit for the user joe
+- pam_limits:
+    domain: *
+    limit_type: soft
+    limit_item: nofile
+    value: 100000
+
+- pam_limits:
+    domain: *
+    limit_type: hard
+    limit_item: nofile
+    value: 100000

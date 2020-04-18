@@ -1,0 +1,46 @@
+# Check roles nodejs/OS for os-specific pre-configuration
+
+- name: Install nodejs
+  become: ansible_distribution == 'Ubuntu'
+  package:
+    name: nodejs
+    state: latest
+
+# NVM installation
+# https://github.com/nvm-sh/nvm#manual-install
+- name: Get latest NVM release
+  become: no
+  github_release:
+    token: "{{ github_token }}"
+    user: nvm-sh
+    repo: nvm
+    action: latest_release
+  register: nvm_version
+
+- name: Clone nvm
+  become: no
+  git:
+    repo: 'https://github.com/nvm-sh/nvm.git'
+    dest: "{{ lookup('env','HOME') }}/applications/nvm"
+    version: "{{ nvm_version.tag }}"
+    clone: yes
+    update: yes
+
+- name: Link nodejs bashrc configuration
+  become: no
+  file: 
+    state: link 
+    src: "{{role_path}}/files/node.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/node.sh" 
+    force: yes
+
+- name: Install global nodejs packages
+  become: ansible_distribution == 'Ubuntu'
+  npm:
+    global: yes
+    state: latest
+    name: "{{ item }}"
+  with_items:
+    - yarn
+    - eslint
+    - redis-commander

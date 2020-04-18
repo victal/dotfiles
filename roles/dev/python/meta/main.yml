@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: dev/python/mac
+    when: ansible_os_family == 'Darwin'
+  - role: dev/python/ubuntu
+    when: ansible_distribution == 'Ubuntu'
+
