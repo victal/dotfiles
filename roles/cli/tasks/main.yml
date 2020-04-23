@@ -15,6 +15,7 @@
       - thefuck
 
 - name: Copy thefuck initialization to .bashrc.d dir
+  become: no
   shell: "thefuck --alias > {{ lookup('env', 'HOME') }}/.bashrc.d/thefuck.sh"
   args: 
     executable: '{{ bash.executable }}'
