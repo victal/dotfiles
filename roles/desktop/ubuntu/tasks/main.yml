@@ -44,3 +44,21 @@
 
 # Firefox Dev edition installation
 - import_tasks: aurora.yml
+
+# YACReader
+- name: Add yacreader repo key
+  apt_key: 
+    url: "https://download.opensuse.org/repositories/home:selmf/xUbuntu_19.10/Release.key"
+    state: present
+
+- name: Add yacreader APT repository
+  apt_repository: 
+    repo: 'deb http://download.opensuse.org/repositories/home:/selmf/xUbuntu_19.10/ /'
+    state: present 
+    filename: yacreader
+    update_cache: yes
+
+- name: Install yacreader from apt
+  apt:
+    name: yacreader
+    state: latest
