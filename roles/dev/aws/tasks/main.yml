@@ -1,5 +1,6 @@
 # Install packages for aws-cli and helpers/dependencies
 
+#TODO: Install via brew on mac
 - name: Install aws-cli package
   become: no
   pip:
@@ -14,6 +15,7 @@
     name: aws-adfs
   when: ansible_os_family == 'Darwin'
 
+#TODO: Install via brew on mac
 # https://github.com/aws-cloudformation/cfn-python-lint
 - name: Install cfn-lint
   become: no
