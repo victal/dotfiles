@@ -14,6 +14,8 @@
       tags: "vim" 
     - name: dev
       tags: "dev" 
+    - name: dev/k8s
+      tags: 'k8s'
     - name: xorg
       tags: ["xorg", "linux", "home"]
       when: ansible_distribution == 'Ubuntu'
