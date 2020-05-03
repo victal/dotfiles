@@ -18,3 +18,16 @@
 - name: Install minikube from official link
   apt: 
     deb: "https://github.com/kubernetes/minikube/releases/download/{{ minikube_version.tag }}/minikube_{{ minikube_version.tag | replace('v', '') }}-0_amd64.deb"
+
+- name: Install kubectl bash completions
+  shell: "kubectl completion bash > {{ lookup('env','HOME') }}/.bashrc.d//kubectl.sh"
+  args: 
+    executable: '{{ bash.executable }}' # TODO: Get dynamically 
+
+- name: Install kubect. aliases
+  become: no
+  file:
+    state: link
+    src: "{{role_path}}/files/kube_aliases.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/kube_aliases.sh"
+    force: yes
