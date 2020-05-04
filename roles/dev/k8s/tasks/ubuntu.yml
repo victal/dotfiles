@@ -24,11 +24,3 @@
   shell: "kubectl completion bash > {{ lookup('env','HOME') }}/.bashrc.d/kubectl_1_completion.sh"
   args: 
     executable: '{{ bash.executable }}' # TODO: Get dynamically 
-
-- name: Install kubect. aliases
-  become: no
-  file:
-    state: link
-    src: "{{role_path}}/files/kubectl_2_aliases.sh"
-    dest: "{{ lookup('env','HOME') }}/.bashrc.d/kubectl_2_aliases.sh"
-    force: yes

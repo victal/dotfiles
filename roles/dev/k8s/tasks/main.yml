@@ -3,3 +3,11 @@
 
 - import_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
+
+- name: Install kubect. aliases
+  become: no
+  file:
+    state: link
+    src: "{{role_path}}/files/kubectl_2_aliases.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/kubectl_2_aliases.sh"
+    force: yes
