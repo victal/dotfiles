@@ -1,0 +1,8 @@
+- name: Install kubernetes tools via brew
+  become: no
+  package: 
+    state: latest
+    name: 
+      - kubectl
+      - kubectx
+      - minikube

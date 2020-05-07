@@ -1,0 +1,26 @@
+---
+
+- name: Install kubectl from snap
+  snap:
+    name: kubectl
+    classic: yes
+    state: present
+
+- name: Get latest minikube release
+  become: no
+  github_release:
+    token: "{{ github_token }}"
+    user: kubernetes
+    repo: minikube
+    action: latest_release
+  register: minikube_version
+
+- name: Install minikube from official link
+  apt: 
+    deb: "https://github.com/kubernetes/minikube/releases/download/{{ minikube_version.tag }}/minikube_{{ minikube_version.tag | replace('v', '') }}-0_amd64.deb"
+
+- name: Install kubectl bash completions
+  become: no
+  shell: "kubectl completion bash > {{ lookup('env','HOME') }}/.bashrc.d/kubectl_1_completion.sh"
+  args: 
+    executable: '{{ bash.executable }}' # TODO: Get dynamically 
