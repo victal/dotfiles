@@ -41,6 +41,5 @@
     state: latest
     name: "{{ item }}"
   with_items:
-    - yarn
     - eslint
     - redis-commander
