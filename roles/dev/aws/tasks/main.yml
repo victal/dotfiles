@@ -1,12 +1,24 @@
 # Install packages for aws-cli and helpers/dependencies
 
-#TODO: Install via brew on mac
-- name: Install aws-cli package
+# https://github.com/aws-cloudformation/cfn-python-lint
+- name: Install aws-cli packages on ubuntu
   become: no
   pip:
     state: latest
-    name: awscli
+    name: 
+      - awscli
+      - cfn-lint
+  when: ansible_distribution == 'Ubuntu'
 
+- name: Install aws-cli packages on mac
+  become: no
+  package:
+    state: latest
+    name: 
+      - awscli
+      - cfn-lint
+  when: ansible_os_family == 'Darwin'
+  
 # https://github.com/venth/aws-adfs
 - name: Install AWS adfs package (for mac)
   become: no
@@ -14,11 +26,3 @@
     state: latest
     name: aws-adfs
   when: ansible_os_family == 'Darwin'
-
-#TODO: Install via brew on mac
-# https://github.com/aws-cloudformation/cfn-python-lint
-- name: Install cfn-lint
-  become: no
-  pip: 
-    state: latest
-    name: cfn-lint
