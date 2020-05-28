@@ -5,7 +5,7 @@
   become: no
   pip:
     state: latest
-    name: 
+    name:
       - awscli
       - cfn-lint
   when: ansible_distribution == 'Ubuntu'
@@ -14,11 +14,11 @@
   become: no
   package:
     state: latest
-    name: 
+    name:
       - awscli
       - cfn-lint
   when: ansible_os_family == 'Darwin'
-  
+
 # https://github.com/venth/aws-adfs
 - name: Install AWS adfs package (for mac)
   become: no

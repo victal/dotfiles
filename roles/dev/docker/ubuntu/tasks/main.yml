@@ -1,10 +1,10 @@
 - name: Add docker repo key
-  apt_key: 
-    url: "https://download.docker.com/linux/ubuntu/gpg" 
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
     state: present
- 
+
 - name: Add Docker APT repository
-  apt_repository: 
+  apt_repository:
     repo: 'deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} test'
     state: present
     filename: docker
@@ -12,7 +12,7 @@
 
 - name: Install docker and dependencies
   become: yes
-  apt: 
+  apt:
     state: latest
     name:
       - docker-ce

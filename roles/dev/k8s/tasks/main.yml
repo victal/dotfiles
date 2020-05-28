@@ -8,6 +8,6 @@
   become: no
   file:
     state: link
-    src: "{{role_path}}/files/kubectl_2_aliases.sh"
+    src: "{{ role_path }}/files/kubectl_2_aliases.sh"
     dest: "{{ lookup('env','HOME') }}/.bashrc.d/kubectl_2_aliases.sh"
     force: yes

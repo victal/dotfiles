@@ -1,7 +1,7 @@
 - name: Install docker-compose
   pip:
     state: latest
-    name: 
+    name:
       - docker
       - docker-compose
 
@@ -15,7 +15,7 @@
 - name: Add docker config
   become: no
   template:
-    src: "{{role_path}}/files/config.json"
+    src: "{{ role_path }}/files/config.json"
     dest: "{{ lookup('env','HOME') }}/.docker/config.json"
   when: ecr is defined and ecr.accounts is defined
 

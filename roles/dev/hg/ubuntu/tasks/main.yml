@@ -1,10 +1,10 @@
-# Watchman installation from source 
+# Watchman installation from source
 # https://facebook.github.io/watchman/docs/install.html
 - name: Clone watchman into applications directory
   become: no
-  git: 
+  git:
     repo: "git://github.com/facebook/watchman.git"
-    dest: "{{ lookup('env','HOME') }}/applications/watchman" 
+    dest: "{{ lookup('env','HOME') }}/applications/watchman"
     depth: 1
     version: "v4.9.0"
   register: watchman
@@ -12,10 +12,10 @@
 - name: Install watchman build dependencies
   apt:
     state: latest
-    name: 
+    name:
       - libtool
       - python-dev
-  when: watchman.changed
+  when: watchman.changed # noqa 503
 
 - name: Build and install watchman
   shell: |
@@ -24,5 +24,5 @@
     make
     make install
   args:
-    chdir: "{{ lookup('env','HOME') }}/applications/watchman" 
-  when: watchman.changed
+    chdir: "{{ lookup('env','HOME') }}/applications/watchman"
+  when: watchman.changed # noqa 503

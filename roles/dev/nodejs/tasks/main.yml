@@ -28,10 +28,10 @@
 
 - name: Link nodejs bashrc configuration
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/node.sh"
-    dest: "{{ lookup('env','HOME') }}/.bashrc.d/node.sh" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/node.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/node.sh"
     force: yes
 
 - name: Install global nodejs packages

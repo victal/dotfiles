@@ -1,13 +1,13 @@
 - name: Install Mercurial
   become: "{{ ansible_distribution == 'Ubuntu' }}"
-  package: 
+  package:
     state: latest
     name: mercurial
 
 - name: Link hgrc config
   become: no
-  file: state=link src={{role_path}}/files/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
+  file: state=link src={{ role_path }}/files/hgrc dest="{{ lookup('env','HOME') }}/.hgrc"
 
 - name: Link hg bash configurations
   become: no
-  file: state=link src={{role_path}}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes
+  file: state=link src={{ role_path }}/files/bashrc/hg.sh dest="{{ lookup('env','HOME') }}/.bashrc.d/hg.sh" force=yes

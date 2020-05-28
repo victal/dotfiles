@@ -1,0 +1,6 @@
+skip_list:
+  - '301' # Commands should not change things if othing needs doing
+  - '403' # Package installs shoulçd not use latest
+  - '701' # No 'galaxy info' found
+
+# vim:set et sw=4 ts=8 ft=yaml:

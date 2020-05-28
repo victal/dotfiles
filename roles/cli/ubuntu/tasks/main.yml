@@ -1,9 +1,9 @@
 # Install specific packages for linux environment
 - name: Install utility packages
   become: "{{ ansible_distribution == 'Ubuntu' }}"
-  package: 
+  package:
     state: latest
-    name: 
+    name:
       - dnsutils
       - p7zip-full
       - rar
@@ -16,7 +16,7 @@
       - dstat
       - nmon
       - nmap
-      - ncdu 
+      - ncdu
 
 # Install packages not available under package manager
 # Facebook PathPicker, install from github release
@@ -44,15 +44,15 @@
 
 - name: Install fzf shortcuts
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/fzf.sh"
-    dest: "{{ lookup('env','HOME') }}/.bashrc.d/fzf.sh" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/fzf.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/fzf.sh"
     force: yes
 
 - name: Install fzf bash-completion
   become: yes
-  file: 
-    state: link 
+  file:
+    state: link
     src: "/usr/share/bash-completion/completions/fzf"
-    dest: "/etc/bash_completion.d/fzf" 
+    dest: "/etc/bash_completion.d/fzf"

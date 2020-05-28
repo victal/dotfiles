@@ -16,11 +16,11 @@
   register: minikube_version
 
 - name: Install minikube from official link
-  apt: 
-    deb: "https://github.com/kubernetes/minikube/releases/download/{{ minikube_version.tag }}/minikube_{{ minikube_version.tag | replace('v', '') }}-0_amd64.deb"
+  apt:
+    deb: "https://github.com/kubernetes/minikube/releases/download/{{ minikube_version.tag }}/minikube_{{ minikube_version.tag | replace('v', '') }}-0_amd64.deb" # noqa 204
 
 - name: Install kubectl bash completions
   become: no
   shell: "kubectl completion bash > {{ lookup('env','HOME') }}/.bashrc.d/kubectl_1_completion.sh"
-  args: 
-    executable: '{{ bash.executable }}' # TODO: Get dynamically 
+  args:
+    executable: '{{ bash.executable }}' # TODO: Get dynamically

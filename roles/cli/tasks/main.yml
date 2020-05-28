@@ -6,9 +6,9 @@
 # https://github.com/nvbn/thefuck
 - name: Install utility packages
   become: "{{ ansible_distribution == 'Ubuntu' }}"
-  package: 
+  package:
     state: latest
-    name: 
+    name:
       - tldr
       - '{{ applications.ag }}'
       - fzf
@@ -17,7 +17,7 @@
 - name: Copy thefuck initialization to .bashrc.d dir
   become: no
   shell: "thefuck --alias > {{ lookup('env', 'HOME') }}/.bashrc.d/thefuck.sh"
-  args: 
+  args:
     executable: '{{ bash.executable }}'
 
 # Applications installed in OS specific roles:

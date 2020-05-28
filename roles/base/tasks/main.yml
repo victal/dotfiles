@@ -11,15 +11,15 @@
 # install git if not present
 - name: Install Git
   become: "{{ ansible_distribution == 'Ubuntu' }}"
-  package: 
+  package:
     name: git
-    state: latest 
+    state: latest
 
 # Copy git configuration - git installation is handled by sub-roles
 - name: Link git config
   become: no
   template:
-    src: "{{role_path}}/files/gitconfig"
+    src: "{{ role_path }}/files/gitconfig"
     dest: "{{ lookup('env','HOME') }}/.gitconfig"
 
 # Needed for github_release module
