@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-export PATH="$(npm config get prefix 2> /dev/null)/bin:${PATH}"
+PATH="${PATH}:$(npm config get prefix 2> /dev/null)/bin"
+export PATH
 
 export NVM_DIR="$HOME/applications/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
