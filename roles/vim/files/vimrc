@@ -100,6 +100,7 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'davidhalter/jedi-vim'
 Plug 'tweekmonster/braceless.vim'
+Plug 'pearofducks/ansible-vim'
 
 autocmd FileType python BracelessEnable +indent +fold +highlight-cc2
 
@@ -215,6 +216,8 @@ let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
 """""""""""""""""""
 
 call neomake#configure#automake('nrwi', 100)
+let g:neomake_yaml_ansible_enabled_makers = ['ansiblelint']
+let g:neomake_yaml_ansible_ansiblelint_errorformat = '%f:%l: [%t%n] %m'
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_open_list = 2
 
