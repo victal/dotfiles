@@ -1,19 +1,19 @@
 - hosts: localhost
   become: yes
   become_method: sudo
-  roles: 
+  roles:
     - name: setup
-      tags: "always" 
+      tags: "always"
     - name: base
-      tags: "base" 
+      tags: "base"
     - name: shell
-      tags: "shell" 
+      tags: "shell"
     - name: cli
-      tags: "cli" 
+      tags: "cli"
     - name: vim
-      tags: "vim" 
+      tags: "vim"
     - name: dev
-      tags: "dev" 
+      tags: "dev"
     - name: dev/k8s
       tags: 'k8s'
     - name: xorg
@@ -23,7 +23,7 @@
       tags: ["i3", "linux", "home"]
       when: ansible_distribution == 'Ubuntu'
     - name: desktop
-      tags: "desktop" 
+      tags: "desktop"
     - name: games
       tags: ["games", "linux", "home"]
       when: ansible_distribution == 'Ubuntu'

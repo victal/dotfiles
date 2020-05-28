@@ -1,5 +1,5 @@
 - name: Install arandr
-  apt: 
+  apt:     
     name: arandr 
     state: latest
 
