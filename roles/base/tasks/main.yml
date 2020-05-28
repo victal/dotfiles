@@ -10,7 +10,7 @@
 
 # install git if not present
 - name: Install Git
-  become: ansible_distribution == 'Ubuntu'
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   package: 
     name: git
     state: latest 

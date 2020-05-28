@@ -1,6 +1,6 @@
 # Install neovim
 - name: Install neovim
-  become: ansible_distribution == 'Ubuntu'
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   package: 
     name: neovim
     state: latest
@@ -48,7 +48,7 @@
     force: yes
 
 - name: Install neovim npm package
-  become: ansible_distribution == 'Ubuntu'
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   npm:
     global: yes
     state: latest

@@ -1,5 +1,5 @@
 - name: Install Mercurial
-  become: ansible_distribution == 'Ubuntu'
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   package: 
     state: latest
     name: mercurial

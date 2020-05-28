@@ -1,7 +1,7 @@
 # Check roles nodejs/OS for os-specific pre-configuration
 
 - name: Install nodejs
-  become: ansible_distribution == 'Ubuntu'
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   package:
     name: nodejs
     state: latest
@@ -35,7 +35,7 @@
     force: yes
 
 - name: Install global nodejs packages
-  become: ansible_distribution == 'Ubuntu'
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   npm:
     global: yes
     state: latest

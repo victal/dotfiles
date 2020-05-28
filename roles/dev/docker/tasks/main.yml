@@ -27,7 +27,7 @@
   when: dockerhub is defined
 
 - name: Install docker ecr credential helper
-  become: ansible_distribution == 'Ubuntu'
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   package:
     state: latest
     name: '{{ applications.docker_ecr_helper }}'

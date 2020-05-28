@@ -25,7 +25,7 @@
     force: yes
 
 - name: Get pipenv bash completion
-  become: no
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
   shell: "pipenv --completion > {{ bash.completion_dir }}/pipenv.sh"
   args: 
     executable: '{{ bash.executable }}' # TODO: Get dynamically 
