@@ -1,10 +1,10 @@
 - name: Install the best game ever created
-  apt: 
-    state: latest 
+  apt:
+    state: latest
     name:
       - nethack-console
 
 # Nethack
 - name: Copy nethackrc
   become: no
-  file: state=link src={{role_path}}/files/nethackrc path={{ lookup('env','HOME') }}/.nethackrc force=yes
+  file: state=link src={{ role_path }}/files/nethackrc path={{ lookup('env','HOME') }}/.nethackrc force=yes

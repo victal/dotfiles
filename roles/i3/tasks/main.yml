@@ -1,6 +1,6 @@
 - name: Install base i3 packages
-  apt: 
-    state: latest 
+  apt:
+    state: latest
     name:
       - dunst
       - dmenu
@@ -18,33 +18,33 @@
 
 - name: Create screenshot dir
   become: no
-  file: 
-    state: directory 
+  file:
+    state: directory
     dest: "{{ lookup('env','HOME') }}/screenshots"
 
 - name: Create i3 config dir
   become: no
-  file: 
+  file:
     state: directory
     dest: "{{ lookup('env','HOME') }}/.i3"
 
 - name: Link specific i3 configuration
   become: no
-  file: state=link src={{role_path}}/files/{{item}} dest="{{ lookup('env','HOME') }}/.i3/{{item}}" force=yes
+  file: state=link src={{ role_path }}/files/{{ item }} dest="{{ lookup('env','HOME') }}/.i3/{{ item }}" force=yes
   with_items:
     - config
     - i3blocks.conf
 
 - name: Create rofi configuration folder
   become: no
-  file: 
-    state: directory 
+  file:
+    state: directory
     path: "{{ lookup('env', 'HOME') }}/.config/rofi"
 
 - name: Link specific rofi configuration
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/rofi.config"
-    dest: "{{ lookup('env','HOME') }}/.config/rofi/config" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/rofi.config"
+    dest: "{{ lookup('env','HOME') }}/.config/rofi/config"
     force: yes

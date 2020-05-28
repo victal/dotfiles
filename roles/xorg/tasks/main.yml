@@ -1,24 +1,24 @@
 - name: Install arandr
-  apt:     
-    name: arandr 
+  apt:
+    name: arandr
     state: latest
 
 - name: Create xorg.conf.d directory
-  file: 
-    path: /etc/X11/xorg.conf.d 
+  file:
+    path: /etc/X11/xorg.conf.d
     state: directory
 
 - name: Add xorg configuration for Logitech T650
   file:
-    src: "{{role_path}}/files/t650/52-t650-synaptics.conf"
+    src: "{{ role_path }}/files/t650/52-t650-synaptics.conf"
     path: /etc/X11/xorg.conf.d/52-t650-synaptics.conf
     state: link
 
 - name: Install Xmodmap file
   become: no
-  file: 
-    src: "{{role_path}}/files/Xmodmap" 
+  file:
+    src: "{{ role_path }}/files/Xmodmap"
     dest: "{{ lookup('env','HOME') }}/.Xmodmap"
-    state: link 
-    force: yes 
+    state: link
+    force: yes
 

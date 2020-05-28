@@ -1,7 +1,7 @@
 # Install neovim
 - name: Install neovim
   become: "{{ ansible_distribution == 'Ubuntu' }}"
-  package: 
+  package:
     name: neovim
     state: latest
 
@@ -57,12 +57,12 @@
 
 - name: Configure virtualenv for python2 provider
   become: no
-  script: "{{role_path}}/files/pyenv-venv.sh 2.7.17 neovim2"
+  script: "{{ role_path }}/files/pyenv-venv.sh 2.7.17 neovim2"
   register: pyenv2
 
 - name: Configure virtualenv for python3 provider
   become: no
-  script: "{{role_path}}/files/pyenv-venv.sh 3.8.2 neovim3"
+  script: "{{ role_path }}/files/pyenv-venv.sh 3.8.2 neovim3"
   register: pyenv3
 
 - name: get neovim2 path
@@ -77,8 +77,8 @@
     src: "{{ role_path }}/files/{{ ansible_os_family | lower }}.vim"
     dest: "{{ lookup('env','HOME') }}/.config/nvim/{{ ansible_os_family | lower }}.vim"
     force: yes
-    
-# Install vim plugins 
+
+# Install vim plugins
 - name: Install Vim Plugins
   become: no
   command: nvim +PlugUpgrade +PlugClean +PlugInstall +PlugUpdate +qall && reset

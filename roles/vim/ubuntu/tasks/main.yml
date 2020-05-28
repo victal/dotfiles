@@ -7,8 +7,8 @@
 
 # Install neovim plugin dependencies
 - name: Install vim plugin dependencies
-  apt: 
-    state: latest 
-    name: 
+  apt:
+    state: latest
+    name:
       - cmake
       - exuberant-ctags

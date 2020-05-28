@@ -1,43 +1,43 @@
 - name: Install latest bash via homebrew
   become: no
-  package: 
+  package:
     name: bash
-    state: latest 
+    state: latest
 
 - name: Change default shell to homebrew-installed bash
   become: no
-  user: 
+  user:
     name: "{{ lookup('env','USER') }}"
     shell: "/usr/local/bin/bash"
 
 - name: Install bash-completion via homebrew
   become: no
-  package: 
+  package:
     name: bash-completion@2
-    state: latest 
+    state: latest
 
 # Needed for completion scripts using bash-completion v1 configurations
 # https://github.com/Homebrew/homebrew-core/issues/36377
 - name: Add bash-completion compatibility configuration to bashrc
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/bash-completion.sh"
-    dest: "{{ lookup('env','HOME') }}/.bashrc.d/bash-completion.sh" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/bash-completion.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/bash-completion.sh"
     force: yes
 
-# Needed for python and pip usage 
+# Needed for python and pip usage
 # see https://stackoverflow.com/questions/58272830
 - name: Install openssl dependency
   become: no
-  package: 
+  package:
     name: openssl
-    state: latest 
+    state: latest
 
 - name: Add openssl to library path via bashrc
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/openssl.sh"
-    dest: "{{ lookup('env','HOME') }}/.bashrc.d/openssl.sh" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/openssl.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/openssl.sh"
     force: yes

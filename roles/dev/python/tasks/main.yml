@@ -3,7 +3,7 @@
   pip:
     state: latest
     executable: pip
-    name: 
+    name:
       - jedi
       - pipenv
       - virtualenv
@@ -13,22 +13,22 @@
   become: no
   file:
     state: link
-    src: "{{role_path}}/files/pyrc.py"
+    src: "{{ role_path }}/files/pyrc.py"
     dest: "{{ lookup('env','HOME') }}/.pyrc.py"
 
 - name: Link virtualenv and pipenv bash configurations
   become: no
   file:
     state: link
-    src: "{{role_path}}/files/bashrc/python.sh"
+    src: "{{ role_path }}/files/bashrc/python.sh"
     dest: "{{ lookup('env','HOME') }}/.bashrc.d/python.sh"
     force: yes
 
 - name: Get pipenv bash completion
   become: "{{ ansible_distribution == 'Ubuntu' }}"
   shell: "pipenv --completion > {{ bash.completion_dir }}/pipenv.sh"
-  args: 
-    executable: '{{ bash.executable }}' # TODO: Get dynamically 
+  args:
+    executable: '{{ bash.executable }}' # TODO: Get dynamically
 
 - name: Clone pyenv
   become: no
@@ -43,7 +43,7 @@
     repo: "https://github.com/pyenv/{{ item }}.git"
     dest: "{{ lookup('env', 'HOME') }}/applications/pyenv/plugins/{{ item }}"
     depth: 1
-  with_items: 
+  with_items:
     - pyenv-doctor
     - pyenv-installer
     - pyenv-update
@@ -54,6 +54,6 @@
   become: no
   file:
     state: link
-    src: "{{role_path}}/files/bashrc/pyenv.sh"
+    src: "{{ role_path }}/files/bashrc/pyenv.sh"
     dest: "{{ lookup('env','HOME') }}/.bashrc.d/pyenv.sh"
     force: yes

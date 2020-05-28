@@ -1,7 +1,7 @@
 # Install neovim plugin dependencies
 - name: Install vim plugin dependencies
   become: no
-  package: 
-    state: latest 
-    name: 
+  package:
+    state: latest
+    name:
       - universal-ctags

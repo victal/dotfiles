@@ -4,14 +4,14 @@
 
 - name: Link basic .bashrc file
   become: no
-  file: state=link force=yes src={{role_path}}/files/bashrc path={{ lookup('env','HOME') }}/.bashrc
+  file: state=link force=yes src={{ role_path }}/files/bashrc path={{ lookup('env','HOME') }}/.bashrc
 
 - name: Add basic .bashrc.d config
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/00-applications.sh"
-    dest: "{{ lookup('env','HOME') }}/.bashrc.d/00-applications.sh" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/00-applications.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/00-applications.sh"
     force: yes
 
 - name: Clone liquidprompt
@@ -22,15 +22,15 @@
 
 - name: Add liquidprompt .bashrc.d config
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/liquidprompt.sh"
-    dest: "{{ lookup('env','HOME') }}/.bashrc.d/liquidprompt.sh" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/liquidprompt.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/liquidprompt.sh"
     force: yes
 
 - name: Add liquidpromptrc
   become: no
-  file: 
-    state: link 
-    src: "{{role_path}}/files/liquidpromptrc"
-    dest: "{{ lookup('env','HOME') }}/.liquidpromptrc" 
+  file:
+    state: link
+    src: "{{ role_path }}/files/liquidpromptrc"
+    dest: "{{ lookup('env','HOME') }}/.liquidpromptrc"
