@@ -354,3 +354,12 @@ au Filetype json vnoremap <leader>j :call RangeJsonBeautify()<CR>
 au Filetype json nnoremap <leader>j :call JsonBeautify()<CR>
 au Filetype javascript vnoremap <leader>j :call RangeJsBeautify()<CR>
 au Filetype javascript nnoremap <leader>j :call JsBeautify()<CR>
+
+autocmd BufNewFile,BufRead *.template set filetype=cloudformation.yaml
+let g:neomake_cloudformation_cfnlint_maker = {
+    \ 'exe': 'cfn-lint',
+    \ 'args': ['--format=parseable'],
+    \ 'errorformat':
+        \ '%f:%l:%c:%\\d%\\+:%\\d%\\+:%t%n:%m',
+    \ }
+let g:neomake_cloudformation_enabled_makers = ['cfnlint']
