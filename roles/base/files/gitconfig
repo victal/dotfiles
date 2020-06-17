@@ -7,6 +7,7 @@
     ci = commit
     st = status
     meld = difftool -t meld -d
+    pb = !git push origin $(git branch --show-current)
 
     # aliases that match the hg in / out commands
     out      = !git fetch && git log FETCH_HEAD..
