@@ -58,14 +58,14 @@ Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'hzchirs/vim-material'
 
 """ Code (Generic)  """
-"Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets'
-Plug 'scrooloose/nerdcommenter'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'preservim/nerdcommenter'
 Plug 'metakirby5/codi.vim'
 Plug 'machakann/vim-swap'
 
-Plug 'frazrepo/vim-rainbow'
-au FileType javascript,*.javascript call rainbow#load()
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
 
 Plug 'neomake/neomake'
 Plug 'ludovicchabant/vim-gutentags'
@@ -92,8 +92,9 @@ autocmd FileType python BracelessEnable +indent +fold +highlight-cc2
 
 """ TODO """
 Plug 'dbeniamine/todo.txt-vim'
-autocmd BufNewFile,BufRead *.todo.txt set filetype=todo
-autocmd Filetype todo setlocal nofoldenable
+autocmd BufNewFile,BufRead *.todo.txt set filetype=todo 
+autocmd Filetype todo setlocal nofoldenable | RainbowToggleOff
+autocmd Filetype todo RainbowToggleOff
 
 if (!exists('g:todo_home')) 
   let g:todo_home="~/Nextcloud/todo" 
@@ -114,7 +115,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 "TODO: Simplify this mess
-set updatetime=300
+set updatetime=100
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -135,6 +136,7 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -446,7 +448,9 @@ let g:codi#rightalign = 0
 """""""""""""""""
 
 " From https://www.hillelwayne.com/post/intermediate-vim/
+" shows you in realtime what changes your ex command should make (neovim only)
 set inccommand=nosplit
+" Make j/k move by wrapped line 
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
