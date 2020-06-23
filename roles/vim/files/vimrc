@@ -110,6 +110,8 @@ command -nargs=? Todo call OpenTodo('<args>')
 
 
 """ coc.nvim """
+" Install Coc extensions via :CocInstall 
+" See https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
