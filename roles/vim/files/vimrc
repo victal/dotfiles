@@ -69,7 +69,6 @@ let g:rainbow_active = 1
 
 Plug 'neomake/neomake'
 Plug 'ludovicchabant/vim-gutentags'
-"Plug 'ervandew/supertab'
 
 Plug 'mhinz/vim-signify'
 let g:signify_vcs_list = [ 'hg', 'git' ]
@@ -85,10 +84,7 @@ Plug 'maksimr/vim-jsbeautify'
 
 """ Python """
 Plug 'jmcantrell/vim-virtualenv'
-"Plug 'tweekmonster/braceless.vim'
 Plug 'pearofducks/ansible-vim'
-
-autocmd FileType python BracelessEnable +indent +fold +highlight-cc2
 
 """ TODO """
 Plug 'dbeniamine/todo.txt-vim'
@@ -315,37 +311,6 @@ autocmd FileType javascript,*.javascript set makeprg=npm
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
-""""""""""""""""""""
-" Jedi-vim Options "
-""""""""""""""""""""
-
-"let g:jedi#auto_vim_configuration = 0
-"let g:jedi#popup_on_dot = 0
-"let g:jedi#popup_select_first = 0
-"let g:jedi#completions_enabled = 0
-"let g:jedi#completions_command = ""
-"let g:jedi#show_call_signatures = "1"
-
-"let g:jedi#goto_assignments_command = "<leader>a"
-"let g:jedi#goto_definitions_command = "<leader>g"
-"let g:jedi#documentation_command = "<leader>k"
-"let g:jedi#usages_command = "<leader>u"
-"let g:jedi#rename_command = "<leader>r"
-
-""""""""""""""""""""
-" Deoplete Options "
-""""""""""""""""""""
-
-"let g:deoplete#enable_at_startup = 1
-"call deoplete#custom#option({
-      "\   'ignore_case': v:true,
-      "\   'camel_case': v:true,
-      "\ })
-"call deoplete#custom#source('_', {
-      "\   'max_abbr_width': 0,
-      "\   'max_menu_width': 0,
-      "\ })
-
 """""""""""""""""""
 " Neomake options "
 """""""""""""""""""
@@ -364,16 +329,6 @@ let g:gutentags_cache_dir="~/.vim/tags"
 let g:gutentags_ctags_exclude = ['coverage', '.nyc_output', '.vscode', 'node_modules', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
 let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
 let g:airline#extensions#gutentags#enabled = 1
-
-"""""""""""""""""""""
-" Ultisnips Options "
-"""""""""""""""""""""
-
-"let g:UltiSnipsExpandTrigger="<Tab>"
-"let g:UltiSnipsJumpForwardTrigger="<Tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<C-p>"
-"let g:snips_email = 'guilherme.costa@maps.com.br'
-"let g:snips_github = ''
 
 """""""""""""""""
 " Color Options "
@@ -407,6 +362,7 @@ nnoremap <leader>t :TagbarToggle<CR>
 " NERDTree Options "
 """"""""""""""""""""
 nnoremap <leader>x :NERDTreeToggle<CR>
+
 " Thanks https://superuser.com/a/474298/383630 and https://gist.github.com/avesus/1954d9384d86cc1e39cb2b2eff7017b7
 " calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
 function! s:isNTOpen()
