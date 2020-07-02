@@ -1,8 +1,8 @@
 ---
 dependencies:
   - role: base
-  #- role: desktop/mac
-    #when: ansible_os_family == 'Darwin'
+  - role: desktop/mac
+    when: ansible_os_family == 'Darwin'
   - role: desktop/ubuntu
     when: ansible_distribution == 'Ubuntu'
 

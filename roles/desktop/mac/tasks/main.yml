@@ -1,0 +1,7 @@
+- name: Link iTerm title bash configuration
+  become: no
+  file:
+    state: link
+    src: "{{ role_path }}/files/bashrc/99-iterm-prompt-command.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/99-iterm-prompt-command.sh"
+    force: yes
