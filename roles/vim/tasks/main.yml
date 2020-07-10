@@ -81,4 +81,8 @@
 # Install vim plugins
 - name: Install Vim Plugins
   become: no
-  command: nvim +PlugUpgrade +PlugClean +PlugInstall +PlugUpdate +qall && reset
+  command: nvim -c 'PlugUpgrade | PlugClean! | PlugUpdate | PlugInstall | qall' && reset
+
+- name: Install coc.nvim extensions
+  become: no
+  command: nvim -c 'CocInstall -sync coc-json coc-html coc-tsserver coc-ultisnips|qall'
