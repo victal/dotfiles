@@ -16,7 +16,7 @@
       - curl
       - python
       - python-dev
-      - python-pip
+      - python3-pip
       - git
 
 - name: Install HTTPS repo dependencies
@@ -27,14 +27,15 @@
      - ca-certificates
      - software-properties-common
 
-- name: Link font folder
-  become: no
-  file:
-    src: "{{ role_path }}/../files/fonts"
-    path: "{{ lookup('env','HOME') }}/.local/share/fonts"
-    state: link
-    force: yes
 
-- name: Rebuild font cache
-  become: no
-  command: fc-cache -vf
+#- name: Link font folder
+#  become: no
+#  file:
+#    src: "{{ role_path }}/../files/fonts"
+#    path: "{{ lookup('env','HOME') }}/.local/share/fonts"
+#    state: link
+#    force: yes
+#
+#- name: Rebuild font cache
+#  become: no
+#  command: fc-cache -vf

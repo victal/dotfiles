@@ -8,6 +8,7 @@
       - pipenv
       - virtualenv
       - virtualenvwrapper
+    executable: pip3
 
 - name: Link pyrc file
   become: no

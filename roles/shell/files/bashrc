@@ -107,12 +107,12 @@ shopt -s globstar
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }' 
 #export PS4=`echo -ne "+(\${BASH_SOURCE}:\${LINENO}): \${FUNCNAME[0]:+\${FUNCNAME[0]}(): }"`
 
-alias now="date +%Y%m%d%H%M%S"
-
-for file in $HOME/.bashrc.d/*.sh
-do
-  source "$file"
-done
+#alias now="date +%Y%m%d%H%M%S"
+#
+#for file in $HOME/.bashrc.d/*.sh
+#do
+#  source "$file"
+#done
 
 # FIXME: short circuit tabtab completion auto installation
 # Needed until serverless projects start using versions >= 1.55.0 due to https://github.com/serverless/serverless/pull/6835
