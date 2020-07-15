@@ -8,7 +8,7 @@
       - gnu-sed
       - go-jira
       - fpp
-      - watch 
+      - watch
 
 - name: Create gojira configuration directory
   become: no

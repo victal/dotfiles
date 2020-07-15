@@ -8,6 +8,7 @@
     name:
       - awscli
       - cfn-lint
+    executable: pip3
   when: ansible_distribution == 'Ubuntu'
 
 - name: Install aws-cli packages on mac
