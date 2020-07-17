@@ -57,6 +57,9 @@ Plug 'nightsense/stellarized'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'hzchirs/vim-material'
 
+""" Tmux """
+Plug 'christoomey/vim-tmux-navigator'
+
 """ Code (Generic)  """
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -217,8 +220,14 @@ omap ac <Plug>(coc-classobj-a)
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <C-s>h :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-s>j :TmuxNavigateDown<cr>
+nnoremap <silent> <C-s>k :TmuxNavigateUp<cr>
+nnoremap <silent> <C-s>l :TmuxNavigateRight<cr>
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
