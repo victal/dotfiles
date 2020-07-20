@@ -20,6 +20,22 @@
   args:
     executable: '{{ bash.executable }}'
 
+- name: Install tmux
+  become: "{{ ansible_distribution == 'Ubuntu' }}"
+  package:
+    state: latest
+    name:
+      - tmux
+
+- name: Link tmux configuration
+  become: no
+  file:
+    state: link
+    src: "{{ role_path }}/files/tmux.conf"
+    dest: "{{ lookup('env','HOME') }}/.tmux.conf"
+
+
+
 # Applications installed in OS specific roles:
 # fpp (both)
 # go-jira (on mac)
