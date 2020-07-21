@@ -434,4 +434,4 @@ command Wq :execute ':W' | :q
 nnoremap <leader>ss :wa<CR>
 nnoremap <leader>sq :wqa<CR>
 " }}}
-vim:set et sw=2 ts=8 tw=78 foldmethod=marker:
+" vim:set et sw=2 ts=8 tw=78 foldmethod=marker:
