@@ -9,6 +9,7 @@
       - go-jira
       - fpp
       - watch 
+      - reattach-to-user-namespace
 
 - name: Create gojira configuration directory
   become: no
