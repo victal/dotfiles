@@ -41,3 +41,11 @@
     src: "{{ role_path }}/files/openssl.sh"
     dest: "{{ lookup('env','HOME') }}/.bashrc.d/openssl.sh"
     force: yes
+
+- name: Add custom aliases to .bashrc.d
+  become: no
+  file:
+    state: link
+    src: "{{ role_path }}/files/aliases.sh"
+    dest: "{{ lookup('env','HOME') }}/.bashrc.d/mac-aliases.sh"
+    force: yes
