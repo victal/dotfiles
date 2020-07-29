@@ -261,6 +261,9 @@ nnoremap <silent> <C-s>h :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-s>j :TmuxNavigateDown<cr>
 nnoremap <silent> <C-s>k :TmuxNavigateUp<cr>
 nnoremap <silent> <C-s>l :TmuxNavigateRight<cr>
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
 " }}}
 " Grep w/Silver Searcher {{{
 " https://thoughtbot.com/blog/faster-grepping-in-vim
