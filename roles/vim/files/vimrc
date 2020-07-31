@@ -2,8 +2,8 @@
 syntax on
 set nocompatible
 set expandtab
-set autoindent
 set smarttab
+set autoindent
 set shiftwidth=4
 set softtabstop=4
 set tabstop=8
@@ -16,8 +16,10 @@ set modeline
 set foldmethod=manual
 set nobomb
 set viminfo=
+" Ignore whitespace in diff mode
 set diffopt+=iwhite
-set diffexpr=""
+" TODO: 2020-07-29 Default is already an empty string
+" set diffexpr=""
 
 " }}}
 " Vim-Plug setup {{{
@@ -109,7 +111,7 @@ function! OpenTodo(...)
         execute 'edit '.g:todo_home.'/'.a:1.'.todo.txt'
     endif
 endfunction
-command -nargs=? Todo call OpenTodo('<args>')
+command! -nargs=? Todo call OpenTodo('<args>')
 " }}}
 " coc.nvim Options {{{
 "TODO: Simplify this mess
@@ -360,6 +362,13 @@ set guifont=MesloLGLDZ\ Nerd\ Font\ 10
 let g:airline_powerline_fonts = 1
 let g:airline_theme='material'
 " }}}
+" Buffergator Options {{{
+" Disable default keymaps so we can set our own without conflicts
+" Especially since <leader>t conflicts with tagbar
+" and <leader>b maps to open instead of toggle
+let g:buffergator_suppress_keymaps = 1
+nnoremap <silent> <Leader>b :BuffergatorToggle<CR>
+" }}}
 " Tagbar Options {{{
 nnoremap <leader>t :TagbarToggle<CR>
 " }}}
@@ -431,9 +440,9 @@ au BufNewFile,BufRead Jenkinsfile setf groovy
 cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 
 """ Extra save commands """
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
-command WQ :execute ':W' | :q
-command Wq :execute ':W' | :q
+command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+command! WQ :execute ':W' | :q
+command! Wq :execute ':W' | :q
 nnoremap <leader>ss :wa<CR>
 nnoremap <leader>sq :wqa<CR>
 " }}}
