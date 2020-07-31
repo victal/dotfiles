@@ -56,6 +56,7 @@ Plug 'hzchirs/vim-material'
 
 """ Tmux """
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
 
 """ Code (Generic)  """
 Plug 'SirVer/ultisnips'
@@ -265,7 +266,64 @@ nnoremap <silent> <C-s>k :TmuxNavigateUp<cr>
 nnoremap <silent> <C-s>l :TmuxNavigateRight<cr>
 
 " automatically rebalance windows on vim resize
-autocmd VimResized * :wincmd =
+autocmd VimResized * wincmd =
+" }}}
+" Vim-tmux-runner Options {{{
+
+" Mapping      |   Command
+" -----------------------------
+" <leader>va   |   VtrAttachToPane<cr>
+" <leader>ror  |   VtrReorientRunner<cr>
+" <leader>sc   |   VtrSendCommandToRunner<cr>
+" <leader>sf   |   VtrSendFile<cr>
+" <leader>sl   |   VtrSendLinesToRunner<cr>
+" <leader>or   |   VtrOpenRunner<cr>
+" <leader>kr   |   VtrKillRunner<cr>
+" <leader>fr   |   VtrFocusRunner<cr>
+" <leader>dr   |   VtrDetachRunner<cr>
+" <leader>cr   |   VtrClearRunner<cr>
+" <leader>fc   |   VtrFlushCommand<cr>
+" <leader>sl   |   VtrSendLinesToRunner<cr>
+
+let g:VtrUseVtrMaps = 1
+
+let s:shells = {
+  \ "javascript": "node",
+  \ "python": "python",
+  \ "sh": "",
+  \ }
+
+function! GetVtrShell()
+  let l:shell = ''
+  if has_key(s:shells, &filetype)
+      let l:shell = get(s:shells, &filetype)
+  endif
+  return l:shell
+endfunction
+
+function! OpenVtrShell()
+  let l:shell = GetVtrShell()
+  execute "VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': '" . l:shell . "' }"
+endfunction
+
+function! SendBlockToRunner() range
+    let l:shell = GetVtrShell()
+    if l:shell == 'node'
+      " Set node's editor mode to allow for multiline expressions
+      execute "VtrSendCommandToRunner .editor"
+      execute a:firstline . "," . a:lastline . "VtrSendLinesToRunner"
+      execute "VtrSendCtrlD"
+    else
+      execute "VtrSendLinesToRunner"
+    endif
+endfunction
+
+nnoremap <leader>r :call OpenVtrShell()<CR>
+vnoremap <leader>r :call SendBlockToRunner()<cr>
+
+"Kill VTR runner on vim close
+autocmd VimLeavePre * VtrKillRunner
+
 " }}}
 " Grep w/Silver Searcher {{{
 " https://thoughtbot.com/blog/faster-grepping-in-vim
