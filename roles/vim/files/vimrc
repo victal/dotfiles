@@ -285,11 +285,16 @@ autocmd VimResized * wincmd =
 " <leader>fc   |   VtrFlushCommand<cr>
 " <leader>sl   |   VtrSendLinesToRunner<cr>
 
+" Whitespace options to better handle python code
+let g:VtrStripLeadingWhitespace = 0
+let g:VtrClearEmptyLines = 0
+let g:VtrAppendNewline = 1
+
 let g:VtrUseVtrMaps = 1
 
 let s:shells = {
   \ "javascript": "node",
-  \ "python": "python",
+  \ "python": "python3",
   \ "sh": "",
   \ }
 
@@ -314,7 +319,7 @@ function! SendBlockToRunner() range
       execute a:firstline . "," . a:lastline . "VtrSendLinesToRunner"
       execute "VtrSendCtrlD"
     else
-      execute "VtrSendLinesToRunner"
+      execute a:firstline . "," . a:lastline . "VtrSendLinesToRunner"
     endif
 endfunction
 
