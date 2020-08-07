@@ -315,6 +315,7 @@ function! SendBlockToRunner() range
     let l:shell = GetVtrShell()
     if l:shell == 'node'
       " Set node's editor mode to allow for multiline expressions
+      " Thanks to https://stackoverflow.com/questions/29203892/how-to-write-multiple-lines-of-code-in-node-repl#39133557
       execute "VtrSendCommandToRunner .editor"
       execute a:firstline . "," . a:lastline . "VtrSendLinesToRunner"
       execute "VtrSendCtrlD"
