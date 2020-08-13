@@ -1,11 +1,9 @@
-""""""""""""""""""
-" Common options "
-""""""""""""""""""
+" Common options {{{
 syntax on
 set nocompatible
 set expandtab
-set autoindent
 set smarttab
+set autoindent
 set shiftwidth=4
 set softtabstop=4
 set tabstop=8
@@ -18,19 +16,18 @@ set modeline
 set foldmethod=manual
 set nobomb
 set viminfo=
+" Ignore whitespace in diff mode
 set diffopt+=iwhite
-set diffexpr=""
+" TODO: 2020-07-29 Default is already an empty string
+" set diffexpr=""
 
-""""""""""""""""""
-" Vim-Plug setup "
-""""""""""""""""""
+" }}}
+" Vim-Plug setup {{{
 
 call plug#begin('~/.vim/bundle')
 
-""""""""""""""""""""
-" My Plugins       "
-""""""""""""""""""""
-
+" }}}
+" Plugins       {{{
 """ Sensible defaults """
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
@@ -56,6 +53,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'nightsense/stellarized'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'hzchirs/vim-material'
+
+""" Tmux """
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
 
 """ Code (Generic)  """
 Plug 'SirVer/ultisnips'
@@ -86,8 +87,17 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'pearofducks/ansible-vim'
 
-""" TODO """
+""" todo.txt """
 Plug 'dbeniamine/todo.txt-vim'
+
+""" coc.nvim """
+" Install Coc extensions via :CocInstall 
+" See https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+call plug#end()
+" }}}
+" todo.txt options {{{
 autocmd BufNewFile,BufRead *.todo.txt set filetype=todo 
 autocmd Filetype todo setlocal nofoldenable | RainbowToggleOff
 autocmd Filetype todo RainbowToggleOff
@@ -102,16 +112,9 @@ function! OpenTodo(...)
         execute 'edit '.g:todo_home.'/'.a:1.'.todo.txt'
     endif
 endfunction
-command -nargs=? Todo call OpenTodo('<args>')
-
-
-""" coc.nvim """
-" Install Coc extensions via :CocInstall 
-" See https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-call plug#end()
-
+command! -nargs=? Todo call OpenTodo('<args>')
+" }}}
+" coc.nvim Options {{{
 "TODO: Simplify this mess
 set updatetime=100
 
@@ -217,8 +220,9 @@ omap ac <Plug>(coc-classobj-a)
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
+" Disabled to make way for tmux wincmd mappings
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -251,11 +255,83 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" }}}
+" Tmux navigation {{{
 
+let g:tmux_navigator_no_mappings = 1
 
-""""""""""""""""""""""""""
-" Grep w/Silver Searcher "
-""""""""""""""""""""""""""
+nnoremap <silent> <C-s>h :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-s>j :TmuxNavigateDown<cr>
+nnoremap <silent> <C-s>k :TmuxNavigateUp<cr>
+nnoremap <silent> <C-s>l :TmuxNavigateRight<cr>
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * wincmd =
+" }}}
+" Vim-tmux-runner Options {{{
+
+" Mapping      |   Command
+" -----------------------------
+" <leader>va   |   VtrAttachToPane<cr>
+" <leader>ror  |   VtrReorientRunner<cr>
+" <leader>sc   |   VtrSendCommandToRunner<cr>
+" <leader>sf   |   VtrSendFile<cr>
+" <leader>sl   |   VtrSendLinesToRunner<cr>
+" <leader>or   |   VtrOpenRunner<cr>
+" <leader>kr   |   VtrKillRunner<cr>
+" <leader>fr   |   VtrFocusRunner<cr>
+" <leader>dr   |   VtrDetachRunner<cr>
+" <leader>cr   |   VtrClearRunner<cr>
+" <leader>fc   |   VtrFlushCommand<cr>
+" <leader>sl   |   VtrSendLinesToRunner<cr>
+
+" Whitespace options to better handle python code
+let g:VtrStripLeadingWhitespace = 0
+let g:VtrClearEmptyLines = 0
+let g:VtrAppendNewline = 1
+
+let g:VtrUseVtrMaps = 1
+
+let s:shells = {
+  \ "javascript": "node",
+  \ "python": "python3",
+  \ "sh": "",
+  \ }
+
+function! GetVtrShell()
+  let l:shell = ''
+  if has_key(s:shells, &filetype)
+      let l:shell = get(s:shells, &filetype)
+  endif
+  return l:shell
+endfunction
+
+function! OpenVtrShell()
+  let l:shell = GetVtrShell()
+  execute "VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': '" . l:shell . "' }"
+endfunction
+
+function! SendBlockToRunner() range
+    let l:shell = GetVtrShell()
+    if l:shell == 'node'
+      " Set node's editor mode to allow for multiline expressions
+      " Thanks to https://stackoverflow.com/questions/29203892/how-to-write-multiple-lines-of-code-in-node-repl#39133557
+      execute "VtrSendCommandToRunner .editor"
+      execute a:firstline . "," . a:lastline . "VtrSendLinesToRunner"
+      execute "VtrSendCtrlD"
+    else
+      execute a:firstline . "," . a:lastline . "VtrSendLinesToRunner"
+    endif
+endfunction
+
+nnoremap <leader>r :call OpenVtrShell()<CR>
+vnoremap <leader>r :call SendBlockToRunner()<cr>
+
+"Kill VTR runner on vim close
+autocmd VimLeavePre * VtrKillRunner
+
+" }}}
+" Grep w/Silver Searcher {{{
 " https://thoughtbot.com/blog/faster-grepping-in-vim
 if executable('ag')
   " Use ag over grep
@@ -268,11 +344,11 @@ if executable('ag')
   "let g:ctrlp_use_caching = 0
 endif
 
-"""""""""""""""""
-" CtrlP options "
-"""""""""""""""""
+nnoremap <leader>g :grep! "\b<cword>\b"<CR>:cw<CR>
+" }}}
+" CtrlP options {{{
 
-let g:ctrlp_map = '<c-p>'
+let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_root_markers = ['pom.xml', 'package.json', 'bower.json', 'setup.py']
@@ -281,12 +357,10 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
   \ }
 nnoremap <leader>f :CtrlPBuffer<C-M>
+" }}}
+" File type options {{{
 
-""""""""""""""""""""""""""
-" Tabwidth per file type "
-""""""""""""""""""""""""""
-
-" HTML (tab width 2 chr, no wrapping)
+" HTML (tab width 4 chr, no wrapping)
 autocmd FileType html,xhtml,htmldjango set sw=4
 autocmd FileType html,xhtml,htmldjango set ts=4
 autocmd FileType html,xhtml,htmldjango set sts=4
@@ -303,17 +377,13 @@ autocmd FileType javascript,jade set sw=2
 autocmd FileType javascript,jade set ts=2
 autocmd FileType javascript,jade set sts=2
 autocmd FileType javascript,*.javascript set makeprg=npm
-
-"""""""""""""""""""
-" Folding Options "
-"""""""""""""""""""
+" }}}
+" Folding Options {{{
 
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
-
-"""""""""""""""""""
-" Neomake options "
-"""""""""""""""""""
+" }}}
+" Neomake options {{{
 
 call neomake#configure#automake('nrwi', 100)
 let g:neomake_yaml_ansible_enabled_makers = ['ansiblelint']
@@ -321,28 +391,31 @@ let g:neomake_yaml_ansible_ansiblelint_errorformat = '%f:%l: [%t%n] %m'
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_open_list = 2
 
-"""""""""""""""""""""
-" Gutentags options "
-"""""""""""""""""""""
+autocmd BufNewFile,BufRead *.template set filetype=cloudformation.yaml
+let g:neomake_cloudformation_cfnlint_maker = {
+    \ 'exe': 'cfn-lint',
+    \ 'args': ['--format=parseable'],
+    \ 'errorformat':
+        \ '%f:%l:%c:%\\d%\\+:%\\d%\\+:%t%n:%m',
+    \ }
+let g:neomake_cloudformation_enabled_makers = ['cfnlint']
+" }}}
+" Gutentags options {{{
 
 let g:gutentags_cache_dir="~/.vim/tags"
 let g:gutentags_ctags_exclude = ['coverage', '.nyc_output', '.vscode', 'node_modules', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
 let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
 let g:airline#extensions#gutentags#enabled = 1
-
-"""""""""""""""""
-" Color Options "
-"""""""""""""""""
+" }}}
+" Color Options {{{
 
 set termguicolors
 let g:enable_bold_font = 1
 let g:enable_italic_font = 1
 set background=dark
 silent! colorscheme vim-material
-
-"""""""""""""""""""
-" Airline options "
-"""""""""""""""""""
+" }}}
+" Airline options {{{
 
 if !has('nvim')
   set term=xterm-256color
@@ -352,15 +425,18 @@ set laststatus=2
 set guifont=MesloLGLDZ\ Nerd\ Font\ 10
 let g:airline_powerline_fonts = 1
 let g:airline_theme='material'
-
-""""""""""""""""""
-" Tagbar Options "
-""""""""""""""""""
+" }}}
+" Buffergator Options {{{
+" Disable default keymaps so we can set our own without conflicts
+" Especially since <leader>t conflicts with tagbar
+" and <leader>b maps to open instead of toggle
+let g:buffergator_suppress_keymaps = 1
+nnoremap <silent> <Leader>b :BuffergatorToggle<CR>
+" }}}
+" Tagbar Options {{{
 nnoremap <leader>t :TagbarToggle<CR>
-
-""""""""""""""""""""
-" NERDCommenter Options "
-""""""""""""""""""""
+" }}}
+" NERDCommenter Options {{{
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
@@ -369,10 +445,8 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
-
-""""""""""""""""""""
-" NERDTree Options "
-""""""""""""""""""""
+" }}}
+" NERDTree Options {{{
 nnoremap <leader>x :NERDTreeToggle<CR>
 
 " Thanks https://superuser.com/a/474298/383630 and https://gist.github.com/avesus/1954d9384d86cc1e39cb2b2eff7017b7
@@ -398,24 +472,24 @@ endfunction
 
 " Shows NERDTree on start and synchronizes the tree with opened file when switching between opened windows
 autocmd BufEnter * call s:syncTreeIf()
-
-""""""""""""""""""""""""""""
-" Markdown Preview Options "
-""""""""""""""""""""""""""""
+" }}}
+" Markdown Preview Options {{{
 " set to 1, nvim will open the preview window after entering the markdown buffer
 let g:mkdp_auto_start = 0 
-
-""""""""""""""""""""
-" Codi.vim Options "
-""""""""""""""""""""
+" }}}
+" Codi.vim Options {{{
 
 "Width of the codi side pane as a percentage of the current buffer width
 let g:codi#width = 40.0
 let g:codi#rightalign = 0
-
-"""""""""""""""""
-" Extra Options "
-"""""""""""""""""
+" }}}
+" jsbeautify Options {{{
+au Filetype json vnoremap <leader>j :call RangeJsonBeautify()<CR>
+au Filetype json nnoremap <leader>j :call JsonBeautify()<CR>
+au Filetype javascript vnoremap <leader>j :call RangeJsBeautify()<CR>
+au Filetype javascript nnoremap <leader>j :call JsBeautify()<CR>
+" }}}
+" Extra Options {{{
 
 " From https://www.hillelwayne.com/post/intermediate-vim/
 " shows you in realtime what changes your ex command should make (neovim only)
@@ -430,24 +504,10 @@ au BufNewFile,BufRead Jenkinsfile setf groovy
 cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 
 """ Extra save commands """
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
-command WQ :execute ':W' | :q
-command Wq :execute ':W' | :q
+command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+command! WQ :execute ':W' | :q
+command! Wq :execute ':W' | :q
 nnoremap <leader>ss :wa<CR>
 nnoremap <leader>sq :wqa<CR>
-
-nnoremap <leader>g :grep! "\b<cword>\b"<CR>:cw<CR>
-
-au Filetype json vnoremap <leader>j :call RangeJsonBeautify()<CR>
-au Filetype json nnoremap <leader>j :call JsonBeautify()<CR>
-au Filetype javascript vnoremap <leader>j :call RangeJsBeautify()<CR>
-au Filetype javascript nnoremap <leader>j :call JsBeautify()<CR>
-
-autocmd BufNewFile,BufRead *.template set filetype=cloudformation.yaml
-let g:neomake_cloudformation_cfnlint_maker = {
-    \ 'exe': 'cfn-lint',
-    \ 'args': ['--format=parseable'],
-    \ 'errorformat':
-        \ '%f:%l:%c:%\\d%\\+:%\\d%\\+:%t%n:%m',
-    \ }
-let g:neomake_cloudformation_enabled_makers = ['cfnlint']
+" }}}
+" vim:set et sw=2 ts=8 tw=78 foldmethod=marker:
