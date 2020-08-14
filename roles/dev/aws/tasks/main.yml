@@ -18,7 +18,7 @@
 
 - name: Run awscli installer
   become: yes
-  command: /tmp/aws/install
+  command: /tmp/aws/install --update
   when: ansible_distribution == 'Ubuntu'
 
 # https://github.com/aws-cloudformation/cfn-python-lint
