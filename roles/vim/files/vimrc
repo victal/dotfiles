@@ -97,6 +97,29 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 " }}}
+" Other vim-plug options {{{
+function! s:plug_gx()
+  let line = getline('.')
+  echo line
+  let sha = matchstr(line, '^  \X*\zs\x\{7,9}\ze ')
+  let name = empty(sha) ? matchstr(line, "'[^']\\+/\\zs[^:,]\\+\\ze',\\?")
+                      \ : getline(search('^- .*:$', 'bn'))[2:-2]
+  let uri  = get(get(g:plugs, name, {}), 'uri', '')
+  echo uri
+  if uri !~ 'github.com'
+    return
+  endif
+  let repo = matchstr(uri, '[^:/]*/'.name)
+  let url  = empty(sha) ? 'https://github.com/'.repo
+                      \ : printf('https://github.com/%s/commit/%s', repo, sha)
+  call netrw#BrowseX(url, 0)
+endfunction
+
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+" }}}
 " todo.txt options {{{
 autocmd BufNewFile,BufRead *.todo.txt set filetype=todo 
 autocmd Filetype todo setlocal nofoldenable | RainbowToggleOff
