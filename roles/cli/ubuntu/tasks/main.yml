@@ -4,6 +4,7 @@
   package:
     state: latest
     name:
+      - fzf
       - dnsutils
       - p7zip-full
       - rar
@@ -54,5 +55,5 @@
   become: yes
   file:
     state: link
-    src: "/usr/share/bash-completion/completions/fzf"
+    src: "/usr/share/doc/fzf/examples/completion.bash"
     dest: "/etc/bash_completion.d/fzf"
