@@ -1,6 +1,7 @@
 ---
 dependencies:
   - role: dev/aws
+  - role: dev/azure
   - role: dev/python
   - role: dev/nodejs
   - role: dev/docker
