@@ -1,0 +1,12 @@
+MODIFIED_FILES=$(git diff --name-only --staged | wc -l)
+if [ "${MODIFIED_FILES}" -eq 0 ]; then
+    echo 'No files have been staged for commit, aborting commit without running local hooks'
+    exit 0
+fi
+
+if [ -e ./.git/hooks/pre-commit ]; then
+    ./.git/hooks/pre-commit "$@"
+fi
+
+
+# vim:set et sw=4 ts=8 ft=sh:
