@@ -1,3 +1,8 @@
+#!/usr/bin/env sh
+# Git global hook to ignore pre-commit hooks if we have not added any file to the staging area
+# Useful since some hooks might be time-consuming (e.g. running lint in a big project)
+# With thanks to https://stackoverflow.com/a/53722351
+
 MODIFIED_FILES=$(git diff --name-only --staged | wc -l)
 if [ "${MODIFIED_FILES}" -eq 0 ]; then
     echo 'No files have been staged for commit, aborting commit without running local hooks'
