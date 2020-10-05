@@ -1,1 +1,4 @@
 keycode  38 = a A a A aring Aring aring
+clear Lock
+keycode 66 = Control_R
+add Control = Control_R
