@@ -1,13 +1,34 @@
 # Install packages for aws-cli and helpers/dependencies
 
+#https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install
+- name: Download awscli v2 package
+  become: no
+  uri:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp/awscliv2.zip
+    status_code: 200,304
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Unpack awscli installer
+  become: no
+  unarchive:
+    src: /tmp/awscliv2.zip
+    dest: /tmp
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Run awscli installer
+  become: yes
+  command: /tmp/aws/install --update
+  when: ansible_distribution == 'Ubuntu'
+
 # https://github.com/aws-cloudformation/cfn-python-lint
-- name: Install aws-cli packages on ubuntu
+- name: Install cfn-lint on ubuntu
   become: no
   pip:
     state: latest
     name:
-      - awscli
       - cfn-lint
+    executable: pip3
   when: ansible_distribution == 'Ubuntu'
 
 - name: Install aws-cli packages on mac

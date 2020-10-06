@@ -21,4 +21,9 @@
 [pull]
     rebase = false
 
+# Note: global hooks must call local hooks or they will be ignored
+# See https://stackoverflow.com/questions/51178382
+[core]
+    hooksPath = {{ lookup('env', 'HOME') }}/.config/git/hooks
+
 # vi: ft=gitconfig

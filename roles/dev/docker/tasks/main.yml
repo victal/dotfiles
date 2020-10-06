@@ -4,6 +4,7 @@
     name:
       - docker
       - docker-compose
+    executable: pip3
 
 - name: Create docker config dir
   become: no

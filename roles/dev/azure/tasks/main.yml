@@ -1,0 +1,19 @@
+- name: Install azure-cli via brew
+  become: no
+  package:
+    state: latest
+    name: azure-cli
+  when: ansible_os_family == 'Darwin'
+
+
+- name: Download azure docker credential helper install script
+  get_url:
+    url: https://raw.githubusercontent.com/Azure/acr-docker-credential-helper/master/install/install.sh
+    dest: "{{ lookup('env','TMPDIR') }}/install_acr.sh"
+
+# Yes, we need to set the shell as interactive 
+# in order to install the helper non interactively
+# Not fixing it upstream as I don't know how to check for curl | bash correctly yet
+- name: Install Azure docker credential helper
+  become: no
+  shell: bash -i {{ lookup('env','TMPDIR') }}/install_acr.sh

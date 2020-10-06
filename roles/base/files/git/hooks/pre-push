@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# Necessary when core.hooksPath is set, so we don't ignore local hooks
+
+if [ -e ./.git/hooks/pre-push ]; then
+    ./.git/hooks/pre-push "$@"
+fi
+
+
+# vim:set et sw=4 ts=8 ft=sh:

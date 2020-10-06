@@ -15,12 +15,19 @@
     name: git
     state: latest
 
-# Copy git configuration - git installation is handled by sub-roles
-- name: Link git config
+# Copy git configuration
+- name: Build gitconfig file
   become: no
   template:
     src: "{{ role_path }}/files/gitconfig"
     dest: "{{ lookup('env','HOME') }}/.gitconfig"
+
+- name: Link git configs directory (for hooks)
+  become: no
+  file:
+    src: "{{ role_path }}/files/git"
+    dest: "{{ lookup('env', 'HOME') }}/.config/git"
+    state: link
 
 # Needed for github_release module
 - name: Install pip dependencies for other modules
@@ -29,3 +36,4 @@
     name: github3.py
     state: present
     version: 1.0.0a4 # TODO: Check latest working version
+    executable: pip3
