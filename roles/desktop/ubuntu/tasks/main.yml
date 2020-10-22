@@ -62,3 +62,16 @@
   apt:
     name: yacreader
     state: latest
+
+# Peek GIF Recorder - https://github.com/phw/peek
+- name: Add peek PPA
+  apt_repository:
+    repo: 'ppa:peek-developers/stable'
+    state: present
+    filename: peek
+    update_cache: yes
+   
+- name: Install peek from apt
+  apt:
+    name: peek
+    state: latest
