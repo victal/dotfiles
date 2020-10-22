@@ -34,7 +34,18 @@
     src: "{{ role_path }}/files/tmux.conf"
     dest: "{{ lookup('env','HOME') }}/.tmux.conf"
 
+# See https://thoughtbot.com/upcase/videos/tmux-navigation
+- name: Clone thoughtbot dotfiles
+  become: no
+  git:
+    repo: https://github.com/thoughtbot/dotfiles.git
+    dest: "{{ lookup('env', 'HOME') }}/applications/thoughtbot-dotfiles"
 
+- name: Install thoughtbot's tmux tat script
+  file:
+    state: link
+    src: "{{ lookup('env', 'HOME') }}/applications/thoughtbot-dotfiles/bin/tat"
+    dest: "{{ lookup('env','HOME') }}/bin/tat"
 
 # Applications installed in OS specific roles:
 # fpp (both)
