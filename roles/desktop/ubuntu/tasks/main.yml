@@ -70,7 +70,7 @@
     state: present
     filename: peek
     update_cache: yes
-   
+
 - name: Install peek from apt
   apt:
     name: peek

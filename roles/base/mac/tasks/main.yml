@@ -26,5 +26,6 @@
     dest: "{{ lookup('env', 'HOME') }}/Library/Fonts/{{ item.path | basename }}"
     remote_src: yes
     force: yes
+    mode: 0644
   with_items:
    - "{{ fonts.files }}"

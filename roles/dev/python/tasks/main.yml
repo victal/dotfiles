@@ -36,6 +36,7 @@
     repo: https://github.com/pyenv/pyenv.git
     dest: "{{ lookup('env', 'HOME') }}/applications/pyenv"
     depth: 1
+    version: master
 
 - name: Clone pyenv plugins
   become: no
@@ -43,6 +44,7 @@
     repo: "https://github.com/pyenv/{{ item }}.git"
     dest: "{{ lookup('env', 'HOME') }}/applications/pyenv/plugins/{{ item }}"
     depth: 1
+    version: master
   with_items:
     - pyenv-doctor
     - pyenv-installer

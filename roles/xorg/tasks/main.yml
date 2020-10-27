@@ -6,12 +6,14 @@
 - name: Create xorg.conf.d directory
   file:
     path: /etc/X11/xorg.conf.d
+    mode: 0755
     state: directory
 
 - name: Add xorg configuration for Logitech T650
   file:
     src: "{{ role_path }}/files/t650/52-t650-synaptics.conf"
     path: /etc/X11/xorg.conf.d/52-t650-synaptics.conf
+    mode: 0644
     state: link
 
 - name: Install Xmodmap file

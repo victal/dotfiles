@@ -1,12 +1,18 @@
 # Create applications directory -> Manually installed applications will live here
 - name: Create applications directory
   become: no
-  file: path={{ lookup('env','HOME') }}/applications/ state=directory
+  file:
+    path: "{{ lookup('env','HOME') }}/applications/"
+    state: directory
+    mode: 0755
 
 # Create $HOME/bin directory -> executables of manually installed applications will be linked here to be added to $PATH
 - name: Create bin directory
   become: no
-  file: path={{ lookup('env','HOME') }}/bin/ state=directory
+  file:
+    path: "{{ lookup('env','HOME') }}/bin/"
+    state: directory
+    mode: 0755
 
 # install git if not present
 - name: Install Git
@@ -21,6 +27,7 @@
   template:
     src: "{{ role_path }}/files/gitconfig"
     dest: "{{ lookup('env','HOME') }}/.gitconfig"
+    mode: 0644
 
 - name: Link git configs directory (for hooks)
   become: no
@@ -28,6 +35,7 @@
     src: "{{ role_path }}/files/git"
     dest: "{{ lookup('env', 'HOME') }}/.config/git"
     state: link
+    mode: 0755
 
 # Needed for github_release module
 - name: Install pip dependencies for other modules

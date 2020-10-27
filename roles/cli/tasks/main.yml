@@ -40,12 +40,14 @@
   git:
     repo: https://github.com/thoughtbot/dotfiles.git
     dest: "{{ lookup('env', 'HOME') }}/applications/thoughtbot-dotfiles"
+    version: master
 
 - name: Install thoughtbot's tmux tat script
   file:
     state: link
     src: "{{ lookup('env', 'HOME') }}/applications/thoughtbot-dotfiles/bin/tat"
     dest: "{{ lookup('env','HOME') }}/bin/tat"
+    mode: 0644
 
 # Applications installed in OS specific roles:
 # fpp (both)

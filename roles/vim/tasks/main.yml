@@ -11,6 +11,7 @@
   file:
     state: directory
     path: "{{ lookup('env','HOME') }}/.config/nvim"
+    mode: 0775
     force: yes
 
 - name: copy init.vim file
@@ -18,6 +19,7 @@
   template:
     src: "{{ role_path }}/files/init.vim"
     dest: "{{ lookup('env','HOME') }}/.config/nvim/init.vim"
+    mode: 0664
     force: yes
 
 # Link vim configuration folder
@@ -76,6 +78,7 @@
   template:
     src: "{{ role_path }}/files/{{ ansible_os_family | lower }}.vim"
     dest: "{{ lookup('env','HOME') }}/.config/nvim/{{ ansible_os_family | lower }}.vim"
+    mode: 0664
     force: yes
 
 # Install vim plugins
