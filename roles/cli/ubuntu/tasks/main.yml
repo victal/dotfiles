@@ -57,3 +57,4 @@
     state: link
     src: "/usr/share/doc/fzf/examples/completion.bash"
     dest: "/etc/bash_completion.d/fzf"
+    mode: 0644

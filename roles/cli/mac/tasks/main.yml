@@ -13,7 +13,10 @@
 
 - name: Create gojira configuration directory
   become: no
-  file: path={{ lookup('env','HOME') }}/.jira.d/ state=directory
+  file:
+    path: "{{ lookup('env','HOME') }}/.jira.d/"
+    state: directory
+    mode: 0755
 
 - name: Copy gojira config
   become: no
@@ -22,6 +25,7 @@
     dest: "{{ lookup('env','HOME') }}/.jira.d/config.yml"
     variable_start_string: "{_ "
     variable_end_string: " _}"
+    mode: 0644
 
 - name: Link bashrc configuration
   become: no

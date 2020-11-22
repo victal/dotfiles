@@ -1,10 +1,18 @@
 - name: Create bashrc.d folder
   become: no
-  file: path={{ lookup('env','HOME') }}/.bashrc.d state=directory
+  file:
+    path: "{{ lookup('env','HOME') }}/.bashrc.d"
+    state: directory
+    mode: 0755
 
 - name: Link basic .bashrc file
   become: no
-  file: state=link force=yes src={{ role_path }}/files/bashrc path={{ lookup('env','HOME') }}/.bashrc
+  file:
+    src: "{{ role_path }}/files/bashrc"
+    dest: "{{ lookup('env','HOME') }}/.bashrc"
+    mode: 0644
+    state: link
+    force: yes
 
 - name: Add basic .bashrc.d config
   become: no
@@ -12,6 +20,7 @@
     state: link
     src: "{{ role_path }}/files/00-applications.sh"
     dest: "{{ lookup('env','HOME') }}/.bashrc.d/00-applications.sh"
+    mode: 0644
     force: yes
 
 - name: Clone liquidprompt
@@ -19,6 +28,7 @@
   git:
     repo: https://github.com/nojhan/liquidprompt.git
     dest: "{{ lookup('env', 'HOME') }}/applications/liquidprompt"
+    version: master
 
 - name: Add liquidprompt .bashrc.d config
   become: no

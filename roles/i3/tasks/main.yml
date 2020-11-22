@@ -21,12 +21,14 @@
   file:
     state: directory
     dest: "{{ lookup('env','HOME') }}/screenshots"
+    mode: 0755
 
 - name: Create i3 config dir
   become: no
   file:
     state: directory
     dest: "{{ lookup('env','HOME') }}/.i3"
+    mode: 0755
 
 - name: Link specific i3 configuration
   become: no
@@ -40,6 +42,7 @@
   file:
     state: directory
     path: "{{ lookup('env', 'HOME') }}/.config/rofi"
+    mode: 0755
 
 - name: Link specific rofi configuration
   become: no
