@@ -47,7 +47,7 @@
     state: link
     src: "{{ lookup('env', 'HOME') }}/applications/thoughtbot-dotfiles/bin/tat"
     dest: "{{ lookup('env','HOME') }}/bin/tat"
-    mode: 0644
+    mode: 0755
 
 # Applications installed in OS specific roles:
 # fpp (both)

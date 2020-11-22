@@ -15,7 +15,7 @@
        - libssl-dev
        - llvm
        - make
-       - python-openssl
+       # - python-openssl
        - tk-dev
        - wget
        - xz-utils

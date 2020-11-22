@@ -7,5 +7,5 @@
   apt_repository:
         filename: nodesource
         state: present
-        repo: 'deb https://deb.nodesource.com/node_13.x {{ ansible_distribution_release }} main'
+        repo: 'deb https://deb.nodesource.com/node_14.x {{ ansible_distribution_release }} main'
         update_cache: true

@@ -5,7 +5,7 @@
 
 - name: Unpack firefox package
   become: no
-  unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/ src=/tmp/aurora.tar.bz2
+  unarchive: copy=no dest={{ lookup('env','HOME') }}/applications/ src=/tmp/aurora.tar.bz2 mode=0755
 
 - name: Remove package
   file: path=/tmp/aurora.tar.bz2 state=absent
