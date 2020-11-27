@@ -15,3 +15,8 @@ if type kubectx > /dev/null 2>&1;
 then
     alias kx='kubectx'
 fi
+
+if type kubeval > /dev/null 2>&1;
+then
+    alias kubeval-all="find . -path '*/kubernetes/*' -regex \".*\\.ya*ml\" -type f -exec kubeval {} +"
+fi

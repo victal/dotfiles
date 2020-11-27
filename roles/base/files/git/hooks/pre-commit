@@ -13,5 +13,21 @@ if [ -e ./.git/hooks/pre-commit ]; then
     ./.git/hooks/pre-commit "$@"
 fi
 
+RED=$(tput setaf 160)
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+
+if type kubeval > /dev/null 2>&1; 
+then
+    echo "Kubeval installed. Checking kubernetes manifests"
+    # Finds .yml or .yaml files in a kubernetes directory and runs kubeval on all of the files
+    find . -path '*/kubernetes/*' -regex ".*\\.ya*ml" -type f -exec kubeval {} +
+    RETCODE=$?
+    if [ $RETCODE -ne 0 ]
+    then
+        echo "${RED}${BOLD}ERROR:${RESET} Errors were found in kubernetes manifests. Check the output for errors/warnings."
+        exit $RETCODE
+    fi
+fi
 
 # vim:set et sw=4 ts=8 ft=sh:
